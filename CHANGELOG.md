@@ -1,13 +1,13 @@
 # Changelog
 
-## [2.0.3a1](https://github.com/JarbasAl/tutubo/tree/2.0.3a1) (2026-04-27)
+## [2.0.3a1](https://github.com/TigreGotico/tutubo/tree/2.0.3a1) (2026-04-27)
 
-[Full Changelog](https://github.com/JarbasAl/tutubo/compare/V2.0.2...2.0.3a1)
+[Full Changelog](https://github.com/TigreGotico/tutubo/compare/V2.0.2...2.0.3a1)
 
 **Merged pull requests:**
 
-- ci: add standard gh-automations workflows [\#21](https://github.com/JarbasAl/tutubo/pull/21) ([JarbasAl](https://github.com/JarbasAl))
-- modernize: pyproject.toml, bug fixes, docs, CI [\#20](https://github.com/JarbasAl/tutubo/pull/20) ([JarbasAl](https://github.com/JarbasAl))
+- ci: add standard gh-automations workflows [\#21](https://github.com/TigreGotico/tutubo/pull/21) ([JarbasAl](https://github.com/JarbasAl))
+- modernize: pyproject.toml, bug fixes, docs, CI [\#20](https://github.com/TigreGotico/tutubo/pull/20) ([JarbasAl](https://github.com/JarbasAl))
 
 
 
