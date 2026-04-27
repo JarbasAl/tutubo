@@ -6,6 +6,6 @@ on:
 
 jobs:
   pip_audit:
-    uses: OpenVoiceOS/gh-automations/.github/workflows/pip_audit.yml@dev
+    uses: OpenVoiceOS/gh-automations/.github/workflows/pip-audit.yml@dev
     with:
       package_name: tutubo
