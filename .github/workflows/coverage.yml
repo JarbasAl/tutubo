@@ -1,11 +1,16 @@
-name: Coverage
+name: Code Coverage
+
 on:
-  push:
   pull_request:
+    branches: [dev]
   workflow_dispatch:
 
 jobs:
   coverage:
     uses: OpenVoiceOS/gh-automations/.github/workflows/coverage.yml@dev
     with:
-      package_name: tutubo
+      python_version: '3.11'
+      coverage_source: 'tutubo'
+      test_path: 'test/'
+      install_extras: ''
+      min_coverage: 0
