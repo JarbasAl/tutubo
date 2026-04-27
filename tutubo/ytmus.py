@@ -169,7 +169,10 @@ def search_yt_music(query, as_dict=True, n_retries=3):
             else:
                 yield MusicVideo(r)
         elif r["resultType"] == "song":
-            yield MusicTrack(r)
+            if as_dict:
+                yield MusicTrack(r).as_dict
+            else:
+                yield MusicTrack(r)
         elif r["resultType"] == "album":
             try:
                 a = ytmusic.get_album(r["browseId"])

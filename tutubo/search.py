@@ -239,7 +239,7 @@ class YoutubeSearch(_Search):
         for v in self.iterate_youtube_music(SearchType.MUSIC_ALBUM):
             yield v
             n += 1
-            if n > max_res:
+            if 0 < max_res <= n:
                 break
 
     def iterate_music_artists(self, max_res=-1):
@@ -247,7 +247,7 @@ class YoutubeSearch(_Search):
         for v in self.iterate_youtube_music(SearchType.MUSIC_ARTIST):
             yield v
             n += 1
-            if n > max_res:
+            if 0 < max_res <= n:
                 break
 
     def iterate_music_tracks(self, max_res=-1):
@@ -255,7 +255,7 @@ class YoutubeSearch(_Search):
         for v in self.iterate_youtube_music(SearchType.MUSIC_TRACK):
             yield v
             n += 1
-            if n > max_res:
+            if 0 < max_res <= n:
                 break
 
     def iterate_music_playlists(self, max_res=-1):
@@ -263,7 +263,7 @@ class YoutubeSearch(_Search):
         for v in self.iterate_youtube_music(SearchType.MUSIC_PLAYLIST):
             yield v
             n += 1
-            if n > max_res:
+            if 0 < max_res <= n:
                 break
 
     def iterate_music_videos(self, max_res=-1):
@@ -271,7 +271,7 @@ class YoutubeSearch(_Search):
         for v in self.iterate_youtube_music(SearchType.MUSIC_VIDEO):
             yield v
             n += 1
-            if n > max_res:
+            if 0 < max_res <= n:
                 break
 
 

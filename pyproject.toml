@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tutubo"
+dynamic = ["version"]
+description = "YouTube search and stream wrapper around a bundled pytube fork"
+license = { text = "Apache-2.0" }
+authors = [{ name = "jarbasAI", email = "jarbasai@mailfence.com" }]
+requires-python = ">=3.8"
+dependencies = ["bs4", "requests", "ytmusicapi"]
+
+[project.urls]
+Homepage = "https://github.com/OpenJarbas/tutubo"
+
+[tool.setuptools.dynamic]
+version = { attr = "tutubo.version.__version__" }
+
+[tool.setuptools.packages.find]
+include = ["tutubo*"]
