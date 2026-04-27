@@ -1,0 +1,11 @@
+name: Build and Test
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build_tests:
+    uses: OpenVoiceOS/gh-automations/.github/workflows/build-tests.yml@dev
+    with:
+      package_name: tutubo
