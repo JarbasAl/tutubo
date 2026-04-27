@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.0.3a3](https://github.com/TigreGotico/tutubo/tree/2.0.3a3) (2026-04-27)
+
+[Full Changelog](https://github.com/TigreGotico/tutubo/compare/2.0.3a2...2.0.3a3)
+
+**Merged pull requests:**
+
+- Configure Renovate [\#23](https://github.com/TigreGotico/tutubo/pull/23) ([renovate[bot]](https://github.com/apps/renovate))
+
+## [2.0.3a2](https://github.com/TigreGotico/tutubo/tree/2.0.3a2) (2026-04-27)
+
+[Full Changelog](https://github.com/TigreGotico/tutubo/compare/2.0.3a1...2.0.3a2)
+
 ## [2.0.3a1](https://github.com/TigreGotico/tutubo/tree/2.0.3a1) (2026-04-27)
 
 [Full Changelog](https://github.com/TigreGotico/tutubo/compare/V2.0.2...2.0.3a1)
