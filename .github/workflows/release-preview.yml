@@ -1,10 +1,13 @@
 name: Release Preview
+
 on:
   pull_request:
-    types: [opened, synchronize, labeled, unlabeled]
+    branches: [dev]
+  workflow_dispatch:
 
 jobs:
   release_preview:
     uses: OpenVoiceOS/gh-automations/.github/workflows/release-preview.yml@dev
     with:
-      version_file: tutubo/version.py
+      package_name: 'tutubo'
+      version_file: 'tutubo/version.py'
