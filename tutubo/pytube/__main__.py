@@ -9,8 +9,8 @@ smaller peripheral modules and functions.
 import logging
 from typing import Any, Callable, Dict, List, Optional
 
-import pytube
-import pytube.exceptions as exceptions
+import tutubo.pytube as pytube
+import tutubo.pytube.exceptions as exceptions
 from tutubo.pytube import extract, request
 from tutubo.pytube import Stream, StreamQuery
 from tutubo.pytube.helpers import install_proxy
