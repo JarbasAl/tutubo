@@ -13,15 +13,21 @@ logger = logging.getLogger(__name__)
 
 
 class Channel(Playlist):
-    def __init__(self, url: str, proxies: Optional[Dict[str, str]] = None):
+    def __init__(self, url: str, proxies: Optional[Dict[str, str]] = None,
+                 language: str = "en-US,en;q=0.9"):
         """Construct a :class:`Channel <Channel>`.
 
         :param str url:
             A valid YouTube channel URL.
         :param proxies:
             (Optional) A dictionary of proxies to use for web requests.
+        :param str language:
+            Value for the ``Accept-Language`` request header. Controls the
+            language YouTube uses for auto-translated titles and metadata.
+            Defaults to ``"en-US,en;q=0.9"``.
         """
         super().__init__(url, proxies)
+        self.language = language
 
         self.channel_uri = extract.channel_name(url)
 
@@ -101,7 +107,7 @@ class Channel(Playlist):
         """
         if self._html:
             return self._html
-        self._html = requests.get(self.html_url).text
+        self._html = requests.get(self.html_url, headers={"Accept-Language": self.language}).text
         return self._html
 
     @property
