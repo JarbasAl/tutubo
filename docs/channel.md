@@ -1,0 +1,301 @@
+# Channel API
+
+`Channel` — `tutubo/channel.py:249`
+
+Fetches metadata and tab content from a YouTube channel page. All properties are lazily loaded on first access and cached in-instance, so repeated reads of the same property do not issue additional network requests.
+
+---
+
+## Constructing a Channel
+
+`Channel` accepts any of the three common YouTube channel URL formats:
+
+```python
+from tutubo import Channel
+
+# Handle URL (most common)
+c = Channel("https://www.youtube.com/@Metallica")
+
+# Legacy /c/ vanity URL
+c = Channel("https://www.youtube.com/c/LofiGirl")
+
+# Internal /channel/ UC… ID URL
+c = Channel("https://www.youtube.com/channel/UC4BSeEq7XNtihGqI309vhYg")
+```
+
+The `channel_name()` utility in `tutubo/_utils.py:34` normalises all three formats to a canonical URI path (`/@Handle`, `/c/name`, or `/channel/UC…`) which is appended to `https://www.youtube.com`.
+
+The optional `language` parameter controls the `Accept-Language` request header. This can affect display language for auto-translated titles and some metadata:
+
+```python
+c = Channel("https://www.youtube.com/@RobZombieOfficial", language="pt-PT,pt;q=0.9")
+```
+
+Default is `"en-US,en;q=0.9"`.
+
+---
+
+## Channel metadata properties
+
+All metadata properties read from two parsed data structures: `channelMetadataRenderer` (for IDs, keywords, RSS, vanity URL) and `pageHeaderViewModel` (for subscriber count, video count, description). Both come from `ytInitialData` embedded in the channel home page.
+
+```python
+c.channel_name        # str — display name, e.g. "Metallica"
+c.channel_id          # str — UC… internal ID
+c.vanity_url          # str or None — e.g. "https://www.youtube.com/@Metallica"
+c.title               # str — alias for channel_name
+c.channel_url         # str — canonical channel URL used internally
+c.description         # str — full about text (prefers pageHeader; falls back to metadata)
+c.thumbnail_url       # str — profile avatar URL (highest available resolution)
+c.subscribers         # str — subscriber count label, e.g. "12.3M subscribers"
+c.video_count_label   # str — video count label, e.g. "2.3K videos"
+c.keywords            # list[str] — channel keyword tags (used for content classification)
+c.available_countries # list[str] — ISO-3166-1 alpha-2 codes where the channel is available
+c.rss_url             # str — RSS feed URL for this channel's uploads
+```
+
+`keywords` deserialises YouTube's raw keyword string (which uses shell-style quoting for multi-word tags) via `shlex.split`. Multi-word tags like `"full movie"` remain as a single list element rather than being split on the space.
+
+`as_dict` serialises all metadata fields:
+
+```python
+c.as_dict
+# {
+#   "channelId": "UC...",
+#   "title": "Metallica",
+#   "image": "https://...",
+#   "url": "https://www.youtube.com/@Metallica",
+#   "description": "...",
+#   "subscribers": "12.3M subscribers",
+#   "video_count": "2.3K videos",
+#   "keywords": ["metallica", "metal", ...],
+#   "rss_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UC...",
+# }
+```
+
+---
+
+## URL shortcuts
+
+These are constructed at `__init__` time from the canonical channel URL and never trigger network fetches:
+
+```python
+c.videos_url     # str — /videos tab
+c.shorts_url     # str — /shorts tab
+c.live_url       # str — /streams tab
+c.playlists_url  # str — /playlists tab
+c.podcasts_url   # str — /podcasts tab
+```
+
+---
+
+## Videos tab — `channel.videos`
+
+`tutubo/channel.py:559`
+
+Returns a `DeferredGeneratorList` of `Video` objects from the `/videos` tab. Items are fetched page by page as you consume the list; YouTube returns roughly 30 items per page. Continuation tokens are resolved automatically.
+
+```python
+for video in c.videos:
+    print(video.title, video.watch_url)
+    print("  views:", video.view_count)
+    print("  published:", video.published_time)
+    print("  content_type:", video.content_type)
+```
+
+`DeferredGeneratorList` supports indexing and slicing:
+
+```python
+first = c.videos[0]            # fetches only the first page
+recent_five = c.videos[:5]     # fetches all pages, returns first 5
+all_videos = list(c.videos)    # fetches all pages
+```
+
+## Shorts tab — `channel.shorts`
+
+`tutubo/channel.py:565`
+
+Same interface as `videos` but reads from the `/shorts` tab. Items are `Video` objects with `is_live=False` and typically very short durations.
+
+```python
+for short in c.shorts:
+    print(short.title, short.video_id)
+```
+
+## Streams tab — `channel.live`
+
+`tutubo/channel.py:570`
+
+Returns a `DeferredGeneratorList` of `Video` objects from the `/streams` tab. This tab contains the channel's full stream archive — both currently active streams (`is_live=True`) and recordings of past streams (`is_live=False`).
+
+```python
+for stream in c.live:
+    if stream.is_live:
+        print("ON AIR:", stream.title, stream.watch_url)
+    else:
+        print("archived:", stream.title, stream.published_time)
+```
+
+Because archived streams appear after active ones, you can break early to avoid fetching the full archive:
+
+```python
+for stream in c.live:
+    if not stream.is_live:
+        break
+    print("currently live:", stream.title, stream.watch_url)
+```
+
+## Current live stream — `channel.current_live`
+
+`tutubo/channel.py:578`
+
+Returns a single `Video` object representing the stream currently on air, or `None` if the channel is offline.
+
+This property fetches `{channel_url}/live` rather than the `/streams` tab. YouTube's `/@handle/live` URL redirects to the active watch page when a stream is live, and to the channel home or a recent video when it is not. tutubo reads `currentVideoEndpoint.watchEndpoint.videoId` from the page data and confirms liveness via the engagement panel header text.
+
+```python
+live = c.current_live
+if live:
+    print("LIVE NOW:", live.title)
+    print("Watch:", live.watch_url)
+    print("Content type:", live.content_type)
+else:
+    print("Channel is offline")
+```
+
+`current_live` returns `None` (never raises) on network errors or if the page cannot be parsed. The returned `Video` has `is_live=True` and `channel_tags` populated from `c.keywords`, enabling content-type sub-classification (e.g. `LIVE_NEWS` for a news channel).
+
+---
+
+## Video object
+
+`Video` — `tutubo/channel.py:31`
+
+Lightweight object populated from channel-page renderer data. It does not represent a fully fetched video page.
+
+```python
+v.video_id        # str — 11-character YouTube video ID
+v.watch_url       # str — https://www.youtube.com/watch?v={video_id}
+v.title           # str or None
+v.thumbnail_url   # str — falls back to maxresdefault if not set by channel page
+v.is_live         # bool — True only for currently active streams
+v.view_count      # str — human-formatted, e.g. "31K views" (from channel page data)
+v.published_time  # str — relative label, e.g. "5 hours ago" or "3 months ago"
+v.keywords        # list[str] — always [] (channel pages do not expose per-video keywords)
+v.channel_tags    # list[str] — inherited from the channel's keyword list at fetch time
+v.description     # str — description snippet if returned by the channel page (may be "")
+v.content_type    # ContentType — classified from title, description, is_live, channel_tags
+v.as_dict         # dict
+```
+
+`as_dict` keys: `videoId`, `url`, `title`, `image`, `is_live`, `views`, `published`, `description`, `content_type`.
+
+### Content type from channel context
+
+`Video.content_type` calls `classify_video()` with `channel_tags=self.channel_tags`. Because `channel_tags` are populated at construction time from `Channel.keywords`, even a video with a plain title can receive a specific content type if the channel itself carries strong tags.
+
+Example — a video titled "Episode 42" on a channel tagged `["podcast", "interview"]` will classify as `ContentType.VIDEO` (no title keyword match), but a video on the same channel that is a live stream will classify as `ContentType.LIVE_NEWS` if the channel also carries a `"news"` tag.
+
+```python
+c = Channel("https://www.youtube.com/@BBCNews")
+for v in c.live:
+    print(v.title, v.content_type)
+    # typical output: "BBC News Live" ContentType.LIVE_NEWS
+```
+
+---
+
+## Playlists
+
+`tutubo/channel.py:698`
+
+```python
+# Just the URLs, no Playlist objects constructed
+c.playlist_urls   # list[str]
+
+# Full Playlist objects, lazy
+for playlist in c.playlists:
+    print(playlist.title, playlist.playlist_id)
+    for video in playlist.videos:
+        print("  ", video.watch_url)
+```
+
+`Channel.playlists` returns a `DeferredGeneratorList` of `Playlist` objects. `Playlist.videos` is a generator that pages through the playlist using continuation tokens.
+
+`Playlist` — `tutubo/channel.py:92`
+
+```python
+pl.playlist_id    # str
+pl.playlist_url   # str — https://www.youtube.com/playlist?list=...
+pl.title          # str or None
+pl.video_urls     # list[str] — all video watch URLs (fetches all pages)
+pl.videos         # generator of Video objects (one per video)
+```
+
+Construct a `Playlist` directly from any URL containing a `list=` parameter:
+
+```python
+from tutubo.channel import Playlist
+
+pl = Playlist("https://www.youtube.com/playlist?list=PLSomeListId")
+for v in pl.videos:
+    print(v.watch_url)
+```
+
+---
+
+## Podcasts
+
+`tutubo/channel.py:773`
+
+YouTube channels with a Podcasts tab expose grouped podcast shows. Each show is represented as a `PodcastPreview` backed by a YouTube playlist of episodes.
+
+```python
+c = Channel("https://www.youtube.com/@TheDissenterRL")
+for pod in c.podcasts:
+    print(pod.title)
+    print("  episodes:", pod.episode_count)   # e.g. "142 episodes"
+    print("  updated:", pod.last_updated)      # e.g. "Updated 4 days ago"
+    print("  url:", pod.playlist_url)
+
+    # Hydrate to a Playlist for full episode iteration
+    pl = pod.get()
+    for ep in pl.videos:
+        print("    episode:", ep.watch_url)
+        break
+```
+
+`PodcastPreview` — `tutubo/channel.py:216`
+
+```python
+pod.title           # str — show title
+pod.playlist_id     # str — backing playlist ID
+pod.playlist_url    # str — https://www.youtube.com/playlist?list=...
+pod.episode_count   # str — e.g. "142 episodes" (empty if not shown)
+pod.last_updated    # str — e.g. "Updated 4 days ago" (empty if not shown)
+pod.thumbnail_url   # str
+pod.as_dict         # {title, playlistId, url, episodeCount, lastUpdated, image}
+pod.get()           # returns a Playlist
+```
+
+`pod.episode_count` is a badge text string extracted from the podcast thumbnail overlay, not an integer. Parse it yourself if you need arithmetic:
+
+```python
+count = int(pod.episode_count.split()[0]) if pod.episode_count else 0
+```
+
+The `is_podcast=True` flag passed to `classify_video()` for episodes obtained through `Channel.podcasts` is not set automatically — to classify podcast episodes as `ContentType.PODCAST` you must pass `is_podcast=True` explicitly when calling `classify_video()` yourself. Videos encountered in search results or channel `/videos` tabs are never auto-classified as PODCAST regardless of their title.
+
+---
+
+## Building an M3U8 playlist from live channels
+
+See [`examples/iptv.py`](../examples/iptv.py) for a script that iterates `Channel.live` across multiple channels and writes results to an `.m3u8` file suitable for media players.
+
+---
+
+## Lazy loading and caching
+
+HTML pages are fetched at most once per tab URL per `Channel` instance. The mapping is maintained in `_html_cache` (URL → raw HTML text) and `_initial_data_cache` (URL → parsed `ytInitialData` dict). Constructing a second `Channel` for the same handle will re-fetch.
+
+Continuation POSTs (for fetching additional pages of videos or playlists) are not cached — each scroll triggers a network call, matching YouTube's own behaviour.

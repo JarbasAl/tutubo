@@ -1,62 +1,200 @@
 # tutubo
 
-YouTube search wrapper built on top of a bundled pytube fork with YouTube Music support.
+YouTube and YouTube Music metadata library. No pytube dependency. Searches videos, channels, playlists, music tracks, albums, and artists — with per-item content-type classification and lazy channel tab iteration.
 
 ## Install
 
 ```bash
 pip install tutubo
+# Downloading requires yt-dlp (optional):
+pip install yt-dlp
 ```
 
-## Quick start
+Dependencies: `requests`, `ytmusicapi`, `bs4`.
+
+## Feature Overview
+
+| Feature | What you get |
+|---|---|
+| YouTube search | `VideoPreview`, `ChannelPreview`, `PlaylistPreview`, mix previews, related queries |
+| YouTube Music search | `MusicTrack`, `MusicVideo`, `MusicAlbum`, `MusicPlaylist`, `MusicArtist` |
+| Content-type classification | 30 `ContentType` values inferred from title, duration, badges, and channel tags |
+| Typed search factories | `YoutubeSearch.for_movies()`, `for_trailers()`, `for_podcasts()`, etc. — 24 factories |
+| Channel tab iteration | `.videos`, `.shorts`, `.live`, `.current_live`, `.playlists`, `.podcasts` |
+| Podcast shows | `PodcastPreview` with episode count and backing playlist |
+| Lazy iteration | `DeferredGeneratorList` — network calls only as items are consumed |
+| Downloading | `download()` and `download_playlist()` via yt-dlp subprocess |
+| Offline testing | Fixture-based test suite — no network required once fixtures are recorded |
+
+## 5-Minute Quickstart
+
+### Search YouTube
+
+```python
+from tutubo import YoutubeSearch
+
+s = YoutubeSearch("rob zombie")
+
+for v in s.iterate_videos(max_res=5):
+    print(v.title, v.length, v.published_time, v.short_view_count)
+    print("  content_type:", v.content_type)
+    print("  cc:", v.has_captions, "| official artist:", v.is_official_artist_channel)
+    print("  badges:", v.badges)
+
+for ch in s.iterate_channels():
+    print(ch.title, ch.subscriber_count, "verified:", ch.is_verified)
+
+for pl in s.iterate_playlists():
+    print(pl.title, pl.video_count, "videos")
+
+for q in s.iterate_queries():     # "People also searched for"
+    print(q.query)
+```
+
+### Factory classmethods for intent-focused queries
+
+Every factory appends a keyword to your query to improve YouTube's result ranking.
+
+```python
+from tutubo import YoutubeSearch
+
+# Appends "full movie" → "blade runner full movie"
+for v in YoutubeSearch.for_movies("blade runner").iterate_movies(max_res=5):
+    print(v.title, v.length)
+
+# Appends "official trailer"
+for v in YoutubeSearch.for_trailers("dune 2").iterate_trailers(max_res=5):
+    print(v.title)
+
+# Appends "tutorial"
+for v in YoutubeSearch.for_tutorials("python asyncio").iterate_tutorials():
+    print(v.title)
+```
+
+### Filter any search by content type
+
+```python
+from tutubo import YoutubeSearch
+from tutubo.content_type import ContentType
+
+s = YoutubeSearch("free movies")
+for v in s.iterate_by_content_type(ContentType.MOVIE, max_res=10):
+    print(v.title, v.length)
+```
+
+### YouTube Music search
+
+```python
+from tutubo import YoutubeSearch
+
+s = YoutubeSearch("black sabbath paranoid")
+
+for track in s.iterate_music_tracks(max_res=5):
+    print(track.title, track.artist, track.length)
+    print("  audio_only:", track.is_audio_only, "| music_video:", track.is_music_video)
+    print("  views:", track.views, "| explicit:", track.is_explicit)
+
+for album in s.iterate_music_albums(max_res=3):
+    print(album.title, album.artist, album.year, f"({album.track_count} tracks)")
+    for t in album.tracks:
+        print(f"  {t.track_number}. {t.title} [{t.length}s]")
+
+for artist in s.iterate_music_artists(max_res=2):
+    print(artist.name, artist.subscribers)
+```
+
+### Convenience functions (return dicts)
 
 ```python
 from tutubo import search_yt, search_yt_music
 
-# YouTube search — returns dicts
 for item in search_yt("rob zombie", max_res=10):
-    print(item["title"], item["url"])
+    print(item["title"], item["url"], item["published"], item["badges"])
 
-# YouTube Music search — returns dicts
 for item in search_yt_music("rob zombie dragula"):
-    print(item)
+    print(item["title"], item["artist"], item["audio_only"])
 ```
 
-## Typed search
+### Channel metadata and tab iteration
 
 ```python
-from tutubo import YoutubeSearch
-from tutubo.models import VideoPreview, ChannelPreview, PlaylistPreview
+from tutubo import Channel
 
-s = YoutubeSearch("rob zombie")
+c = Channel("https://www.youtube.com/@Metallica")
+print(c.channel_name, c.subscribers, c.video_count_label)
+print("keywords:", c.keywords[:5])
+print("rss:", c.rss_url)
 
-for v in s.iterate_videos(max_res=10):
-    print(v.title, v.length, v.watch_url)
+# Regular uploads
+for video in c.videos:
+    print(video.title, video.view_count, video.published_time)
+    print("  content_type:", video.content_type)
 
-for ch in s.iterate_channels():
-    print(ch.title, ch.channel_url)
+# Currently on-air stream (None if offline)
+live = c.current_live
+if live:
+    print("LIVE:", live.title, live.watch_url)
 
-for pl in s.iterate_playlists():
-    print(pl.title, [f["title"] for f in pl.featured_videos])
+# Podcast shows
+c2 = Channel("https://www.youtube.com/@TheDissenterRL")
+for pod in c2.podcasts:
+    print(pod.title, pod.episode_count)
+    pl = pod.get()            # hydrates to a Playlist
+    for ep in pl.videos:
+        print("  episode:", ep.watch_url)
+        break
 ```
 
-## YouTube Music
+### Download
 
 ```python
-s = YoutubeSearch("rob zombie")
+from tutubo.download import download, download_playlist
 
-for track in s.iterate_music_tracks(max_res=5):
-    print(track.title, track.artist, track.watch_url)
+# Best quality video as .mp4
+path = download("https://www.youtube.com/watch?v=EqQuihD0hoI")
 
-for album in s.iterate_music_albums(max_res=3):
-    print(album.title, [t.title for t in album.tracks])
+# Audio only as .mp3
+path = download("https://www.youtube.com/watch?v=EqQuihD0hoI", audio_only=True)
+
+# Max 720p, custom filename and directory
+path = download(
+    "https://www.youtube.com/watch?v=EqQuihD0hoI",
+    output_path="/music",
+    filename="dragula",
+    quality="720",
+)
+
+# Full playlist
+paths = download_playlist(
+    "https://www.youtube.com/playlist?list=PLBxwSF9JxLuJea2Hn2b_xw-3X7IAfBMZT",
+    output_path="/music/rob_zombie",
+    audio_only=True,
+)
 ```
-
-## Docs
-
-- [Search API](docs/search.md)
-- [Models](docs/models.md)
 
 ## Examples
 
-See the [`examples/`](examples/) directory.
+| File | What it shows |
+|---|---|
+| `examples/search.py` | Full YouTube search bucketed by result type |
+| `examples/mus.py` | YouTube Music search |
+| `examples/music_albums.py` | Album track listings via YouTube Music |
+| `examples/ch_playlists.py` | Listing channel playlists and their videos |
+| `examples/livestreams.py` | Filtering live-only streams from a channel |
+| `examples/iptv.py` | Generating `.m3u8` files from YouTube live channels |
+| `examples/podcasts.py` | Listing podcast shows and their episodes |
+| `examples/related_queries.py` | Related search suggestions |
+
+## Documentation
+
+- [docs/index.md](docs/index.md) — class index and overview
+- [docs/search.md](docs/search.md) — full Search API reference
+- [docs/channel.md](docs/channel.md) — Channel, Video, Playlist, and PodcastPreview
+- [docs/content_type.md](docs/content_type.md) — ContentType enum and classify_video internals
+- [docs/models.md](docs/models.md) — all model types with typed field reference
+- [docs/downloading.md](docs/downloading.md) — download() and download_playlist()
+- [docs/testing.md](docs/testing.md) — fixture-based testing and recording
+
+## License
+
+Apache 2.0
