@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.4a1](https://github.com/TigreGotico/tutubo/tree/2.0.4a1) (2026-04-28)
+
+[Full Changelog](https://github.com/TigreGotico/tutubo/compare/2.0.3a3...2.0.4a1)
+
+**Merged pull requests:**
+
+- fix: send Accept-Language header when fetching channel HTML [\#27](https://github.com/TigreGotico/tutubo/pull/27) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [2.0.3a3](https://github.com/TigreGotico/tutubo/tree/2.0.3a3) (2026-04-27)
 
 [Full Changelog](https://github.com/TigreGotico/tutubo/compare/2.0.3a2...2.0.3a3)
