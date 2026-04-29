@@ -150,10 +150,10 @@ Fixture files are stored as `test/fixtures/channel_<path_slug>.html` where the s
 ### Automated recording
 
 ```bash
-TUTUBO_RECORD_DIR=test/fixtures python scripts/record_fixtures.py
+TUTUBO_RECORD_DIR=test/fixtures python test/record_fixtures.py
 ```
 
-`scripts/record_fixtures.py` records:
+`test/record_fixtures.py` records:
 
 1. **Search fixtures** — calls `YoutubeSearch(query).iterate_videos()` for a large set of predefined queries covering every `ContentType`. Each innertube response is saved as `search_{query_slug}.json`.
 2. **YouTube Music fixtures** — calls `search_yt_music(query)` for two queries and saves results as `ytmusic_{query_slug}.json`.

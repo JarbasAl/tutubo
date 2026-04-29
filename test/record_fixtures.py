@@ -1,7 +1,7 @@
 """Record live YouTube API responses as test fixtures.
 
 Usage:
-    TUTUBO_RECORD_DIR=test/fixtures python scripts/record_fixtures.py
+    TUTUBO_RECORD_DIR=test/fixtures python test/record_fixtures.py
 
 Each query/channel below will hit the live YouTube API and save the raw
 response JSON to TUTUBO_RECORD_DIR.  Commit the resulting files to enable
@@ -13,7 +13,7 @@ import os
 import pathlib
 import sys
 
-# Allow running from repo root or scripts/
+# Allow running from repo root or test/
 sys.path.insert(0, str(pathlib.Path(__file__).parent.parent))
 
 record_dir = os.environ.get("TUTUBO_RECORD_DIR", "test/fixtures")

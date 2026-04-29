@@ -10,7 +10,7 @@ Recording fixtures
 ------------------
 Set ``TUTUBO_RECORD_DIR=test/fixtures`` and run:
 
-    python scripts/record_fixtures.py
+    python test/record_fixtures.py
 
 or any script that exercises tutubo.  All innertube responses will be
 written to that directory automatically.
@@ -56,7 +56,7 @@ def patch_innertube(monkeypatch):
     prefixed with ``search_``.  Example: query ``"rob zombie"`` → ``search_rob_zombie.json``.
 
     If a matching fixture does not exist the test will raise FileNotFoundError —
-    run ``scripts/record_fixtures.py`` to capture it first.
+    run ``test/record_fixtures.py`` to capture it first.
     """
     import tutubo._innertube as _it
 
@@ -74,7 +74,7 @@ def patch_innertube(monkeypatch):
             raise FileNotFoundError(
                 f"No fixture for query {query!r}.\n"
                 f"Expected: {path}\n"
-                "Run scripts/record_fixtures.py to capture it."
+                "Run test/record_fixtures.py to capture it."
             )
         return json.loads(path.read_text())
 
@@ -175,7 +175,7 @@ def patch_channel_data(monkeypatch):
             raise FileNotFoundError(
                 f"No channel fixture for {url!r}\n"
                 f"Expected: {fixture}\n"
-                "Run scripts/record_fixtures.py to capture it."
+                "Run test/record_fixtures.py to capture it."
             )
         return json.loads(fixture.read_text())
 
@@ -211,7 +211,7 @@ def patch_channel_requests(monkeypatch):
             raise FileNotFoundError(
                 f"No channel fixture for {url!r}.\n"
                 f"Expected: {html_path}\n"
-                "Run scripts/record_fixtures.py to capture it."
+                "Run test/record_fixtures.py to capture it."
             )
         return _FakeResponse(html_path.read_text())
 

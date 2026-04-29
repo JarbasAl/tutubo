@@ -1,7 +1,7 @@
 """Fixture-based search tests.
 
 All tests use recorded API responses from test/fixtures/ — no network access.
-Re-record with:  TUTUBO_RECORD_DIR=test/fixtures python scripts/record_fixtures.py
+Re-record with:  TUTUBO_RECORD_DIR=test/fixtures python test/record_fixtures.py
 """
 import json
 from pathlib import Path

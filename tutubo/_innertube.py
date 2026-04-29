@@ -1,9 +1,16 @@
-"""Thin innertube API client — search endpoint only."""
+"""Thin innertube API client — search endpoint only.
+
+Wraps the unauthenticated `/youtubei/v1/search` endpoint. Set
+``TUTUBO_RECORD_DIR`` to capture raw responses as JSON fixtures.
+"""
+from __future__ import annotations
+
 import json
 import logging
 import os
 import pathlib
 import re
+from typing import Optional
 from urllib import error as urllib_error, parse, request as urllib_request
 
 logger = logging.getLogger(__name__)
@@ -36,6 +43,7 @@ _HEADERS = {
 
 
 def _post(endpoint: str, params: dict, body: dict) -> dict:
+    """POST to a YouTube innertube endpoint and return the parsed JSON response."""
     url = f"{_BASE_URL}/{endpoint}?{parse.urlencode(params)}"
     data = json.dumps(body).encode()
     req = urllib_request.Request(url, data=data, headers=_HEADERS, method="POST")
@@ -53,7 +61,7 @@ def _post(endpoint: str, params: dict, body: dict) -> dict:
     return result
 
 
-def search(query: str, continuation: str = None) -> dict:
+def search(query: str, continuation: Optional[str] = None) -> dict:
     """Call the innertube search endpoint and return the raw JSON."""
     params = {"key": _API_KEY, "contentCheckOk": True, "racyCheckOk": True}
     body: dict = {"context": _CONTEXT}

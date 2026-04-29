@@ -1,4 +1,11 @@
-"""Standalone YouTube Channel class — no pytube dependency."""
+"""Standalone YouTube Channel/Playlist/Video classes — no pytube dependency.
+
+Fetches and parses youtube.com pages directly via the public ``ytInitialData``
+JSON blob and the innertube ``/browse`` continuation endpoint.  All page
+requests share a consent cookie (``SOCS``) so EU/GDPR redirects don't kick in.
+"""
+from __future__ import annotations
+
 import json
 import logging
 from typing import Iterable, List, Optional, Tuple
@@ -31,21 +38,21 @@ _YT_COOKIES = {
 class Video:
     """Lightweight YouTube video object populated from channel-page data."""
 
-    def __init__(self, video_id: str, title: str = None,
-                 thumbnail_url: str = None, is_live: bool = False,
-                 keywords: list = None, view_count: str = "",
-                 published_time: str = "", channel_tags: list = None,
-                 description: str = ""):
-        self.video_id = video_id
-        self.watch_url = f"https://www.youtube.com/watch?v={video_id}"
-        self._title = title
-        self._thumbnail_url = thumbnail_url
-        self._is_live = is_live
-        self.keywords = keywords or []
-        self.view_count = view_count        # e.g. "31K views"
-        self.published_time = published_time  # e.g. "5 hours ago"
-        self.channel_tags = channel_tags or []
-        self.description = description
+    def __init__(self, video_id: str, title: Optional[str] = None,
+                 thumbnail_url: Optional[str] = None, is_live: bool = False,
+                 keywords: Optional[List[str]] = None, view_count: str = "",
+                 published_time: str = "", channel_tags: Optional[List[str]] = None,
+                 description: str = "") -> None:
+        self.video_id: str = video_id
+        self.watch_url: str = f"https://www.youtube.com/watch?v={video_id}"
+        self._title: Optional[str] = title
+        self._thumbnail_url: Optional[str] = thumbnail_url
+        self._is_live: bool = is_live
+        self.keywords: List[str] = keywords or []
+        self.view_count: str = view_count        # e.g. "31K views"
+        self.published_time: str = published_time  # e.g. "5 hours ago"
+        self.channel_tags: List[str] = channel_tags or []
+        self.description: str = description
 
     @property
     def title(self) -> Optional[str]:
@@ -62,7 +69,8 @@ class Video:
         return self._is_live
 
     @property
-    def content_type(self):
+    def content_type(self) -> "object":
+        """Semantic ``ContentType`` inferred from title, description and channel tags."""
         from tutubo.content_type import classify_video
         return classify_video(
             title=self._title or "",
@@ -72,7 +80,7 @@ class Video:
         )
 
     @property
-    def tags(self) -> list:
+    def tags(self) -> List[str]:
         """Freeform labels from title and description (genre, era, format sub-type, etc.)."""
         from tutubo.content_type import extract_tags
         return extract_tags(self._title or "", self.description)
@@ -92,14 +100,14 @@ class Video:
             "tags": self.tags,
         }
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"<Video {self.video_id!r} title={self.title!r}>"
 
 
 class Playlist:
     """A YouTube playlist — fetches video URLs from the playlist page."""
 
-    def __init__(self, url: str):
+    def __init__(self, url: str) -> None:
         from urllib.parse import urlparse, parse_qs
         parsed = urlparse(url)
         ids = parse_qs(parsed.query).get("list", [])
@@ -121,6 +129,7 @@ class Playlist:
 
     @property
     def html(self) -> str:
+        """Cached HTML of the playlist page (fetched on first access)."""
         if not self._html:
             resp = requests.get(
                 self.playlist_url,
@@ -134,6 +143,7 @@ class Playlist:
 
     @property
     def data(self) -> dict:
+        """Parsed ``ytInitialData`` blob from the playlist page."""
         if not self._initial_data:
             self._initial_data = initial_data(self.html)
         return self._initial_data
@@ -155,6 +165,7 @@ class Playlist:
 
     @staticmethod
     def _extract_video_ids(raw: str) -> Tuple[List[str], Optional[str]]:
+        """Parse a playlist response and return (video_ids, continuation_token)."""
         data = json.loads(raw) if isinstance(raw, str) else raw
         try:
             section = data["contents"]["twoColumnBrowseResultsRenderer"]["tabs"][0][
@@ -191,6 +202,7 @@ class Playlist:
         return ids, continuation
 
     def _continuation_post(self, token: str) -> str:
+        """POST a continuation token to the browse endpoint and return raw JSON text."""
         url = f"{_BROWSE_URL}?key={self.yt_api_key}"
         resp = requests.post(url, json={
             "continuation": token,
@@ -199,7 +211,7 @@ class Playlist:
         resp.raise_for_status()
         return resp.text
 
-    def _video_id_generator(self):
+    def _video_id_generator(self) -> Iterable[str]:
         ids, continuation = self._extract_video_ids(json.dumps(self.data))
         yield from ids
         while continuation:
@@ -216,7 +228,7 @@ class Playlist:
         for vid_id in self._video_id_generator():
             yield Video(vid_id)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"<Playlist {self._playlist_id!r} title={self.title!r}>"
 
 
@@ -224,18 +236,19 @@ class PodcastPreview:
     """A podcast show card from a channel's Podcasts tab."""
 
     def __init__(self, title: str, playlist_id: str, episode_count: str = "",
-                 last_updated: str = "", thumbnail_url: str = ""):
-        self.title = title
-        self.playlist_id = playlist_id
-        self.episode_count = episode_count
-        self.last_updated = last_updated
-        self.thumbnail_url = thumbnail_url
+                 last_updated: str = "", thumbnail_url: str = "") -> None:
+        self.title: str = title
+        self.playlist_id: str = playlist_id
+        self.episode_count: str = episode_count
+        self.last_updated: str = last_updated
+        self.thumbnail_url: str = thumbnail_url
 
     @property
     def playlist_url(self) -> str:
         return f"https://www.youtube.com/playlist?list={self.playlist_id}"
 
     def get(self) -> "Playlist":
+        """Return a full ``Playlist`` for this podcast's episode list."""
         return Playlist(self.playlist_url)
 
     @property
@@ -249,14 +262,14 @@ class PodcastPreview:
             "image": self.thumbnail_url,
         }
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"<PodcastPreview {self.title!r} episodes={self.episode_count!r}>"
 
 
 class Channel:
     """YouTube Channel — fetches metadata, videos, shorts, live streams, and playlists."""
 
-    def __init__(self, url: str, language: str = "en-US,en;q=0.9"):
+    def __init__(self, url: str, language: str = "en-US,en;q=0.9") -> None:
         self._channel_uri = channel_name(url)
         self.language = language
         self.channel_url = f"https://www.youtube.com{self._channel_uri}"
@@ -272,6 +285,7 @@ class Channel:
         self._visitor_data: Optional[str] = None
 
     def _get_html(self, url: str) -> str:
+        """Fetch ``url`` (memoised per-instance) with consent cookies set."""
         if url not in self._html_cache:
             resp = requests.get(
                 url,
@@ -284,6 +298,7 @@ class Channel:
         return self._html_cache[url]
 
     def _get_data(self, url: str) -> dict:
+        """Return parsed ``ytInitialData`` for ``url``, fetched and cached on demand."""
         if url not in self._initial_data_cache:
             self._initial_data_cache[url] = initial_data(self._get_html(url))
         return self._initial_data_cache[url]
@@ -302,7 +317,8 @@ class Channel:
                     .get("content", {})
                     .get("pageHeaderViewModel", {}))
 
-    def _header_metadata_texts(self) -> list:
+    def _header_metadata_texts(self) -> List[str]:
+        """Flatten ``pageHeaderViewModel`` metadata rows into a list of strings."""
         rows = (self._page_header
                     .get("metadata", {})
                     .get("contentMetadataViewModel", {})
@@ -358,7 +374,7 @@ class Channel:
         return thumbs[0]["url"] if thumbs else ""
 
     @property
-    def keywords(self) -> list:
+    def keywords(self) -> List[str]:
         """Channel tags / keywords as a list of strings."""
         raw = self._metadata_renderer.get("keywords", "")
         if isinstance(raw, list):
@@ -371,7 +387,7 @@ class Channel:
             return raw.split() if raw else []
 
     @property
-    def available_countries(self) -> list:
+    def available_countries(self) -> List[str]:
         """ISO country codes where this channel is available."""
         return self._metadata_renderer.get("availableCountryCodes", [])
 
@@ -391,6 +407,7 @@ class Channel:
         return self._ytcfg.get("INNERTUBE_API_KEY", "AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8")
 
     def _continuation_post(self, token: str) -> str:
+        """POST a browse continuation; ``visitorData`` is required for newer feeds."""
         url = f"{_BROWSE_URL}?key={self.yt_api_key}"
         resp = requests.post(url, json={
             "continuation": token,
@@ -405,6 +422,7 @@ class Channel:
 
     @staticmethod
     def _video_id_from_item(item: dict) -> Optional[str]:
+        """Pull the videoId from any of the renderer shapes YouTube uses for grid items."""
         content = item.get("richItemRenderer", {}).get("content", {})
         if "videoRenderer" in content:
             return content["videoRenderer"].get("videoId")
@@ -416,6 +434,7 @@ class Channel:
 
     @staticmethod
     def _title_from_item(item: dict) -> Optional[str]:
+        """Pull the title from a videoRenderer or lockupViewModel grid item."""
         content = item.get("richItemRenderer", {}).get("content", {})
         runs = content.get("videoRenderer", {}).get("title", {}).get("runs", [])
         if runs:
@@ -437,6 +456,7 @@ class Channel:
 
     @staticmethod
     def _is_live_from_item(item: dict) -> bool:
+        """True if the item carries a LIVE badge in either renderer shape."""
         content = item.get("richItemRenderer", {}).get("content", {})
         for badge in content.get("videoRenderer", {}).get("badges", []):
             if "LIVE" in badge.get("metadataBadgeRenderer", {}).get("style", ""):
@@ -451,7 +471,7 @@ class Channel:
         return False
 
     @staticmethod
-    def _metadata_rows_from_item(item: dict) -> list:
+    def _metadata_rows_from_item(item: dict) -> List[str]:
         """Return flat list of metadata text strings from lockupViewModel or videoRenderer."""
         content = item.get("richItemRenderer", {}).get("content", {})
         # lockupViewModel: rows → parts → text.content
@@ -480,7 +500,8 @@ class Channel:
             texts.append(pt)
         return texts
 
-    def _extract_items(self, raw_json: str, tab_suffix: str, channel_tags: list = None) -> Tuple[List[Video], Optional[str]]:
+    def _extract_items(self, raw_json: str, tab_suffix: str,
+                       channel_tags: Optional[List[str]] = None) -> Tuple[List[Video], Optional[str]]:
         data = json.loads(raw_json) if isinstance(raw_json, str) else raw_json
 
         # Initial page: find the active tab
@@ -549,6 +570,7 @@ class Channel:
         return videos, continuation
 
     def _video_generator(self, page_url: str) -> Iterable[Video]:
+        """Yield ``Video`` objects from a channel tab, paging via continuations."""
         tab_suffix = page_url.rsplit("/", 1)[-1]
         data = self._get_data(page_url)
         tags = self.keywords
@@ -646,6 +668,7 @@ class Channel:
 
     @staticmethod
     def _extract_playlist_ids(data: dict) -> Tuple[List[str], Optional[str]]:
+        """Return (playlist_ids, continuation_token) from a channel /playlists response."""
         playlists = []
         try:
             tabs = data["contents"]["twoColumnBrowseResultsRenderer"]["tabs"]
@@ -684,7 +707,8 @@ class Channel:
                 ids.append(p["lockupViewModel"]["contentId"])
         return ids, continuation
 
-    def _playlist_generator(self):
+    def _playlist_generator(self) -> Iterable[Playlist]:
+        """Yield ``Playlist`` objects scraped from the channel's /playlists tab."""
         data = self._get_data(self.playlists_url)
         ids, _ = self._extract_playlist_ids(data)
         for pid in ids:
@@ -707,6 +731,7 @@ class Channel:
 
     @staticmethod
     def _parse_podcast_item(lvm: dict) -> Optional["PodcastPreview"]:
+        """Build a ``PodcastPreview`` from a lockupViewModel on the Podcasts tab."""
         import re as _re
         meta = lvm.get("metadata", {}).get("lockupMetadataViewModel", {})
         title = meta.get("title", {}).get("content", "")
@@ -790,5 +815,5 @@ class Channel:
             "rss_url": self.rss_url,
         }
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"<Channel {self._channel_uri!r}>"

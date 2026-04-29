@@ -12,6 +12,7 @@ changes needed.
 """
 import enum
 import re
+from typing import List, Optional
 
 from tutubo import _locale
 
@@ -151,7 +152,7 @@ def classify_video(
     is_upcoming: bool = False,
     is_official_artist: bool = False,
     is_podcast: bool = False,
-    channel_tags: list = None,
+    channel_tags: Optional[List[str]] = None,
 ) -> ContentType:
     """Classify a video into a ContentType.
 
@@ -342,8 +343,8 @@ def classify_video(
 def extract_tags(
     title: str,
     description: str = "",
-    channel_tags: list = None,
-) -> list:
+    channel_tags: Optional[List[str]] = None,
+) -> List[str]:
     """Return sorted list of freeform labels inferred from title and description.
 
     Labels are orthogonal to ContentType — they capture genre, era, format sub-type,

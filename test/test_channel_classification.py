@@ -1,7 +1,7 @@
 """Channel-based classification tests using ytInitialData fixtures.
 
 No network access — all data served from test/fixtures/channel_*.json.
-Re-record with: python scripts/record_fixtures.py
+Re-record with: python test/record_fixtures.py
 
 Coverage:
   - Short film channels: classified SHORT_FILM via channel tags

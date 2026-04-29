@@ -1,13 +1,22 @@
+"""YouTube Music wrappers — ``MusicTrack``, ``MusicAlbum``, ``MusicArtist`` …
+
+Thin typed views over ``ytmusicapi`` search/get_* responses.  A single
+``YTMusic`` client is cached at module level via :func:`_get_ytmus`.
+"""
+from __future__ import annotations
+
 import json
 import time
+from typing import List, Optional
+
 from ytmusicapi import YTMusic
 
 from tutubo.models import YoutubePreview, Video
 
-_YTMUS = None
+_YTMUS: Optional[YTMusic] = None
 
 
-def _get_ytmus(max_retries=5):
+def _get_ytmus(max_retries: int = 5) -> Optional[YTMusic]:
     """Return the cached YTMusic singleton, creating it on first call.
 
     Retries on transient connection errors (rate-limiting, DNS hiccups).
@@ -26,33 +35,35 @@ def _get_ytmus(max_retries=5):
 
 
 class YTMusicResult(YoutubePreview):
+    """Common base for all YT-Music-domain result wrappers."""
+
     @property
-    def title(self):
+    def title(self) -> Optional[str]:
         return self._raw_data.get("title")
 
     @property
-    def thumbnail_url(self):
+    def thumbnail_url(self) -> Optional[str]:
         img = self._raw_data.get("image")
         if not img and self._raw_data.get("thumbnails"):
             img = self._raw_data["thumbnails"][-1]["url"]
         return img
 
     @property
-    def artist(self):
+    def artist(self) -> Optional[str]:
         artist = self._raw_data.get("artist")
         if not artist and self._raw_data.get("artists"):
             artist = ", ".join(a["name"] for a in self._raw_data['artists'])
         return artist
 
     @property
-    def description(self):
+    def description(self) -> Optional[str]:
         return self._raw_data.get("description")
 
     @property
-    def as_dict(self):
+    def as_dict(self) -> dict:
         return self._raw_data
 
-    def __str__(self):
+    def __str__(self) -> str:
         return json.dumps(self.as_dict, sort_keys=True)
 
 
@@ -73,7 +84,7 @@ class MusicTrack(YTMusicResult):
         return self._raw_data.get("videoId", "")
 
     @property
-    def length(self):
+    def length(self) -> Optional[int]:
         """Duration in seconds, or None if unknown."""
         secs = self._raw_data.get("duration_seconds")
         if secs is not None:
@@ -98,13 +109,14 @@ class MusicTrack(YTMusicResult):
         return raw or ""
 
     @property
-    def year(self):
+    def year(self) -> Optional[int]:
         """Release year as int, or None."""
         y = self._raw_data.get("year")
         return int(y) if y else None
 
     @property
     def is_explicit(self) -> bool:
+        """True if YT Music flags this track as explicit."""
         return bool(self._raw_data.get("isExplicit"))
 
     @property
@@ -113,7 +125,7 @@ class MusicTrack(YTMusicResult):
         return self._raw_data.get("views") or ""
 
     @property
-    def track_number(self):
+    def track_number(self) -> Optional[int]:
         """Track number within album, or None."""
         return self._raw_data.get("trackNumber") or self._raw_data.get("index")
 
@@ -139,7 +151,7 @@ class MusicTrack(YTMusicResult):
         return self._raw_data.get("category", "")
 
     @property
-    def as_dict(self):
+    def as_dict(self) -> dict:
         return {
             "videoId": self.video_id,
             "title": self.title,
@@ -165,7 +177,8 @@ class MusicVideo(MusicTrack):
         vid = self._raw_data.get("videoId", "")
         return f"https://www.youtube.com/watch?v={vid}" if vid else ""
 
-    def get(self):
+    def get(self) -> Video:
+        """Return the corresponding ``tutubo.channel.Video`` object."""
         return Video(self.video_id)
 
 
@@ -186,7 +199,7 @@ class MusicPlaylist(YTMusicResult):
         return f"https://music.youtube.com/playlist?list={pid}" if pid else ""
 
     @property
-    def year(self):
+    def year(self) -> Optional[int]:
         y = self._raw_data.get("year")
         return int(y) if y else None
 
@@ -203,7 +216,8 @@ class MusicPlaylist(YTMusicResult):
         return bool(self._raw_data.get("isExplicit"))
 
     @property
-    def tracks(self):
+    def tracks(self) -> List["MusicTrack"]:
+        """Tracks in this playlist/album, or [] if none have been fetched."""
         if "tracks" in self._raw_data:
             return [MusicTrack(t) for t in self._raw_data["tracks"] if t.get("videoId")]
         elif "songs" in self._raw_data:
@@ -211,7 +225,7 @@ class MusicPlaylist(YTMusicResult):
         return []
 
     @property
-    def as_dict(self):
+    def as_dict(self) -> dict:
         return {
             "title": self.title,
             "artist": self.artist,
@@ -244,15 +258,16 @@ class MusicAlbum(MusicPlaylist):
     """A YouTube Music album."""
 
     @property
-    def name(self):
+    def name(self) -> Optional[str]:
         return self.title
 
     @property
     def label(self) -> str:
+        """Record label, or empty string."""
         return self._raw_data.get("label", "")
 
     @property
-    def as_dict(self):
+    def as_dict(self) -> dict:
         d = super().as_dict
         d["label"] = self.label
         return d
@@ -283,14 +298,14 @@ class MusicArtist(YTMusicResult):
         return self._raw_data.get("description") or ""
 
     @property
-    def tracks(self):
+    def tracks(self) -> List["MusicTrack"]:
         """Top tracks for this artist."""
         songs = self._raw_data.get("songs", {})
         results = songs.get("results", []) if isinstance(songs, dict) else []
         return [MusicTrack(t) for t in results if t.get("videoId")]
 
     @property
-    def as_dict(self):
+    def as_dict(self) -> dict:
         return {
             "artist": self.name,
             "image": self.thumbnail_url,
@@ -300,7 +315,8 @@ class MusicArtist(YTMusicResult):
         }
 
 
-def search_yt_music(query, as_dict=True, n_retries=3):
+def search_yt_music(query: str, as_dict: bool = True, n_retries: int = 3):
+    """Convenience generator: search YT Music and yield wrappers (or dicts)."""
     ytmusic = _get_ytmus(n_retries)
     for r in ytmusic.search(query):
         if r["resultType"] == "video":
