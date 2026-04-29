@@ -1,0 +1,71 @@
+{
+  "responseContext": {
+    "webResponseContextExtensionData": {
+      "ytConfigData": {
+        "visitorData": "test"
+      }
+    }
+  },
+  "contents": {
+    "twoColumnBrowseResultsRenderer": {
+      "tabs": [
+        {
+          "tabRenderer": {
+            "title": "Live",
+            "selected": true,
+            "endpoint": {
+              "commandMetadata": {
+                "webCommandMetadata": {
+                  "url": "/@euronews/streams"
+                }
+              }
+            },
+            "content": {
+              "richGridRenderer": {
+                "contents": [
+                  {
+                    "richItemRenderer": {
+                      "content": {
+                        "videoRenderer": {
+                          "videoId": "dummyvid001",
+                          "title": {
+                            "runs": [
+                              {
+                                "text": "Euronews | Live News - Breaking News and Live Events"
+                              }
+                            ]
+                          },
+                          "badges": [
+                            {
+                              "metadataBadgeRenderer": {
+                                "style": "BADGE_STYLE_TYPE_LIVE_NOW",
+                                "label": "LIVE"
+                              }
+                            }
+                          ],
+                          "thumbnailOverlays": [
+                            {
+                              "thumbnailOverlayTimeStatusRenderer": {
+                                "style": "LIVE"
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "metadata": {
+    "channelMetadataRenderer": {
+      "title": "@euronews",
+      "keywords": "euronews international news news of the day breaking news world news news"
+    }
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "responseContext": {
+    "webResponseContextExtensionData": {
+      "ytConfigData": {
+        "visitorData": "test"
+      }
+    }
+  },
+  "contents": {
+    "twoColumnBrowseResultsRenderer": {
+      "tabs": [
+        {
+          "tabRenderer": {
+            "title": "Live",
+            "selected": true,
+            "endpoint": {
+              "commandMetadata": {
+                "webCommandMetadata": {
+                  "url": "/@aljazeeraenglish/streams"
+                }
+              }
+            },
+            "content": {
+              "richGridRenderer": {
+                "contents": [
+                  {
+                    "richItemRenderer": {
+                      "content": {
+                        "videoRenderer": {
+                          "videoId": "dummyvid003",
+                          "title": {
+                            "runs": [
+                              {
+                                "text": "Al Jazeera English | Live"
+                              }
+                            ]
+                          },
+                          "badges": [
+                            {
+                              "metadataBadgeRenderer": {
+                                "style": "BADGE_STYLE_TYPE_LIVE_NOW",
+                                "label": "LIVE"
+                              }
+                            }
+                          ],
+                          "thumbnailOverlays": [
+                            {
+                              "thumbnailOverlayTimeStatusRenderer": {
+                                "style": "LIVE"
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "metadata": {
+    "channelMetadataRenderer": {
+      "title": "@aljazeeraenglish",
+      "keywords": "aljazeera live tv news English aljazeera live al Jazeera news"
+    }
+  }
+}

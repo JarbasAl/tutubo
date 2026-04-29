@@ -1,0 +1,50 @@
+{
+  "currentVideoEndpoint": {
+    "watchEndpoint": {
+      "videoId": "curlive004"
+    }
+  },
+  "contents": {
+    "twoColumnWatchNextResults": {
+      "results": {
+        "results": {
+          "contents": [
+            {
+              "videoPrimaryInfoRenderer": {
+                "title": {
+                  "runs": [
+                    {
+                      "text": "Euronews en español | EN VIVO – Noticias internacionales"
+                    }
+                  ]
+                },
+                "badges": [
+                  {
+                    "liveBadgeRenderer": {
+                      "label": {
+                        "runs": [
+                          {
+                            "text": "LIVE NOW"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "metadata": {
+    "channelMetadataRenderer": {
+      "title": "@euronewses",
+      "keywords": ""
+    }
+  },
+  "videoDetails": {
+    "isLiveContent": true
+  }
+}

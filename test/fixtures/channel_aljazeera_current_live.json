@@ -1,0 +1,50 @@
+{
+  "currentVideoEndpoint": {
+    "watchEndpoint": {
+      "videoId": "curlive003"
+    }
+  },
+  "contents": {
+    "twoColumnWatchNextResults": {
+      "results": {
+        "results": {
+          "contents": [
+            {
+              "videoPrimaryInfoRenderer": {
+                "title": {
+                  "runs": [
+                    {
+                      "text": "Al Jazeera English | Live"
+                    }
+                  ]
+                },
+                "badges": [
+                  {
+                    "liveBadgeRenderer": {
+                      "label": {
+                        "runs": [
+                          {
+                            "text": "LIVE NOW"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "metadata": {
+    "channelMetadataRenderer": {
+      "title": "@aljazeeraenglish",
+      "keywords": ""
+    }
+  },
+  "videoDetails": {
+    "isLiveContent": true
+  }
+}

@@ -126,6 +126,14 @@ for short in c.shorts:
 
 `tutubo/channel.py:570`
 
+> **Naming note:** Despite the name, `channel.live` is NOT a single on-air stream. It fetches
+> `/@handle/streams` — the channel's **browse tab** listing all livestream videos (past and current).
+> To get the single currently-airing stream, use `channel.current_live` instead.
+>
+> `/@handle/live` and `/@handle/streams` are two different YouTube URLs:
+> - `/@handle/streams` is a paginated browse tab (what `channel.live` reads).
+> - `/@handle/live` redirects to the active watch page for the most recent livestream — it is not a browse tab (what `channel.current_live` reads).
+
 Returns a `DeferredGeneratorList` of `Video` objects from the `/streams` tab. This tab contains the channel's full stream archive — both currently active streams (`is_live=True`) and recordings of past streams (`is_live=False`).
 
 ```python
@@ -149,9 +157,13 @@ for stream in c.live:
 
 `tutubo/channel.py:578`
 
+> **Naming note:** `channel.current_live` returns **one `Video` or `None`** — it is not a list.
+> Despite the similar name, it is unrelated to `channel.live` (the `/streams` browse tab).
+> Use this property only when you need to know whether the channel is airing right now.
+
 Returns a single `Video` object representing the stream currently on air, or `None` if the channel is offline.
 
-This property fetches `{channel_url}/live` rather than the `/streams` tab. YouTube's `/@handle/live` URL redirects to the active watch page when a stream is live, and to the channel home or a recent video when it is not. tutubo reads `currentVideoEndpoint.watchEndpoint.videoId` from the page data and confirms liveness via the engagement panel header text.
+This property fetches `{channel_url}/live` — YouTube's `/@handle/live` URL, which **redirects to a watch page** for the most recent livestream video. It is not a channel browse tab. tutubo reads `currentVideoEndpoint.watchEndpoint.videoId` from the page data and confirms liveness via `playerMicroformat.liveBroadcastDetails.isLiveNow`. When no stream is active, the redirect leads to a regular video or the channel home; tutubo returns `None` in that case.
 
 ```python
 live = c.current_live
@@ -185,10 +197,12 @@ v.keywords        # list[str] — always [] (channel pages do not expose per-vid
 v.channel_tags    # list[str] — inherited from the channel's keyword list at fetch time
 v.description     # str — description snippet if returned by the channel page (may be "")
 v.content_type    # ContentType — classified from title, description, is_live, channel_tags
+v.tags            # list[str] — freeform labels from extract_tags() covering genre,
+                  #             era, format subtype, audience, etc.
 v.as_dict         # dict
 ```
 
-`as_dict` keys: `videoId`, `url`, `title`, `image`, `is_live`, `views`, `published`, `description`, `content_type`.
+`as_dict` keys: `videoId`, `url`, `title`, `image`, `is_live`, `views`, `published`, `description`, `content_type`, `tags`.
 
 ### Content type from channel context
 

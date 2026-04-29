@@ -1,0 +1,71 @@
+{
+  "responseContext": {
+    "webResponseContextExtensionData": {
+      "ytConfigData": {
+        "visitorData": "test"
+      }
+    }
+  },
+  "contents": {
+    "twoColumnBrowseResultsRenderer": {
+      "tabs": [
+        {
+          "tabRenderer": {
+            "title": "Live",
+            "selected": true,
+            "endpoint": {
+              "commandMetadata": {
+                "webCommandMetadata": {
+                  "url": "/@euronewses/streams"
+                }
+              }
+            },
+            "content": {
+              "richGridRenderer": {
+                "contents": [
+                  {
+                    "richItemRenderer": {
+                      "content": {
+                        "videoRenderer": {
+                          "videoId": "dummyvid004",
+                          "title": {
+                            "runs": [
+                              {
+                                "text": "Euronews en español | EN VIVO – Noticias internacionales"
+                              }
+                            ]
+                          },
+                          "badges": [
+                            {
+                              "metadataBadgeRenderer": {
+                                "style": "BADGE_STYLE_TYPE_LIVE_NOW",
+                                "label": "LIVE"
+                              }
+                            }
+                          ],
+                          "thumbnailOverlays": [
+                            {
+                              "thumbnailOverlayTimeStatusRenderer": {
+                                "style": "LIVE"
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "metadata": {
+    "channelMetadataRenderer": {
+      "title": "@euronewses",
+      "keywords": "noticias en vivo noticias noticiero noticias internacionales en vivo"
+    }
+  }
+}

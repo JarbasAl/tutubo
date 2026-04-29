@@ -19,6 +19,7 @@ Dependencies: `requests`, `ytmusicapi`, `bs4`.
 | YouTube search | `VideoPreview`, `ChannelPreview`, `PlaylistPreview`, mix previews, related queries |
 | YouTube Music search | `MusicTrack`, `MusicVideo`, `MusicAlbum`, `MusicPlaylist`, `MusicArtist` |
 | Content-type classification | 30 `ContentType` values inferred from title, duration, badges, and channel tags |
+| Auto-tagging | `extract_tags()` adds freeform genre/era/format labels orthogonal to ContentType |
 | Typed search factories | `YoutubeSearch.for_movies()`, `for_trailers()`, `for_podcasts()`, etc. — 24 factories |
 | Channel tab iteration | `.videos`, `.shorts`, `.live`, `.current_live`, `.playlists`, `.podcasts` |
 | Podcast shows | `PodcastPreview` with episode count and backing playlist |
@@ -70,6 +71,19 @@ for v in YoutubeSearch.for_trailers("dune 2").iterate_trailers(max_res=5):
 for v in YoutubeSearch.for_tutorials("python asyncio").iterate_tutorials():
     print(v.title)
 ```
+
+### Auto-tagging
+
+`extract_tags()` returns freeform labels covering genre, era, format subtype, audience, and niche — orthogonal to `ContentType`.
+
+```python
+from tutubo.content_type import extract_tags
+
+extract_tags("Lovecraft narrated by Wayne June")
+# ["lovecraft", "narrated", "wayne-june"]
+```
+
+`VideoPreview.tags` and `Video.tags` expose this automatically. Both `as_dict` outputs include a `"tags"` key. See [docs/content_type.md](docs/content_type.md#auto-tagging) for the full label catalogue.
 
 ### Filter any search by content type
 
@@ -130,10 +144,16 @@ for video in c.videos:
     print(video.title, video.view_count, video.published_time)
     print("  content_type:", video.content_type)
 
-# Currently on-air stream (None if offline)
+# Currently on-air stream — single Video or None (reads /@handle/live)
 live = c.current_live
 if live:
     print("LIVE:", live.title, live.watch_url)
+
+# Full stream archive — past + current (reads /@handle/streams browse tab)
+for stream in c.live:
+    print(stream.title, stream.is_live)
+# Note: .live returns a list, .current_live returns one item or None.
+# See docs/channel.md for the full distinction.
 
 # Podcast shows
 c2 = Channel("https://www.youtube.com/@TheDissenterRL")
@@ -172,6 +192,49 @@ paths = download_playlist(
 )
 ```
 
+## Language Support
+
+Classification keywords are locale-aware. The default language is English (`en-us`).
+
+### Setting the language
+
+```python
+import tutubo
+tutubo.set_lang("fr-fr")   # switch to French
+print(tutubo.get_lang())   # "fr-fr"
+```
+
+Or via environment variable before starting the process:
+
+```bash
+TUTUBO_LANG=es-es python my_script.py
+```
+
+### Supported language codes
+
+| Code | Notes |
+|---|---|
+| `en-us` | Default; full coverage |
+| `fr-fr` | French |
+| `it-it` | Italian |
+| `nl-nl` | Dutch |
+| `es` | Spanish (shared base for all Spanish variants) |
+| `es-es` | Spain Spanish — sparse overrides on top of `es` |
+| `es-mx` | Mexican Spanish — sparse overrides on top of `es` |
+| `pt` | Portuguese (shared base for all Portuguese variants) |
+| `pt-pt` | European Portuguese — sparse overrides on top of `pt` |
+| `pt-br` | Brazilian Portuguese — sparse overrides on top of `pt` |
+
+Fallback chain: `es-es` → `es` → `en-us`. Any missing `.voc` file is filled in from the next candidate in the chain.
+
+### Adding a new language
+
+Create `tutubo/locale/<lang>/` and add `.voc` files for each keyword category you want to translate. You only need to provide files for the patterns that differ — everything else falls back to `en-us`. See [docs/locale.md](docs/locale.md) for the full reference.
+
+### ContentType.SOCIAL_CLIP (renamed from SHORT)
+
+`ContentType.SHORT` has been renamed to `ContentType.SOCIAL_CLIP` (value: `"social_clip"`). Update any code that referenced `ContentType.SHORT` or compared against the string `"short"`. The corresponding search factory method `YoutubeSearch.iterate_shorts()` is now `iterate_social_clips()`.
+
 ## Examples
 
 | File | What it shows |
@@ -194,6 +257,7 @@ paths = download_playlist(
 - [docs/models.md](docs/models.md) — all model types with typed field reference
 - [docs/downloading.md](docs/downloading.md) — download() and download_playlist()
 - [docs/testing.md](docs/testing.md) — fixture-based testing and recording
+- [docs/locale.md](docs/locale.md) — locale system, `.voc` files, and adding a new language
 
 ## License
 

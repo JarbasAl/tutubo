@@ -22,7 +22,7 @@ ContentType.MOVIE.value        # "movie"
 | Value | String | Description | Example title |
 |---|---|---|---|
 | `VIDEO` | `"video"` | Generic YouTube video — the default when no other type matches | "Random vlog #42" |
-| `SHORT` | `"short"` | Under 62 seconds (YouTube Shorts format) | Any reel ≤ 61 s |
+| `SOCIAL_CLIP` | `"social_clip"` | Under 62 seconds (YouTube Shorts / social clip format) | Any reel ≤ 61 s |
 | `SHORT_FILM` | `"short_film"` | Narrative short film; distinct from YouTube Shorts | "Dust — Short Film: Parallel" |
 | `LIVE` | `"live"` | Currently broadcasting; no sub-classification matched | "Playing chess with viewers" |
 | `UPCOMING` | `"upcoming"` | Scheduled premiere or waiting room | "Album Release Party — Premiering Soon" |
@@ -35,8 +35,7 @@ ContentType.MOVIE.value        # "movie"
 | `DOCUMENTARY` | `"documentary"` | Documentary, docu-series, docufilm, or docudrama | "Planet Earth III — Full Documentary" |
 | `ANIME` | `"anime"` | Anime episode or series | "One Piece Episode 1 — Full English Sub" |
 | `TV_EPISODE` | `"tv_episode"` | Scripted TV series episode | "Breaking Bad S01E01 Full Episode" |
-| `AUDIOBOOK` | `"audiobook"` | Single-narrator prose reading | "1984 George Orwell Full Audiobook Narrated by" |
-| `AUDIO_DRAMA` | `"audio_drama"` | Multi-cast audio drama, radio play, or dramatised production | "The War of the Worlds — Full Cast Audio Drama" |
+| `AUDIOBOOK` | `"audiobook"` | Audiobook, audio drama, or radio play — spoken audio without video (single-narrator readings and full-cast productions) | "1984 George Orwell Full Audiobook Narrated by" |
 | `PODCAST` | `"podcast"` | Podcast episode — publisher-defined only, never inferred from title | (see PODCAST note below) |
 | `STAND_UP` | `"stand_up"` | Stand-up comedy special or comedy show | "Dave Chappelle — The Closer Comedy Special" |
 | `INTERVIEW` | `"interview"` | Dedicated one-on-one or panel interview | "Elon Musk in conversation with Lex Fridman" |
@@ -95,7 +94,7 @@ The chain runs top to bottom; the first match wins and returns immediately. Item
 3. **[LIVE ONLY] IPTV** — title/description matches live TV or IPTV pattern
 4. **[LIVE ONLY] LIVE** — catch-all for any live stream that did not match the above
 5. **UPCOMING** — `is_upcoming=True`
-6. **SHORT** — `0 < length < 62`
+6. **SOCIAL_CLIP** — `0 < length < 62`
 7. **TRAILER** — title matches `\b(official\s+)?trailer\b|\bteaser\b`; blocked if `length > 600`
 8. **MOVIE** (title) — `"{title} {description}"` matches `\bfull\s+\w*\s*(?:movie|film|length)\b` or `\bcomplete\s+film\b`; blocked if `length < 3600` (when `length > 0`)
 9. **DOCUMENTARY** — combined text matches `\bdocumentary\b` or `\bdocu…\b`, OR `channel_tags & _CHANNEL_DOC_TAGS`
@@ -105,22 +104,21 @@ The chain runs top to bottom; the first match wins and returns immediately. Item
 13. **COMPILATION** — combined text matches `\bcompilation\b`, `\bbest\s+of\b`, or `\btop\s+\d+\b`
 14. **SHORT_FILM** (title/tag) — combined text matches `\bshort\s+(?:film|movie)\b`, OR `channel_tags & _CHANNEL_SHORT_FILM_TAGS`; blocked if `length >= 3600` (when `length > 0`)
 15. **MOVIE** (channel tag) — `channel_tags & _CHANNEL_MOVIE_TAGS`; blocked if `length < 3600`
-16. **AUDIO_DRAMA** — combined text matches audio drama vocabulary
-17. **AUDIOBOOK** — combined text matches audiobook vocabulary
-18. **PODCAST** — `is_podcast=True`
-19. **STAND_UP** — combined text matches stand-up vocabulary, OR `channel_tags & _CHANNEL_STAND_UP_TAGS`
-20. **LECTURE** — title matches `\blecture\b`, `\bTEDx?\b`, `\bTED\s+Talk\b`, `\bMasterclass\b`, `\b(online|open)\s+course\b`
-21. **INTERVIEW** — title matches interview vocabulary (`interview with`, `in conversation with`, `talks to`, `sits down with`)
-22. **CONCERT** — title matches concert vocabulary, OR `channel_tags & _CHANNEL_CONCERT_TAGS`
-23. **NEWS** — combined text matches news vocabulary, OR `channel_tags & _CHANNEL_NEWS_TAGS`
-24. **SPORT** — combined text matches sport vocabulary, OR `channel_tags & _CHANNEL_SPORT_TAGS`
-25. **GAMING** — combined text matches gaming vocabulary, OR `channel_tags & _CHANNEL_GAMING_TAGS`
-26. **TUTORIAL** — combined text matches tutorial vocabulary
-27. **REACTION** — combined text matches reaction vocabulary
-28. **KIDS** — combined text matches children's content vocabulary, OR `channel_tags & _CHANNEL_KIDS_TAGS`
-29. **MUSIC_VIDEO** — title matches `\bofficial\s+(music\s+)?video\b|\bOMV\b`, OR `is_official_artist=True`, OR `channel_tags & _CHANNEL_MUSIC_TAGS`
-30. **MUSIC_AUDIO** — title matches audio/lyric/visualiser vocabulary
-31. **VIDEO** — default; nothing else matched
+16. **AUDIOBOOK** — combined text matches audiobook vocabulary (audiobook, full audio book, read aloud, narrated by) or audio drama / radio play vocabulary (audio drama, audio play, radio play, radiodrama, full cast audio, dramatised/dramatized)
+17. **PODCAST** — `is_podcast=True`
+18. **STAND_UP** — combined text matches stand-up vocabulary, OR `channel_tags & _CHANNEL_STAND_UP_TAGS`
+19. **LECTURE** — title matches `\blecture\b`, `\bTEDx?\b`, `\bTED\s+Talk\b`, `\bMasterclass\b`, `\b(online|open)\s+course\b`
+20. **INTERVIEW** — title matches interview vocabulary (`interview with`, `in conversation with`, `talks to`, `sits down with`)
+21. **CONCERT** — title matches concert vocabulary, OR `channel_tags & _CHANNEL_CONCERT_TAGS`
+22. **NEWS** — combined text matches news vocabulary, OR `channel_tags & _CHANNEL_NEWS_TAGS`
+23. **SPORT** — combined text matches sport vocabulary, OR `channel_tags & _CHANNEL_SPORT_TAGS`
+24. **GAMING** — combined text matches gaming vocabulary, OR `channel_tags & _CHANNEL_GAMING_TAGS`
+25. **TUTORIAL** — combined text matches tutorial vocabulary
+26. **REACTION** — combined text matches reaction vocabulary
+27. **KIDS** — combined text matches children's content vocabulary, OR `channel_tags & _CHANNEL_KIDS_TAGS`
+28. **MUSIC_VIDEO** — title matches `\bofficial\s+(music\s+)?video\b|\bOMV\b`, OR `is_official_artist=True`, OR `channel_tags & _CHANNEL_MUSIC_TAGS`; blocked if `length > 900` (when `length > 0`)
+29. **MUSIC_AUDIO** — title matches audio/lyric/visualiser vocabulary, OR matches full-album / album-premiere / EP-premiere patterns
+30. **VIDEO** — default; nothing else matched
 
 ### Key ordering decisions
 
@@ -129,8 +127,6 @@ The chain runs top to bottom; the first match wins and returns immediately. Item
 **SHORT_FILM (title/tag) before MOVIE (channel tag) (step 14 before 15):** A channel that carries both `"short film"` and `"full movie"` tags (which does happen) should not promote a 45-minute short film to MOVIE. The more specific SHORT_FILM check runs first.
 
 **DOCUMENTARY before BEHIND_THE_SCENES (step 9 before 10):** A title like "Making Of: A Docuseries" would fire both. DOCUMENTARY wins.
-
-**AUDIO_DRAMA before AUDIOBOOK (step 16 before 17):** Audio dramas are more specific than audiobooks — both are long-form audio-only content, but audio dramas have a full cast and sound design. The more specific type wins.
 
 **LIVE_RADIO before LIVE_NEWS (step 1 before 2):** "24/7 Radio News" would match both; radio stream is checked first. If you need live-news radio specifically, check both `LIVE_RADIO` and `LIVE_NEWS`.
 
@@ -144,7 +140,8 @@ The chain runs top to bottom; the first match wins and returns immediately. Item
 | `MOVIE` (channel tag) | `length >= 3600` | Same gate |
 | `TRAILER` | `length <= 600` | If `length > 0` and `length > 600`, the match is skipped |
 | `SHORT_FILM` | `length < 3600` | If `length > 0` and `length >= 3600`, the match is skipped |
-| `SHORT` | `0 < length < 62` | Applied before all regex checks |
+| `SOCIAL_CLIP` | `0 < length < 62` | Applied before all regex checks |
+| `MUSIC_VIDEO` | `length <= 900` | If `length > 0` and `length > 900`, the match is skipped |
 
 When `length == 0` (unknown), duration gates pass — the type is assigned regardless of duration. This allows classification to work on live streams and on `VideoPreview` objects that do not report a duration.
 
@@ -220,14 +217,104 @@ assert ct == ContentType.PODCAST
 
 ---
 
-## AUDIO_DRAMA vs AUDIOBOOK
+## AUDIOBOOK: single-narrator and full-cast productions
 
-Both types cover long-form audio-only content. The distinction:
+`ContentType.AUDIOBOOK` covers all spoken-audio content without video — both single-narrator prose readings and multi-cast productions (audio dramas, radio plays). The `_AUDIOBOOK_RE` regex matches:
 
-- **AUDIO_DRAMA** (`step 16`) — multi-cast production with sound effects and music, presented as a drama. Title contains "audio drama", "audio play", "radio play", "radiodrama", "full cast audio", or "dramatised/dramatized".
-- **AUDIOBOOK** (`step 17`) — single narrator reading prose. Title contains "audiobook", "full audio book", "read aloud", or "narrated by".
+- Audiobook vocabulary: `audiobook`, `full audio book`, `read aloud`, `narrated by`
+- Full-cast / drama vocabulary: `audio drama`, `audio play`, `radio play`, `radiodrama`, `full cast audio`, `dramatised`, `dramatized`
 
-AUDIO_DRAMA is checked first because its vocabulary is more specific. A production titled "Sherlock Holmes — Dramatised Full Cast Audio" would match both if AUDIOBOOK were checked first; the correct type is AUDIO_DRAMA.
+There is no separate `AUDIO_DRAMA` type. Consumers who previously called `for_audio_dramas()` or `iterate_audio_dramas()` will now receive `AUDIOBOOK` results — the methods are retained as aliases.
+
+---
+
+## Auto-tagging
+
+`extract_tags` — `tutubo/content_type.py`
+
+```python
+extract_tags(title: str, description: str = "", channel_tags: list = None) -> list[str]
+```
+
+Returns a sorted list of freeform string labels derived from the title, description, and channel tags. Tags are orthogonal to `ContentType` — they answer "what genre, era, or format subtype?" rather than "what format is this?". A video classified as `AUDIOBOOK` may carry tags `["full-cast", "horror", "lovecraft"]`.
+
+| Category | Example labels |
+|---|---|
+| Audio format | `narrated`, `full-cast`, `radio-play` |
+| Genres | `horror`, `sci-fi`, `fantasy`, `thriller`, `romance`, `comedy`, `action`, `crime`, `war`, `western`, `animation`, `superhero` |
+| Music genres | `classical`, `jazz`, `metal`, `hip-hop`, `electronic`, `folk`, `reggae`, `punk`, `country`, `r&b` |
+| Sports | `football`, `basketball`, `baseball`, `tennis`, `motorsport`, `combat`, `esports` |
+| Spoken word | `debate`, `ted-talk`, `panel` |
+| Production/era | `silent-era`, `classic`, `colorized`, `4k`, `short` |
+| Audience | `kids`, `educational` |
+| Niche | `lovecraft`, `wayne-june` |
+
+```python
+from tutubo.content_type import extract_tags
+
+extract_tags("Lovecraft narrated by Wayne June")
+# ["lovecraft", "narrated", "wayne-june"]
+
+extract_tags("The War of the Worlds — Full Cast Audio Drama", channel_tags=["sci-fi"])
+# ["full-cast", "radio-play", "sci-fi"]
+```
+
+`VideoPreview.tags` and `Video.tags` both expose this as a computed property. Both `as_dict` outputs include a `"tags"` key.
+
+---
+
+## MUSIC_AUDIO: full-album and premiere patterns
+
+In addition to lyric/audio/visualiser vocabulary, `MUSIC_AUDIO` fires when the title indicates a complete album or EP release. These patterns are matched via the `music_audio_keywords.voc` file in each locale:
+
+- Full album: "full album", "álbum completo", "album complet", etc.
+- Album premiere: "album premiere", "new album", etc.
+- EP premiere: "ep premiere", "new ep", etc.
+
+Because full albums are typically 30–90 minutes long, the 900-second MUSIC_VIDEO gate naturally pushes longer music content toward MUSIC_AUDIO without requiring a separate duration check.
+
+---
+
+## Locale-driven keyword matching
+
+Most keyword patterns in `classify_video()` come from `.voc` files under `tutubo/locale/<lang>/`, loaded by `tutubo/_locale.py`. This makes classification work across multiple languages without changing Python code.
+
+Structural patterns that stay in Python (not in `.voc` files):
+- Episode codes (`S01E02`, `Season N Episode N`)
+- Top-N compilation pattern (`top \d+`)
+- Duration gates (all numeric thresholds)
+- `is_live`, `is_upcoming`, `is_podcast` flag checks
+
+These are not translatable — they are either numeric or language-universal.
+
+### Supported languages
+
+| Code | Coverage |
+|---|---|
+| `en-us` | Full — all `.voc` files present |
+| `fr-fr` | Full |
+| `it-it` | Full |
+| `es` | Full — shared base for all Spanish variants |
+| `es-es` | Sparse overrides on top of `es` |
+| `es-mx` | Sparse overrides on top of `es` |
+| `pt` | Full — shared base for all Portuguese variants |
+| `pt-pt` | Sparse overrides on top of `pt` |
+| `pt-br` | Sparse overrides on top of `pt` |
+| `nl-nl` | Full |
+
+The fallback chain is: exact locale → language-only code → `en-us`. For example, `es-mx` falls back to `es`, then to `en-us`.
+
+### Setting the language
+
+```python
+import tutubo
+tutubo.set_lang("fr-fr")   # affects all subsequent classify_video() calls
+
+# or at process start:
+# TUTUBO_LANG=fr-fr python my_script.py
+```
+
+See [docs/locale.md](locale.md) for the full reference.
 
 ---
 

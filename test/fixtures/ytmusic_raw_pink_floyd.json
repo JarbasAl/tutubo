@@ -1,0 +1,888 @@
+[
+  {
+    "category": "Top result",
+    "resultType": "artist",
+    "subscribers": "30M",
+    "artists": [
+      {
+        "name": "Pink Floyd",
+        "id": "UCO6LS_5W7vqG9mALDNzSFug"
+      }
+    ],
+    "thumbnails": [
+      {
+        "url": "https://lh3.googleusercontent.com/I3NonRbCqhwhHAoWaTtXmUNtTUKALOUM3fRYYucCzhtA3VAkPov5k_EKNtS44n2ExEXSPKJf32xgJQ=w60-h60-p-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://lh3.googleusercontent.com/I3NonRbCqhwhHAoWaTtXmUNtTUKALOUM3fRYYucCzhtA3VAkPov5k_EKNtS44n2ExEXSPKJf32xgJQ=w120-h120-p-l90-rj",
+        "width": 120,
+        "height": 120
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "song",
+    "title": "Wish You Were Here",
+    "album": null,
+    "inLibrary": false,
+    "pinnedToListenAgain": false,
+    "videoId": "4K6cvc27_CE",
+    "videoType": "MUSIC_VIDEO_TYPE_ATV",
+    "duration": "5:35",
+    "year": null,
+    "artists": [
+      {
+        "name": "Pink Floyd",
+        "id": "UCO6LS_5W7vqG9mALDNzSFug"
+      }
+    ],
+    "duration_seconds": 335,
+    "views": "618M",
+    "isExplicit": false,
+    "thumbnails": [
+      {
+        "url": "https://lh3.googleusercontent.com/k1P0nFYMJ4yLC3yUumEY021eI7zDr67r2DWOVvUVFowraXukUHHhf4TUOfVgGtnKx6YlJpnpEaskcmLE=w60-h60-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://lh3.googleusercontent.com/k1P0nFYMJ4yLC3yUumEY021eI7zDr67r2DWOVvUVFowraXukUHHhf4TUOfVgGtnKx6YlJpnpEaskcmLE=w120-h120-l90-rj",
+        "width": 120,
+        "height": 120
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "song",
+    "title": "Dogs",
+    "album": null,
+    "inLibrary": false,
+    "pinnedToListenAgain": false,
+    "videoId": "tq3bYPLBcA4",
+    "videoType": "MUSIC_VIDEO_TYPE_ATV",
+    "duration": "17:06",
+    "year": null,
+    "artists": [
+      {
+        "name": "Pink Floyd",
+        "id": "UCO6LS_5W7vqG9mALDNzSFug"
+      }
+    ],
+    "duration_seconds": 1026,
+    "views": "3.1M",
+    "isExplicit": false,
+    "thumbnails": [
+      {
+        "url": "https://lh3.googleusercontent.com/npcjZoV-lzd9tnescQlTiIqPrBcGhiAwv7h-0ure9AKnve-7h8EztYnRtHxy7Qsqs2Oy6Q4bHKwZE8ht=w60-h60-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://lh3.googleusercontent.com/npcjZoV-lzd9tnescQlTiIqPrBcGhiAwv7h-0ure9AKnve-7h8EztYnRtHxy7Qsqs2Oy6Q4bHKwZE8ht=w120-h120-l90-rj",
+        "width": 120,
+        "height": 120
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "song",
+    "title": "Fearless",
+    "album": null,
+    "inLibrary": false,
+    "pinnedToListenAgain": false,
+    "videoId": "nUvLEyykHL8",
+    "videoType": "MUSIC_VIDEO_TYPE_ATV",
+    "duration": "6:08",
+    "year": null,
+    "artists": [
+      {
+        "name": "Pink Floyd",
+        "id": "UCO6LS_5W7vqG9mALDNzSFug"
+      }
+    ],
+    "duration_seconds": 368,
+    "views": "23M",
+    "isExplicit": false,
+    "thumbnails": [
+      {
+        "url": "https://lh3.googleusercontent.com/wAdzID8nk6dQdfLdIVSbtqjJVlD0y39w-KIwEcVbWWymWW5auVmC054MLTJkGhOrE3V2REofDUZDNwg=w60-h60-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://lh3.googleusercontent.com/wAdzID8nk6dQdfLdIVSbtqjJVlD0y39w-KIwEcVbWWymWW5auVmC054MLTJkGhOrE3V2REofDUZDNwg=w120-h120-l90-rj",
+        "width": 120,
+        "height": 120
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "album",
+    "title": "The Dark Side of the Moon",
+    "type": "Album",
+    "playlistId": "OLAK5uy_lrCrcAdxFG4aMzMrebs7o9TU384xyF240",
+    "duration": null,
+    "year": "1973",
+    "artists": [
+      {
+        "name": "Pink Floyd",
+        "id": "UCO6LS_5W7vqG9mALDNzSFug"
+      }
+    ],
+    "browseId": "MPREb_nHbCAGX6uUL",
+    "isExplicit": true,
+    "thumbnails": [
+      {
+        "url": "https://yt3.googleusercontent.com/lfiVQfNhs8F77ZOE_OyAftPDGXNY8WfkIVg67gNVxaJHLef7QIXsm7CAcaT4o3AyyLTaQeqWguKel0g=w60-h60-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/lfiVQfNhs8F77ZOE_OyAftPDGXNY8WfkIVg67gNVxaJHLef7QIXsm7CAcaT4o3AyyLTaQeqWguKel0g=w120-h120-l90-rj",
+        "width": 120,
+        "height": 120
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/lfiVQfNhs8F77ZOE_OyAftPDGXNY8WfkIVg67gNVxaJHLef7QIXsm7CAcaT4o3AyyLTaQeqWguKel0g=w226-h226-l90-rj",
+        "width": 226,
+        "height": 226
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/lfiVQfNhs8F77ZOE_OyAftPDGXNY8WfkIVg67gNVxaJHLef7QIXsm7CAcaT4o3AyyLTaQeqWguKel0g=w544-h544-l90-rj",
+        "width": 544,
+        "height": 544
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "album",
+    "title": "The Wall",
+    "type": "Album",
+    "playlistId": "OLAK5uy_n-lE02j8pQkwGhsL5JLAPvbBAoAmxh9n8",
+    "duration": null,
+    "year": "1979",
+    "artists": [
+      {
+        "name": "Pink Floyd",
+        "id": "UCO6LS_5W7vqG9mALDNzSFug"
+      }
+    ],
+    "browseId": "MPREb_tc3z4MYeOpY",
+    "isExplicit": false,
+    "thumbnails": [
+      {
+        "url": "https://yt3.googleusercontent.com/ghryivwB6kZQnSKXVbpM50OoTIZn7kBm4526S3sAb4FK6gHCD-IDWLOXktQh2b-daknR8KHCjC1F2VcR=w60-h60-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/ghryivwB6kZQnSKXVbpM50OoTIZn7kBm4526S3sAb4FK6gHCD-IDWLOXktQh2b-daknR8KHCjC1F2VcR=w120-h120-l90-rj",
+        "width": 120,
+        "height": 120
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/ghryivwB6kZQnSKXVbpM50OoTIZn7kBm4526S3sAb4FK6gHCD-IDWLOXktQh2b-daknR8KHCjC1F2VcR=w226-h226-l90-rj",
+        "width": 226,
+        "height": 226
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/ghryivwB6kZQnSKXVbpM50OoTIZn7kBm4526S3sAb4FK6gHCD-IDWLOXktQh2b-daknR8KHCjC1F2VcR=w544-h544-l90-rj",
+        "width": 544,
+        "height": 544
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "album",
+    "title": "Wish You Were Here",
+    "type": "Album",
+    "playlistId": "OLAK5uy_klU9jB4SMO5SqEyFazPAVbDek2j0JVQxY",
+    "duration": null,
+    "year": "1975",
+    "artists": [
+      {
+        "name": "Pink Floyd",
+        "id": "UCO6LS_5W7vqG9mALDNzSFug"
+      }
+    ],
+    "browseId": "MPREb_pYj3YFxjhPp",
+    "isExplicit": false,
+    "thumbnails": [
+      {
+        "url": "https://yt3.googleusercontent.com/k1P0nFYMJ4yLC3yUumEY021eI7zDr67r2DWOVvUVFowraXukUHHhf4TUOfVgGtnKx6YlJpnpEaskcmLE=w60-h60-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/k1P0nFYMJ4yLC3yUumEY021eI7zDr67r2DWOVvUVFowraXukUHHhf4TUOfVgGtnKx6YlJpnpEaskcmLE=w120-h120-l90-rj",
+        "width": 120,
+        "height": 120
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/k1P0nFYMJ4yLC3yUumEY021eI7zDr67r2DWOVvUVFowraXukUHHhf4TUOfVgGtnKx6YlJpnpEaskcmLE=w226-h226-l90-rj",
+        "width": 226,
+        "height": 226
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/k1P0nFYMJ4yLC3yUumEY021eI7zDr67r2DWOVvUVFowraXukUHHhf4TUOfVgGtnKx6YlJpnpEaskcmLE=w544-h544-l90-rj",
+        "width": 544,
+        "height": 544
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "playlist",
+    "title": "Presenting Pink Floyd",
+    "itemCount": 40,
+    "author": "YouTube Music",
+    "browseId": "VLRDCLAK5uy_nPN5nGhNWMuq-NC1COQ7_tMl2r5SxSgKE",
+    "thumbnails": [
+      {
+        "url": "https://yt3.googleusercontent.com/hBR6lr3aWcO_zcOazWPZTixv8CNG8KCJN5fkVAjeeSmiFHSRoeHODu8oNkIaUlsNla3gMZrMva5DNyY=w60-h60-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/hBR6lr3aWcO_zcOazWPZTixv8CNG8KCJN5fkVAjeeSmiFHSRoeHODu8oNkIaUlsNla3gMZrMva5DNyY=w120-h120-l90-rj",
+        "width": 120,
+        "height": 120
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/hBR6lr3aWcO_zcOazWPZTixv8CNG8KCJN5fkVAjeeSmiFHSRoeHODu8oNkIaUlsNla3gMZrMva5DNyY=w226-h226-l90-rj",
+        "width": 226,
+        "height": 226
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/hBR6lr3aWcO_zcOazWPZTixv8CNG8KCJN5fkVAjeeSmiFHSRoeHODu8oNkIaUlsNla3gMZrMva5DNyY=w544-h544-l90-rj",
+        "width": 544,
+        "height": 544
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "playlist",
+    "title": "Pink Floyd greatest hits",
+    "itemCount": "14M",
+    "author": "Antonio Kamber",
+    "browseId": "VLPL1tiBqitg38_Rsqb2qiTvm3hKX2Y2qUgg",
+    "thumbnails": [
+      {
+        "url": "https://yt3.googleusercontent.com/M7vMRo-Hz_p9VRlIbL-P70NKuEfE_s1O-gTev_cclXAK4nqrsfpCZ09d47GzRYoi8b-D_IuDfQAL=s192",
+        "width": 192,
+        "height": 192
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/M7vMRo-Hz_p9VRlIbL-P70NKuEfE_s1O-gTev_cclXAK4nqrsfpCZ09d47GzRYoi8b-D_IuDfQAL=s576",
+        "width": 576,
+        "height": 576
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/M7vMRo-Hz_p9VRlIbL-P70NKuEfE_s1O-gTev_cclXAK4nqrsfpCZ09d47GzRYoi8b-D_IuDfQAL=s1200",
+        "width": 1200,
+        "height": 1200
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "playlist",
+    "title": "Pink Floyd PULSE Remastered 2019 Full Concert",
+    "itemCount": "47K",
+    "author": "Gilmour True HD",
+    "browseId": "VLPLFjSBXVNvHDTgHlqn_4-hdSDmqqJ2EMLm",
+    "thumbnails": [
+      {
+        "url": "https://i.ytimg.com/vi/7Tc6RM7ZkWQ/sddefault.jpg?sqp=-oaymwEWCJADEOEBIAQqCghqEJQEGHgg6AJIWg&rs=AMzJL3lyBesTTqBlkSeo0BB_XhvXSP2lsQ",
+        "width": 400,
+        "height": 225
+      },
+      {
+        "url": "https://i.ytimg.com/vi/7Tc6RM7ZkWQ/sddefault.jpg?sqp=-oaymwEWCKoDEPABIAQqCghqEJQEGHgg6AJIWg&rs=AMzJL3nrFF-0YaGTTSv9M-P5ZU2dNy9XXQ",
+        "width": 426,
+        "height": 240
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "artist",
+    "artist": "Syd Barrett",
+    "shuffleId": "RDAOtSYPnMQDwK1xvB7BvX1Uvg",
+    "radioId": "RDEMtSYPnMQDwK1xvB7BvX1Uvg",
+    "browseId": "UCV0jYXPXhxYiiI270Ky0eIg",
+    "thumbnails": [
+      {
+        "url": "https://lh3.googleusercontent.com/dfCTPvNcKNhn44oJ5rqKwSFr96KWhw6Ou-KOpZbtjoxO8fF8Q__a2o9KPQthJfIQ4eAxSDaFoARiVRc=w60-h60-p-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://lh3.googleusercontent.com/dfCTPvNcKNhn44oJ5rqKwSFr96KWhw6Ou-KOpZbtjoxO8fF8Q__a2o9KPQthJfIQ4eAxSDaFoARiVRc=w120-h120-p-l90-rj",
+        "width": 120,
+        "height": 120
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "video",
+    "title": "Pink Floyd - The Dark Side Of The Moon (50th Anniversary) [2023 Remaster] {Full Album}",
+    "videoId": "k9ynZnEBtvw",
+    "videoType": "MUSIC_VIDEO_TYPE_OFFICIAL_SOURCE_MUSIC",
+    "duration": null,
+    "year": null,
+    "artists": [
+      {
+        "name": "Pink Floyd",
+        "id": "UCO6LS_5W7vqG9mALDNzSFug"
+      }
+    ],
+    "views": "42M",
+    "thumbnails": [
+      {
+        "url": "https://i.ytimg.com/vi/k9ynZnEBtvw/sddefault.jpg?sqp=-oaymwEWCJADEOEBIAQqCghqEJQEGHgg6AJIWg&rs=AMzJL3lHZp9lYdReX8m3DpLIiZPlamx4yw",
+        "width": 400,
+        "height": 225
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "artist",
+    "artist": "David Gilmour",
+    "shuffleId": "RDAO7Udc1pStYLKnGcG7cB7x1w",
+    "radioId": "RDEM7Udc1pStYLKnGcG7cB7x1w",
+    "browseId": "UCWjtpG8CoVfBud-Gm-Lj8RA",
+    "thumbnails": [
+      {
+        "url": "https://lh3.googleusercontent.com/A8jFh5HSMT-sfew-QzzeXghYl5vkTa9dgBJ1HnrJUYQ1yQ-Lz9VhPlndoQfrUxBlOpAhnKzNDToXVPxl=w60-h60-p-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://lh3.googleusercontent.com/A8jFh5HSMT-sfew-QzzeXghYl5vkTa9dgBJ1HnrJUYQ1yQ-Lz9VhPlndoQfrUxBlOpAhnKzNDToXVPxl=w120-h120-p-l90-rj",
+        "width": 120,
+        "height": 120
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "video",
+    "title": "Full Album Pink Floyd - Best Songs of Pink Floyd 2023",
+    "videoId": "FO13gsJAzTw",
+    "videoType": "MUSIC_VIDEO_TYPE_UGC",
+    "duration": null,
+    "year": null,
+    "artists": [
+      {
+        "name": "Rock Star",
+        "id": "UCf_tNEF3LXtEKzAODc2HMWw"
+      }
+    ],
+    "views": "3.4M",
+    "thumbnails": [
+      {
+        "url": "https://i.ytimg.com/vi/FO13gsJAzTw/sddefault.jpg?sqp=-oaymwEWCJADEOEBIAQqCghqEJQEGHgg6AJIWg&rs=AMzJL3kwyawSy9srnWbgcBloVsHyZYJdFA",
+        "width": 400,
+        "height": 225
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "artist",
+    "artist": "Roger Waters",
+    "shuffleId": "RDAO8LdoMj0-WpdABoQ5SBn1ww",
+    "radioId": "RDEM8LdoMj0-WpdABoQ5SBn1ww",
+    "browseId": "UCjL3Tr2bN7H6Ivx_dusK5XA",
+    "thumbnails": [
+      {
+        "url": "https://lh3.googleusercontent.com/fqyfzhc9WTyst1AjH3FpN1JQrAQhaIPS2OuCBrys2uPu5YOyYltzeGc92tk0zKUpiss4bzC3mUFtNnhq=w60-h60-p-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://lh3.googleusercontent.com/fqyfzhc9WTyst1AjH3FpN1JQrAQhaIPS2OuCBrys2uPu5YOyYltzeGc92tk0zKUpiss4bzC3mUFtNnhq=w120-h120-p-l90-rj",
+        "width": 120,
+        "height": 120
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "playlist",
+    "title": "Pink Floyd - The Wall (5.1 UpMix)",
+    "itemCount": "38K",
+    "author": "The 5.1 Surround Music Channel",
+    "browseId": "VLPLq5iHE5LRc2S9a_cPTxmF9v8geq42XpeH",
+    "thumbnails": [
+      {
+        "url": "https://i.ytimg.com/vi/il8K_QWkFr8/sddefault.jpg?sqp=-oaymwEWCJADEOEBIAQqCghqEJQEGHgg6AJIWg&rs=AMzJL3m6M0L12sISFBt0ODqvzVTmxgx8Qw",
+        "width": 400,
+        "height": 225
+      },
+      {
+        "url": "https://i.ytimg.com/vi/il8K_QWkFr8/hq720.jpg?sqp=-oaymwEXCKAGEMIDIAQqCwjVARCqCBh4INgESFo&rs=AMzJL3kIWfk6dzKuOUWHkS5Fyx_RR3G3yQ",
+        "width": 800,
+        "height": 450
+      },
+      {
+        "url": "https://i.ytimg.com/vi/il8K_QWkFr8/hq720.jpg?sqp=-oaymwEXCNUGEOADIAQqCwjVARCqCBh4INgESFo&rs=AMzJL3kb0Sppu-_ouEv1YQiN987n_--N3w",
+        "width": 853,
+        "height": 480
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "video",
+    "title": "𝐏𝐢𝐧𝐤 𝐅𝐥𝐨𝐲𝐝 - 𝐏𝐮𝐥𝐬𝐞 𝟏𝟗𝟗𝟒 - 𝟒𝐊 𝐑𝐞𝐦𝐚𝐬𝐭𝐞𝐫 𝐅𝐮𝐥𝐥 𝐂𝐨𝐧𝐜𝐞𝐫𝐭",
+    "videoId": "MLie88A7SZU",
+    "videoType": "MUSIC_VIDEO_TYPE_UGC",
+    "duration": null,
+    "year": null,
+    "artists": [
+      {
+        "name": "Austech",
+        "id": "UC6d85bkFLK6f_QAkmgHHLlQ"
+      }
+    ],
+    "views": "2.5M",
+    "thumbnails": [
+      {
+        "url": "https://i.ytimg.com/vi/MLie88A7SZU/sddefault.jpg?sqp=-oaymwEWCJADEOEBIAQqCghqEJQEGHgg6AJIWg&rs=AMzJL3k6PQg01nrESDRfQyV_-9g_ApCkTw",
+        "width": 400,
+        "height": 225
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "song",
+    "title": "Coming Back to Life",
+    "album": null,
+    "inLibrary": false,
+    "pinnedToListenAgain": false,
+    "videoId": "2sHZ4ny_SxU",
+    "videoType": "MUSIC_VIDEO_TYPE_ATV",
+    "duration": null,
+    "year": null,
+    "artists": [
+      {
+        "name": "Pink Floyd",
+        "id": "UCO6LS_5W7vqG9mALDNzSFug"
+      }
+    ],
+    "views": "71M",
+    "isExplicit": false,
+    "thumbnails": [
+      {
+        "url": "https://lh3.googleusercontent.com/3YZgJ8R9YXzECv3QtGh9YKeXQ02mBnaDbmTPNAw3VAl4pwmPogHh3SD89SMHD3aaJMdVsbX58hGK-fI=w60-h60-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://lh3.googleusercontent.com/3YZgJ8R9YXzECv3QtGh9YKeXQ02mBnaDbmTPNAw3VAl4pwmPogHh3SD89SMHD3aaJMdVsbX58hGK-fI=w120-h120-l90-rj",
+        "width": 120,
+        "height": 120
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "song",
+    "title": "High Hopes",
+    "album": null,
+    "inLibrary": false,
+    "pinnedToListenAgain": false,
+    "videoId": "pCrQMvoMVHk",
+    "videoType": "MUSIC_VIDEO_TYPE_ATV",
+    "duration": null,
+    "year": null,
+    "artists": [
+      {
+        "name": "Pink Floyd",
+        "id": "UCO6LS_5W7vqG9mALDNzSFug"
+      }
+    ],
+    "views": "229M",
+    "isExplicit": false,
+    "thumbnails": [
+      {
+        "url": "https://lh3.googleusercontent.com/3YZgJ8R9YXzECv3QtGh9YKeXQ02mBnaDbmTPNAw3VAl4pwmPogHh3SD89SMHD3aaJMdVsbX58hGK-fI=w60-h60-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://lh3.googleusercontent.com/3YZgJ8R9YXzECv3QtGh9YKeXQ02mBnaDbmTPNAw3VAl4pwmPogHh3SD89SMHD3aaJMdVsbX58hGK-fI=w120-h120-l90-rj",
+        "width": 120,
+        "height": 120
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "song",
+    "title": "Hey You",
+    "album": null,
+    "inLibrary": false,
+    "pinnedToListenAgain": false,
+    "videoId": "pPrte-OhUh4",
+    "videoType": "MUSIC_VIDEO_TYPE_ATV",
+    "duration": null,
+    "year": null,
+    "artists": [
+      {
+        "name": "Pink Floyd",
+        "id": "UCO6LS_5W7vqG9mALDNzSFug"
+      }
+    ],
+    "views": "187M",
+    "isExplicit": false,
+    "thumbnails": [
+      {
+        "url": "https://lh3.googleusercontent.com/ghryivwB6kZQnSKXVbpM50OoTIZn7kBm4526S3sAb4FK6gHCD-IDWLOXktQh2b-daknR8KHCjC1F2VcR=w60-h60-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://lh3.googleusercontent.com/ghryivwB6kZQnSKXVbpM50OoTIZn7kBm4526S3sAb4FK6gHCD-IDWLOXktQh2b-daknR8KHCjC1F2VcR=w120-h120-l90-rj",
+        "width": 120,
+        "height": 120
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "song",
+    "title": "Another Brick in the Wall, Pt. 2",
+    "album": null,
+    "inLibrary": false,
+    "pinnedToListenAgain": false,
+    "videoId": "Ey8gm1W-e1Y",
+    "videoType": "MUSIC_VIDEO_TYPE_ATV",
+    "duration": null,
+    "year": null,
+    "artists": [
+      {
+        "name": "Pink Floyd",
+        "id": "UCO6LS_5W7vqG9mALDNzSFug"
+      }
+    ],
+    "views": "285M",
+    "isExplicit": false,
+    "thumbnails": [
+      {
+        "url": "https://lh3.googleusercontent.com/ghryivwB6kZQnSKXVbpM50OoTIZn7kBm4526S3sAb4FK6gHCD-IDWLOXktQh2b-daknR8KHCjC1F2VcR=w60-h60-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://lh3.googleusercontent.com/ghryivwB6kZQnSKXVbpM50OoTIZn7kBm4526S3sAb4FK6gHCD-IDWLOXktQh2b-daknR8KHCjC1F2VcR=w120-h120-l90-rj",
+        "width": 120,
+        "height": 120
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "song",
+    "title": "The Great Gig in the Sky",
+    "album": null,
+    "inLibrary": false,
+    "pinnedToListenAgain": false,
+    "videoId": "hOhTDRdcx4o",
+    "videoType": "MUSIC_VIDEO_TYPE_ATV",
+    "duration": null,
+    "year": null,
+    "artists": [
+      {
+        "name": "Pink Floyd",
+        "id": "UCO6LS_5W7vqG9mALDNzSFug"
+      }
+    ],
+    "views": "94M",
+    "isExplicit": false,
+    "thumbnails": [
+      {
+        "url": "https://lh3.googleusercontent.com/lfiVQfNhs8F77ZOE_OyAftPDGXNY8WfkIVg67gNVxaJHLef7QIXsm7CAcaT4o3AyyLTaQeqWguKel0g=w60-h60-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://lh3.googleusercontent.com/lfiVQfNhs8F77ZOE_OyAftPDGXNY8WfkIVg67gNVxaJHLef7QIXsm7CAcaT4o3AyyLTaQeqWguKel0g=w120-h120-l90-rj",
+        "width": 120,
+        "height": 120
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "episode",
+    "title": "Pink Floyd : 25 Best Songs Ranked",
+    "videoId": "4CNgiQ5d8pg",
+    "videoType": "MUSIC_VIDEO_TYPE_PODCAST_EPISODE",
+    "live": false,
+    "date": "Apr 6, 2025",
+    "podcast": {
+      "id": "MPSPPLSL8iDVeCUEIWFC5A5dtz49JkYj9NNThp",
+      "name": "JOEpinionated Podcast"
+    },
+    "thumbnails": [
+      {
+        "url": "https://i.ytimg.com/vi/4CNgiQ5d8pg/hqdefault.jpg?sqp=-oaymwEWCOADEI4CIAQqCggAEOADGC0guwJIWg&rs=AMzJL3kqUOepepoTJpmuZOtGqFMXGRIw4g",
+        "width": 480,
+        "height": 270
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "episode",
+    "title": "Pink Floyd - Time /TGGITS (Album Version combo REACTION)",
+    "videoId": "ELYhZIowD7s",
+    "videoType": "MUSIC_VIDEO_TYPE_PODCAST_EPISODE",
+    "live": false,
+    "date": "Nov 17, 2018",
+    "podcast": {
+      "id": "MPSPPLOMO0r0AKIHX7bvidlfWapT9FXfRkLEMg",
+      "name": "Sistah and the Wolf One on One Music Podcasts"
+    },
+    "thumbnails": [
+      {
+        "url": "https://i.ytimg.com/vi/ELYhZIowD7s/hqdefault.jpg?sqp=-oaymwEWCOADEI4CIAQqCggAEOADGC0guwJIWg&rs=AMzJL3kYh4QaR_lLbH-J6XERWFMPMBrj6Q",
+        "width": 480,
+        "height": 270
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "episode",
+    "title": "Pink Floyd's The Wall and the Rise of the Alt-Right",
+    "videoId": "62Stq_inL4k",
+    "videoType": "MUSIC_VIDEO_TYPE_PODCAST_EPISODE",
+    "live": false,
+    "date": "Jul 12, 2020",
+    "podcast": {
+      "id": "MPSPOLeEegmfJu9O4HR8ogZtZLk0lQGETFMHZsQ",
+      "name": "Literate Machine"
+    },
+    "thumbnails": [
+      {
+        "url": "https://i.ytimg.com/vi/62Stq_inL4k/hqdefault.jpg?sqp=-oaymwEWCOADEI4CIAQqCggAEOADGC0guwJIWg&rs=AMzJL3lO-LACJHFMe1Uut8ty_Da9B_fqFw",
+        "width": 480,
+        "height": 270
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "playlist",
+    "title": "Classic Rock Lullabies",
+    "itemCount": 47,
+    "author": "YouTube Music",
+    "browseId": "VLRDCLAK5uy_kABC3nlv35ioOf0D9mih-37tNip6SWre8",
+    "thumbnails": [
+      {
+        "url": "https://yt3.googleusercontent.com/1VO6E7FuuKC9K6vZwZuvy2zGG4P2g4s3zJmr7z3WM0Ne31HIUGMe6YlJb8V74_VU6VJsRxUVMoroEnQ=w60-h60-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/1VO6E7FuuKC9K6vZwZuvy2zGG4P2g4s3zJmr7z3WM0Ne31HIUGMe6YlJb8V74_VU6VJsRxUVMoroEnQ=w120-h120-l90-rj",
+        "width": 120,
+        "height": 120
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/1VO6E7FuuKC9K6vZwZuvy2zGG4P2g4s3zJmr7z3WM0Ne31HIUGMe6YlJb8V74_VU6VJsRxUVMoroEnQ=w226-h226-l90-rj",
+        "width": 226,
+        "height": 226
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/1VO6E7FuuKC9K6vZwZuvy2zGG4P2g4s3zJmr7z3WM0Ne31HIUGMe6YlJb8V74_VU6VJsRxUVMoroEnQ=w544-h544-l90-rj",
+        "width": 544,
+        "height": 544
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "playlist",
+    "title": "J Dilla: Echoes",
+    "itemCount": 75,
+    "author": "YouTube Music",
+    "browseId": "VLRDCLAK5uy_m74zDVn1MHxp6GlT3--hoSfv7T6mJvHc4",
+    "thumbnails": [
+      {
+        "url": "https://yt3.googleusercontent.com/lAg0pvw0pfGZcLJ0ApL9KgTsB7F_8HE7jSARFb0eBgv4dawUfnSBnIG2un6YyYJ4ZrxtEi-uAjiVrw=w60-h60-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/lAg0pvw0pfGZcLJ0ApL9KgTsB7F_8HE7jSARFb0eBgv4dawUfnSBnIG2un6YyYJ4ZrxtEi-uAjiVrw=w120-h120-l90-rj",
+        "width": 120,
+        "height": 120
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/lAg0pvw0pfGZcLJ0ApL9KgTsB7F_8HE7jSARFb0eBgv4dawUfnSBnIG2un6YyYJ4ZrxtEi-uAjiVrw=w226-h226-l90-rj",
+        "width": 226,
+        "height": 226
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/lAg0pvw0pfGZcLJ0ApL9KgTsB7F_8HE7jSARFb0eBgv4dawUfnSBnIG2un6YyYJ4ZrxtEi-uAjiVrw=w544-h544-l90-rj",
+        "width": 544,
+        "height": 544
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "artist",
+    "artist": "pink floyd",
+    "browseId": "UC-fwbeXafnWXphJiKt3Zpxg",
+    "thumbnails": [
+      {
+        "url": "https://yt3.googleusercontent.com/ytc/AIdro_lH08sf2hdezoDDah6GW2szbQNWFG02OENJXObcfNxuFN4=w60-c-h60-k-c0x00ffffff-no-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/ytc/AIdro_lH08sf2hdezoDDah6GW2szbQNWFG02OENJXObcfNxuFN4=w120-c-h120-k-c0x00ffffff-no-l90-rj",
+        "width": 120,
+        "height": 120
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "artist",
+    "artist": "Pink Floyd The Dark Side",
+    "browseId": "UCJl4NvyNtU2tzKA0maEuErg",
+    "thumbnails": [
+      {
+        "url": "https://yt3.googleusercontent.com/5WYlPqrCfIY0TdLfBOlJswpmMNIcPfkEzJmru8OXboDiHPFSofpTwZBS-VE-DRhRB6Qg7Ns0yXw=w60-c-h60-k-c0x00ffffff-no-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/5WYlPqrCfIY0TdLfBOlJswpmMNIcPfkEzJmru8OXboDiHPFSofpTwZBS-VE-DRhRB6Qg7Ns0yXw=w120-c-h120-k-c0x00ffffff-no-l90-rj",
+        "width": 120,
+        "height": 120
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "artist",
+    "artist": "PINK FLOYD BOOTS",
+    "browseId": "UCp0ufarrCFN4_TOgx_vMPBQ",
+    "thumbnails": [
+      {
+        "url": "https://yt3.googleusercontent.com/_e3FC3nrXqTVyGCEvseDTWAemiDzyNmnSJO9ilJ7_rkjq2cMSY1dmg74v_9HK4_IxXvZ0G9jVH0=w60-c-h60-k-c0x00ffffff-no-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/_e3FC3nrXqTVyGCEvseDTWAemiDzyNmnSJO9ilJ7_rkjq2cMSY1dmg74v_9HK4_IxXvZ0G9jVH0=w120-c-h120-k-c0x00ffffff-no-l90-rj",
+        "width": 120,
+        "height": 120
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "podcast",
+    "title": "PINK FLOYD INTERVIEWS",
+    "browseId": "MPSPPL4-tKyR13ib4YrhNEykHn1_ubX7-AnUGA",
+    "thumbnails": [
+      {
+        "url": "https://i.ytimg.com/pl_c/PL4-tKyR13ib4YrhNEykHn1_ubX7-AnUGA/studio_square_thumbnail.jpg?sqp=CPL_xM8G-oaymwEICDwQPCAASFqi85f_AwYI1Kq3xQY&rs=AMzJL3kTimMmDIjX_nsaSnkD3pXH89AN4Q",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://i.ytimg.com/pl_c/PL4-tKyR13ib4YrhNEykHn1_ubX7-AnUGA/studio_square_thumbnail.jpg?sqp=CPL_xM8G-oaymwEICHgQeCAASFqi85f_AwYI1Kq3xQY&rs=AMzJL3nJcWlLMabgIhORMjt9kE25adydCg",
+        "width": 120,
+        "height": 120
+      },
+      {
+        "url": "https://i.ytimg.com/pl_c/PL4-tKyR13ib4YrhNEykHn1_ubX7-AnUGA/studio_square_thumbnail.jpg?sqp=CPL_xM8G-oaymwEKCOIBEOIBIABIWqLzl_8DBgjUqrfFBg&rs=AMzJL3k3Aq1UURh4u_iz1hnJ_8Sy3Pbdww",
+        "width": 226,
+        "height": 226
+      },
+      {
+        "url": "https://i.ytimg.com/pl_c/PL4-tKyR13ib4YrhNEykHn1_ubX7-AnUGA/studio_square_thumbnail.jpg?sqp=CPL_xM8G-oaymwEKCKAEEKAEIABIWqLzl_8DBgjUqrfFBg&rs=AMzJL3mbvecwRwYlenhFm6E8VRxzV5tkqg",
+        "width": 544,
+        "height": 544
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "podcast",
+    "title": "The David Gilmour Podcast",
+    "browseId": "MPSPPLsDZ7QcsbDR8IVdAeywgOJahBvF7hgRdc",
+    "thumbnails": [
+      {
+        "url": "https://i.ytimg.com/pl_c/PLsDZ7QcsbDR8IVdAeywgOJahBvF7hgRdc/studio_square_thumbnail.jpg?sqp=CPL_xM8G-oaymwEICDwQPCAASFqi85f_AwYI-bfloQY&rs=AMzJL3lJhNmZvPToKfBMb4moZc0K7rEF1w",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://i.ytimg.com/pl_c/PLsDZ7QcsbDR8IVdAeywgOJahBvF7hgRdc/studio_square_thumbnail.jpg?sqp=CPL_xM8G-oaymwEICHgQeCAASFqi85f_AwYI-bfloQY&rs=AMzJL3m1v5BaiAJNygoQ4I-lL1HZHz2-qQ",
+        "width": 120,
+        "height": 120
+      },
+      {
+        "url": "https://i.ytimg.com/pl_c/PLsDZ7QcsbDR8IVdAeywgOJahBvF7hgRdc/studio_square_thumbnail.jpg?sqp=CPL_xM8G-oaymwEKCOIBEOIBIABIWqLzl_8DBgj5t-WhBg&rs=AMzJL3kr4w_UBOBxuWGd9tJQgZSWUdY-UA",
+        "width": 226,
+        "height": 226
+      },
+      {
+        "url": "https://i.ytimg.com/pl_c/PLsDZ7QcsbDR8IVdAeywgOJahBvF7hgRdc/studio_square_thumbnail.jpg?sqp=CPL_xM8G-oaymwEKCKAEEKAEIABIWqLzl_8DBgj5t-WhBg&rs=AMzJL3kcuGG0lNh2dynC1STP-9xKlJ8SjA",
+        "width": 544,
+        "height": 544
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "podcast",
+    "title": "Floyd Nation Podcasts",
+    "browseId": "MPSPPLJrZH3F6yYNFnDf8qJMPDyv7nEqHzPyRg",
+    "thumbnails": [
+      {
+        "url": "https://yt3.googleusercontent.com/eYa6RQmjtHHszCcwuLL7WtdYThuDJr0_tVSI4aC1J53vqnB7fkhadEUSrfj2LBu90sMpZ4mM=w60-c-h60-k-c0x00ffffff-no-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/eYa6RQmjtHHszCcwuLL7WtdYThuDJr0_tVSI4aC1J53vqnB7fkhadEUSrfj2LBu90sMpZ4mM=w120-c-h120-k-c0x00ffffff-no-l90-rj",
+        "width": 120,
+        "height": 120
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/eYa6RQmjtHHszCcwuLL7WtdYThuDJr0_tVSI4aC1J53vqnB7fkhadEUSrfj2LBu90sMpZ4mM=w226-c-h226-k-c0x00ffffff-no-l90-rj",
+        "width": 226,
+        "height": 226
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/eYa6RQmjtHHszCcwuLL7WtdYThuDJr0_tVSI4aC1J53vqnB7fkhadEUSrfj2LBu90sMpZ4mM=w544-c-h544-k-c0x00ffffff-no-l90-rj",
+        "width": 544,
+        "height": 544
+      }
+    ]
+  }
+]

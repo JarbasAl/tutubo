@@ -1,0 +1,71 @@
+{
+  "responseContext": {
+    "webResponseContextExtensionData": {
+      "ytConfigData": {
+        "visitorData": "test"
+      }
+    }
+  },
+  "contents": {
+    "twoColumnBrowseResultsRenderer": {
+      "tabs": [
+        {
+          "tabRenderer": {
+            "title": "Live",
+            "selected": true,
+            "endpoint": {
+              "commandMetadata": {
+                "webCommandMetadata": {
+                  "url": "/@France24_en/streams"
+                }
+              }
+            },
+            "content": {
+              "richGridRenderer": {
+                "contents": [
+                  {
+                    "richItemRenderer": {
+                      "content": {
+                        "videoRenderer": {
+                          "videoId": "dummyvid002",
+                          "title": {
+                            "runs": [
+                              {
+                                "text": "FRANCE 24 English – LIVE – International Breaking News & Top stories"
+                              }
+                            ]
+                          },
+                          "badges": [
+                            {
+                              "metadataBadgeRenderer": {
+                                "style": "BADGE_STYLE_TYPE_LIVE_NOW",
+                                "label": "LIVE"
+                              }
+                            }
+                          ],
+                          "thumbnailOverlays": [
+                            {
+                              "thumbnailOverlayTimeStatusRenderer": {
+                                "style": "LIVE"
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "metadata": {
+    "channelMetadataRenderer": {
+      "title": "@France24_en",
+      "keywords": "news breaking france24 24/7 tv live france"
+    }
+  }
+}

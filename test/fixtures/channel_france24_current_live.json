@@ -1,0 +1,50 @@
+{
+  "currentVideoEndpoint": {
+    "watchEndpoint": {
+      "videoId": "curlive002"
+    }
+  },
+  "contents": {
+    "twoColumnWatchNextResults": {
+      "results": {
+        "results": {
+          "contents": [
+            {
+              "videoPrimaryInfoRenderer": {
+                "title": {
+                  "runs": [
+                    {
+                      "text": "FRANCE 24 English – LIVE – International Breaking News"
+                    }
+                  ]
+                },
+                "badges": [
+                  {
+                    "liveBadgeRenderer": {
+                      "label": {
+                        "runs": [
+                          {
+                            "text": "LIVE NOW"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "metadata": {
+    "channelMetadataRenderer": {
+      "title": "@France24_en",
+      "keywords": ""
+    }
+  },
+  "videoDetails": {
+    "isLiveContent": true
+  }
+}

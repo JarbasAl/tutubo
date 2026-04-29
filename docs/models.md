@@ -41,12 +41,14 @@ v.keywords               # list[str] — always [] (search API does not return p
 # Classification
 v.content_type           # ContentType — inferred from title, length, is_live, is_upcoming,
                          #               is_official_artist, and description_snippet
+v.tags                   # list[str] — freeform labels from extract_tags() covering genre,
+                         #             era, format subtype, audience, etc.
 
 v.get()                  # returns a Video object (channel layer; triggers a network fetch)
 v.as_dict                # full dict of all fields above
 ```
 
-`as_dict` keys: `videoId`, `title`, `author`, `channel_url`, `channel_thumbnail`, `url`, `image`, `length`, `published`, `views`, `short_views`, `badges`, `has_captions`, `is_live`, `is_upcoming`, `is_official_artist`, `is_verified`, `description`, `content_type`.
+`as_dict` keys: `videoId`, `title`, `author`, `channel_url`, `channel_thumbnail`, `url`, `image`, `length`, `published`, `views`, `short_views`, `badges`, `has_captions`, `is_live`, `is_upcoming`, `is_official_artist`, `is_verified`, `description`, `content_type`, `tags`.
 
 ### `VideoPreview` vs `Video`
 
@@ -325,8 +327,7 @@ See [docs/content_type.md](content_type.md) for the full classification referenc
 | `DOCUMENTARY` | `"documentary"` | Documentary or docu-series |
 | `ANIME` | `"anime"` | Anime episode or series |
 | `TV_EPISODE` | `"tv_episode"` | Scripted TV series episode |
-| `AUDIOBOOK` | `"audiobook"` | Single-narrator prose reading |
-| `AUDIO_DRAMA` | `"audio_drama"` | Full-cast audio drama or radio play |
+| `AUDIOBOOK` | `"audiobook"` | Audiobook, audio drama, radio play — spoken audio without video |
 | `PODCAST` | `"podcast"` | Podcast episode (publisher-defined only) |
 | `STAND_UP` | `"stand_up"` | Stand-up comedy special |
 | `INTERVIEW` | `"interview"` | Dedicated one-on-one or panel interview |

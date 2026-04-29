@@ -1,0 +1,884 @@
+[
+  {
+    "category": "Top result",
+    "resultType": "artist",
+    "subscribers": "34.4M",
+    "artists": [
+      {
+        "name": "Black Sabbath",
+        "id": "UCLCELUuoHbkUxZ9EMHTYebg"
+      }
+    ],
+    "thumbnails": [
+      {
+        "url": "https://lh3.googleusercontent.com/DvpOh4gP93F7IvpgquneYfSK9pwaHDZ4NptCpDAiakAapVTbN81nDok6VYI-68HmxSSQGBGYzYNhhA=w60-h60-p-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://lh3.googleusercontent.com/DvpOh4gP93F7IvpgquneYfSK9pwaHDZ4NptCpDAiakAapVTbN81nDok6VYI-68HmxSSQGBGYzYNhhA=w120-h120-p-l90-rj",
+        "width": 120,
+        "height": 120
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "song",
+    "title": "Paranoid (2009 Remaster)",
+    "album": null,
+    "inLibrary": false,
+    "pinnedToListenAgain": false,
+    "videoId": "m7nwbJLO9qo",
+    "videoType": "MUSIC_VIDEO_TYPE_ATV",
+    "duration": "2:48",
+    "year": null,
+    "artists": [
+      {
+        "name": "Black Sabbath",
+        "id": "UCLCELUuoHbkUxZ9EMHTYebg"
+      }
+    ],
+    "duration_seconds": 168,
+    "views": "682M",
+    "isExplicit": false,
+    "thumbnails": [
+      {
+        "url": "https://lh3.googleusercontent.com/uSNyVYPeunGmnCo7UUu3dwohNvpsO7XLJxPZAZetSZ_RRUYgGR5D5p6bi-w6suhxYfvYSng0jdP4i929=w60-h60-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://lh3.googleusercontent.com/uSNyVYPeunGmnCo7UUu3dwohNvpsO7XLJxPZAZetSZ_RRUYgGR5D5p6bi-w6suhxYfvYSng0jdP4i929=w120-h120-l90-rj",
+        "width": 120,
+        "height": 120
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "song",
+    "title": "Heaven and Hell",
+    "album": null,
+    "inLibrary": false,
+    "pinnedToListenAgain": false,
+    "videoId": "RVUK2rtAkJE",
+    "videoType": "MUSIC_VIDEO_TYPE_ATV",
+    "duration": "6:58",
+    "year": null,
+    "artists": [
+      {
+        "name": "Black Sabbath",
+        "id": "UCLCELUuoHbkUxZ9EMHTYebg"
+      }
+    ],
+    "duration_seconds": 418,
+    "views": "75M",
+    "isExplicit": false,
+    "thumbnails": [
+      {
+        "url": "https://lh3.googleusercontent.com/TNaboOPjstWUEItvKMh7oImYq3uN-6gnxYbSlMnhHxqFVkNflJNPKEJ1lCHGXQs5oSEDYmk4AObkSq9Q=w60-h60-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://lh3.googleusercontent.com/TNaboOPjstWUEItvKMh7oImYq3uN-6gnxYbSlMnhHxqFVkNflJNPKEJ1lCHGXQs5oSEDYmk4AObkSq9Q=w120-h120-l90-rj",
+        "width": 120,
+        "height": 120
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "song",
+    "title": "War Pigs (2009 Remaster)",
+    "album": null,
+    "inLibrary": false,
+    "pinnedToListenAgain": false,
+    "videoId": "6csiUGMC1fk",
+    "videoType": "MUSIC_VIDEO_TYPE_ATV",
+    "duration": "7:55",
+    "year": null,
+    "artists": [
+      {
+        "name": "Black Sabbath",
+        "id": "UCLCELUuoHbkUxZ9EMHTYebg"
+      }
+    ],
+    "duration_seconds": 475,
+    "views": "122M",
+    "isExplicit": false,
+    "thumbnails": [
+      {
+        "url": "https://lh3.googleusercontent.com/uSNyVYPeunGmnCo7UUu3dwohNvpsO7XLJxPZAZetSZ_RRUYgGR5D5p6bi-w6suhxYfvYSng0jdP4i929=w60-h60-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://lh3.googleusercontent.com/uSNyVYPeunGmnCo7UUu3dwohNvpsO7XLJxPZAZetSZ_RRUYgGR5D5p6bi-w6suhxYfvYSng0jdP4i929=w120-h120-l90-rj",
+        "width": 120,
+        "height": 120
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "album",
+    "title": "Black Sabbath",
+    "type": "Album",
+    "playlistId": "OLAK5uy_l7sDmWvP2VNWTdhZ453bIhVOBGeNh8lJU",
+    "duration": null,
+    "year": "1970",
+    "artists": [
+      {
+        "name": "Black Sabbath",
+        "id": "UCLCELUuoHbkUxZ9EMHTYebg"
+      }
+    ],
+    "browseId": "MPREb_2YUxg4v0pwk",
+    "isExplicit": false,
+    "thumbnails": [
+      {
+        "url": "https://yt3.googleusercontent.com/gWsp6Dd2FJ0hr3QMyjezLMBtqP_VkzYqbD7QHXMhrFDP6NBosEpRPqojWSyBoct2_0xp1sp3ovi0ynac=w60-h60-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/gWsp6Dd2FJ0hr3QMyjezLMBtqP_VkzYqbD7QHXMhrFDP6NBosEpRPqojWSyBoct2_0xp1sp3ovi0ynac=w120-h120-l90-rj",
+        "width": 120,
+        "height": 120
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/gWsp6Dd2FJ0hr3QMyjezLMBtqP_VkzYqbD7QHXMhrFDP6NBosEpRPqojWSyBoct2_0xp1sp3ovi0ynac=w226-h226-l90-rj",
+        "width": 226,
+        "height": 226
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/gWsp6Dd2FJ0hr3QMyjezLMBtqP_VkzYqbD7QHXMhrFDP6NBosEpRPqojWSyBoct2_0xp1sp3ovi0ynac=w544-h544-l90-rj",
+        "width": 544,
+        "height": 544
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "album",
+    "title": "Paranoid",
+    "type": "Album",
+    "playlistId": "OLAK5uy_lhrQQKBwL-MndIQ077Jq-4eKiq5oo-hJw",
+    "duration": null,
+    "year": "1970",
+    "artists": [
+      {
+        "name": "Black Sabbath",
+        "id": "UCLCELUuoHbkUxZ9EMHTYebg"
+      }
+    ],
+    "browseId": "MPREb_JMNNIXwOCOC",
+    "isExplicit": false,
+    "thumbnails": [
+      {
+        "url": "https://yt3.googleusercontent.com/5iPcVTlDc4elGgisihqQvw0gYWLTcfWAByxBpzhpxZMANjy96bivMbiGFxWx8mFswyLCCS6nApxu7Sk2=w60-h60-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/5iPcVTlDc4elGgisihqQvw0gYWLTcfWAByxBpzhpxZMANjy96bivMbiGFxWx8mFswyLCCS6nApxu7Sk2=w120-h120-l90-rj",
+        "width": 120,
+        "height": 120
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/5iPcVTlDc4elGgisihqQvw0gYWLTcfWAByxBpzhpxZMANjy96bivMbiGFxWx8mFswyLCCS6nApxu7Sk2=w226-h226-l90-rj",
+        "width": 226,
+        "height": 226
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/5iPcVTlDc4elGgisihqQvw0gYWLTcfWAByxBpzhpxZMANjy96bivMbiGFxWx8mFswyLCCS6nApxu7Sk2=w544-h544-l90-rj",
+        "width": 544,
+        "height": 544
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "album",
+    "title": "Heaven & Hell",
+    "type": "Album",
+    "playlistId": "OLAK5uy_nzF9Ue_YryHIpQKHCEM1ghxEF4M0wswBQ",
+    "duration": null,
+    "year": "1980",
+    "artists": [
+      {
+        "name": "Black Sabbath",
+        "id": "UCLCELUuoHbkUxZ9EMHTYebg"
+      }
+    ],
+    "browseId": "MPREb_BoPgUvE6PEC",
+    "isExplicit": false,
+    "thumbnails": [
+      {
+        "url": "https://yt3.googleusercontent.com/TNaboOPjstWUEItvKMh7oImYq3uN-6gnxYbSlMnhHxqFVkNflJNPKEJ1lCHGXQs5oSEDYmk4AObkSq9Q=w60-h60-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/TNaboOPjstWUEItvKMh7oImYq3uN-6gnxYbSlMnhHxqFVkNflJNPKEJ1lCHGXQs5oSEDYmk4AObkSq9Q=w120-h120-l90-rj",
+        "width": 120,
+        "height": 120
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/TNaboOPjstWUEItvKMh7oImYq3uN-6gnxYbSlMnhHxqFVkNflJNPKEJ1lCHGXQs5oSEDYmk4AObkSq9Q=w226-h226-l90-rj",
+        "width": 226,
+        "height": 226
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/TNaboOPjstWUEItvKMh7oImYq3uN-6gnxYbSlMnhHxqFVkNflJNPKEJ1lCHGXQs5oSEDYmk4AObkSq9Q=w544-h544-l90-rj",
+        "width": 544,
+        "height": 544
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "artist",
+    "artist": "Ozzy Osbourne",
+    "shuffleId": "RDAO8vups4gWYliRwmid45nANg",
+    "radioId": "RDEM8vups4gWYliRwmid45nANg",
+    "browseId": "UC3oY0sESMqxZaAy8nRcVxQQ",
+    "thumbnails": [
+      {
+        "url": "https://lh3.googleusercontent.com/xbR9cvRRy6-MOnZbVbpTDc4m706kpoj7yiM-cRxXL-G_5tvgsXh50AbSQTHcnPG0DbI1J543tduScbU=w60-h60-p-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://lh3.googleusercontent.com/xbR9cvRRy6-MOnZbVbpTDc4m706kpoj7yiM-cRxXL-G_5tvgsXh50AbSQTHcnPG0DbI1J543tduScbU=w120-h120-p-l90-rj",
+        "width": 120,
+        "height": 120
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "playlist",
+    "title": "Black Sabbath/Ozzy Mix",
+    "itemCount": "8.1K",
+    "author": "Dale Rogers",
+    "browseId": "VLPLXU3AvuGJKivdsRO8ULxexELMhb_aBi5I",
+    "thumbnails": [
+      {
+        "url": "https://yt3.ggpht.com/umixoYcwdCPdgEH2IQDMz54br1S8IKpv_f9tf09mVtDL5BBkKb6PsE2Ajo0RpOl3UJyqI990EA=s192",
+        "width": 192,
+        "height": 192
+      },
+      {
+        "url": "https://yt3.ggpht.com/umixoYcwdCPdgEH2IQDMz54br1S8IKpv_f9tf09mVtDL5BBkKb6PsE2Ajo0RpOl3UJyqI990EA=s576",
+        "width": 576,
+        "height": 576
+      },
+      {
+        "url": "https://yt3.ggpht.com/umixoYcwdCPdgEH2IQDMz54br1S8IKpv_f9tf09mVtDL5BBkKb6PsE2Ajo0RpOl3UJyqI990EA=s1200",
+        "width": 1200,
+        "height": 1200
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "artist",
+    "artist": "Dio",
+    "shuffleId": "RDAOkeIumQbq2gvSoZKsP3Biwg",
+    "radioId": "RDEMkeIumQbq2gvSoZKsP3Biwg",
+    "browseId": "UCgxv4igPRzlBIyCKEzDwiYQ",
+    "thumbnails": [
+      {
+        "url": "https://lh3.googleusercontent.com/NShR9qq8voOAjA05qdze6AY6OhAS77JoSdLAjaxZJrU6Au6mP_af3mW5HcRF9YEjtTVZCyLPA5f00Ro=w60-h60-p-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://lh3.googleusercontent.com/NShR9qq8voOAjA05qdze6AY6OhAS77JoSdLAjaxZJrU6Au6mP_af3mW5HcRF9YEjtTVZCyLPA5f00Ro=w120-h120-p-l90-rj",
+        "width": 120,
+        "height": 120
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "playlist",
+    "title": "Black Sabbath Back to the Beginning Full Show",
+    "itemCount": "1.1M",
+    "author": "Ghostface Gaming",
+    "browseId": "VLPLTTuFNCat390J0HRQZR51MTclVO0_4IKC",
+    "thumbnails": [
+      {
+        "url": "https://i.ytimg.com/vi/Z2vUsoifcew/sddefault.jpg?sqp=-oaymwEWCJADEOEBIAQqCghqEJQEGHgg6AJIWg&rs=AMzJL3nfpw7jJ8YhZ5fpeJHDju-JL01fGw",
+        "width": 400,
+        "height": 225
+      },
+      {
+        "url": "https://i.ytimg.com/vi/Z2vUsoifcew/hq720.jpg?sqp=-oaymwEXCKAGEMIDIAQqCwjVARCqCBh4INgESFo&rs=AMzJL3kmZN-8nencc1jZqYvXjWDAqw2Nag",
+        "width": 800,
+        "height": 450
+      },
+      {
+        "url": "https://i.ytimg.com/vi/Z2vUsoifcew/hq720.jpg?sqp=-oaymwEXCNUGEOADIAQqCwjVARCqCBh4INgESFo&rs=AMzJL3n9QM2_a4MybGiszFKH7MKBTm548w",
+        "width": 853,
+        "height": 480
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "playlist",
+    "title": "Black Sabbath - Best Ballads (1996)",
+    "itemCount": "127K",
+    "author": "CloudNine - Acid Visions",
+    "browseId": "VLPLOCvFmTqxHYjYLaLn-Dd43opHZGstbbqh",
+    "thumbnails": [
+      {
+        "url": "https://i.ytimg.com/vi/NRAsP3n52V0/sddefault.jpg?sqp=-oaymwEWCJADEOEBIAQqCghqEJQEGHgg6AJIWg&rs=AMzJL3n3i60B41r1NTwVmZpHnzkjTaz8xg",
+        "width": 400,
+        "height": 225
+      },
+      {
+        "url": "https://i.ytimg.com/vi/NRAsP3n52V0/hq720.jpg?sqp=-oaymwEXCKAGEMIDIAQqCwjVARCqCBh4INgESFo&rs=AMzJL3ma3k0IwFX6ZcrQZSCPBpGBAtYBjw",
+        "width": 800,
+        "height": 450
+      },
+      {
+        "url": "https://i.ytimg.com/vi/NRAsP3n52V0/hq720.jpg?sqp=-oaymwEXCNUGEOADIAQqCwjVARCqCBh4INgESFo&rs=AMzJL3ndf_Y1-i7IOHz8nWzo_HqU-64jkQ",
+        "width": 853,
+        "height": 480
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "artist",
+    "artist": "Jazz Sabbath",
+    "shuffleId": "RDAO6kGG51V6xQUEKxb2En6muA",
+    "radioId": "RDEM6kGG51V6xQUEKxb2En6muA",
+    "browseId": "UCisJ4WpsnA0selsOXwRSu0g",
+    "thumbnails": [
+      {
+        "url": "https://lh3.googleusercontent.com/a-/ALV-UjXcZY4pSUJ9RGOzk8OdFqmaBZKmIh2-A8SIUdn1uxV2mrt8ftk=w60-h60-l90-rj-dcAYCUxDEoJq4B",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://lh3.googleusercontent.com/a-/ALV-UjXcZY4pSUJ9RGOzk8OdFqmaBZKmIh2-A8SIUdn1uxV2mrt8ftk=w120-h120-l90-rj-dcAYCUxDEoJq4B",
+        "width": 120,
+        "height": 120
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "episode",
+    "title": "Black Sabbath - Orchid album Master of Reality 1971",
+    "videoId": "27bctJyDDGQ",
+    "videoType": "MUSIC_VIDEO_TYPE_PODCAST_EPISODE",
+    "live": false,
+    "date": "Apr 8",
+    "podcast": {
+      "id": "MPSPPLPWo2D6fLSCBPhM_Xfev9KjPAWoUukIZf",
+      "name": "Black Sabbath - Master of Reality 1971"
+    },
+    "thumbnails": [
+      {
+        "url": "https://i.ytimg.com/vi/27bctJyDDGQ/hqdefault.jpg?sqp=-oaymwEWCOADEI4CIAQqCggAEOADGC0guwJIWg&rs=AMzJL3nSV74sU1AEsa4dX3YCuSno5mmdqQ",
+        "width": 480,
+        "height": 270
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "episode",
+    "title": "Black Sabbath - Sabbath Bloody Sabbath 1973 (full album)",
+    "videoId": "iM90Tbsx7dw",
+    "videoType": "MUSIC_VIDEO_TYPE_PODCAST_EPISODE",
+    "live": false,
+    "date": "Apr 19",
+    "podcast": {
+      "id": "MPSPPLPWo2D6fLSCDqjQqUeCvr_KlZleGBXHj6",
+      "name": "Black Sabbath - Sabbath Bloody Sabbath 1973"
+    },
+    "thumbnails": [
+      {
+        "url": "https://i.ytimg.com/vi/iM90Tbsx7dw/hqdefault.jpg?sqp=-oaymwEWCOADEI4CIAQqCggAEOADGC0guwJIWg&rs=AMzJL3k26JrTDN1h-tdffRssQwfy6hLX_w",
+        "width": 480,
+        "height": 270
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "episode",
+    "title": "Black Sabbath - Master of Reality 1971 (full album)",
+    "videoId": "zGsepysJSpw",
+    "videoType": "MUSIC_VIDEO_TYPE_PODCAST_EPISODE",
+    "live": false,
+    "date": "Apr 11",
+    "podcast": {
+      "id": "MPSPPLPWo2D6fLSCD7xGTCQVrz6PNp5_OP-Xoz",
+      "name": "Black Sabbath"
+    },
+    "thumbnails": [
+      {
+        "url": "https://i.ytimg.com/vi/zGsepysJSpw/hqdefault.jpg?sqp=-oaymwEWCOADEI4CIAQqCggAEOADGC0guwJIWg&rs=AMzJL3nKTd_D8t3OCxh5uTjir2-iGu5prA",
+        "width": 480,
+        "height": 270
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "playlist",
+    "title": "Presenting Black Sabbath",
+    "itemCount": 25,
+    "author": "YouTube Music",
+    "browseId": "VLRDCLAK5uy_kdY6lTPLmpV5ZIs-QlTFnFKZTximN_MLk",
+    "thumbnails": [
+      {
+        "url": "https://yt3.googleusercontent.com/K4BB0qNY2ilc0nqGvqXJhtFF1IaBw6d3wuKu5kA9eHuCE_eaG0gwM87hn8rFUOvRgXNnRizc3KJnYEw=w60-h60-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/K4BB0qNY2ilc0nqGvqXJhtFF1IaBw6d3wuKu5kA9eHuCE_eaG0gwM87hn8rFUOvRgXNnRizc3KJnYEw=w120-h120-l90-rj",
+        "width": 120,
+        "height": 120
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/K4BB0qNY2ilc0nqGvqXJhtFF1IaBw6d3wuKu5kA9eHuCE_eaG0gwM87hn8rFUOvRgXNnRizc3KJnYEw=w226-h226-l90-rj",
+        "width": 226,
+        "height": 226
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/K4BB0qNY2ilc0nqGvqXJhtFF1IaBw6d3wuKu5kA9eHuCE_eaG0gwM87hn8rFUOvRgXNnRizc3KJnYEw=w544-h544-l90-rj",
+        "width": 544,
+        "height": 544
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "song",
+    "title": "Iron Man",
+    "album": null,
+    "inLibrary": false,
+    "pinnedToListenAgain": false,
+    "videoId": "b3-QqGVt-tM",
+    "videoType": "MUSIC_VIDEO_TYPE_ATV",
+    "duration": null,
+    "year": null,
+    "artists": [
+      {
+        "name": "Black Sabbath",
+        "id": "UCLCELUuoHbkUxZ9EMHTYebg"
+      }
+    ],
+    "views": "238M",
+    "isExplicit": false,
+    "thumbnails": [
+      {
+        "url": "https://lh3.googleusercontent.com/ynY71hluigZj_6efXn8o7_2XPqbeWB_1QoAEq4y3HnULCeqzN1A9ciCFOSr3nIxgfT9ATHev7U9TzKs=w60-h60-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://lh3.googleusercontent.com/ynY71hluigZj_6efXn8o7_2XPqbeWB_1QoAEq4y3HnULCeqzN1A9ciCFOSr3nIxgfT9ATHev7U9TzKs=w120-h120-l90-rj",
+        "width": 120,
+        "height": 120
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "song",
+    "title": "N.I.B. (2009 Remaster)",
+    "album": null,
+    "inLibrary": false,
+    "pinnedToListenAgain": false,
+    "videoId": "9kgQQuPZ8K0",
+    "videoType": "MUSIC_VIDEO_TYPE_ATV",
+    "duration": null,
+    "year": null,
+    "artists": [
+      {
+        "name": "Black Sabbath",
+        "id": "UCLCELUuoHbkUxZ9EMHTYebg"
+      }
+    ],
+    "views": "85M",
+    "isExplicit": false,
+    "thumbnails": [
+      {
+        "url": "https://lh3.googleusercontent.com/OFcPZ_V3NVEuYaWqGdDtybFpS9z51FCllpTwv9HN-r_o_Y0HVc1Xt-z_av0_Yiq6gs_LCTGrncAcgFVi=w60-h60-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://lh3.googleusercontent.com/OFcPZ_V3NVEuYaWqGdDtybFpS9z51FCllpTwv9HN-r_o_Y0HVc1Xt-z_av0_Yiq6gs_LCTGrncAcgFVi=w120-h120-l90-rj",
+        "width": 120,
+        "height": 120
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "song",
+    "title": "Into the Void (2009 Remaster)",
+    "album": null,
+    "inLibrary": false,
+    "pinnedToListenAgain": false,
+    "videoId": "-R5XnrZn47Q",
+    "videoType": "MUSIC_VIDEO_TYPE_ATV",
+    "duration": null,
+    "year": null,
+    "artists": [
+      {
+        "name": "Black Sabbath",
+        "id": "UCLCELUuoHbkUxZ9EMHTYebg"
+      }
+    ],
+    "views": "28M",
+    "isExplicit": false,
+    "thumbnails": [
+      {
+        "url": "https://lh3.googleusercontent.com/Lq3o1NyyOFjrrrYjo88lSe6voL0uiQTNsQonUz5tmGw0V4-Y4FwDzt65SVjYAOcneZ2QALGGUFAbygUx=w60-h60-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://lh3.googleusercontent.com/Lq3o1NyyOFjrrrYjo88lSe6voL0uiQTNsQonUz5tmGw0V4-Y4FwDzt65SVjYAOcneZ2QALGGUFAbygUx=w120-h120-l90-rj",
+        "width": 120,
+        "height": 120
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "song",
+    "title": "Falling Off the Edge of the World",
+    "album": null,
+    "inLibrary": false,
+    "pinnedToListenAgain": false,
+    "videoId": "0M405H_hurM",
+    "videoType": "MUSIC_VIDEO_TYPE_ATV",
+    "duration": null,
+    "year": null,
+    "artists": [
+      {
+        "name": "Black Sabbath",
+        "id": "UCLCELUuoHbkUxZ9EMHTYebg"
+      }
+    ],
+    "views": "5.3M",
+    "isExplicit": false,
+    "thumbnails": [
+      {
+        "url": "https://lh3.googleusercontent.com/HfIukFrCt46gwkTfQN63x3wUcfyWaIs9dvE1gVrJOM_KLuGc8v_GRovctUNu-UhTzGNLw4pCK76f-pgZ=w60-h60-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://lh3.googleusercontent.com/HfIukFrCt46gwkTfQN63x3wUcfyWaIs9dvE1gVrJOM_KLuGc8v_GRovctUNu-UhTzGNLw4pCK76f-pgZ=w120-h120-l90-rj",
+        "width": 120,
+        "height": 120
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "song",
+    "title": "Sabbra Cadabra (2009 Remaster)",
+    "album": null,
+    "inLibrary": false,
+    "pinnedToListenAgain": false,
+    "videoId": "378aOgtrf1c",
+    "videoType": "MUSIC_VIDEO_TYPE_ATV",
+    "duration": null,
+    "year": null,
+    "artists": [
+      {
+        "name": "Black Sabbath",
+        "id": "UCLCELUuoHbkUxZ9EMHTYebg"
+      }
+    ],
+    "views": "12M",
+    "isExplicit": false,
+    "thumbnails": [
+      {
+        "url": "https://lh3.googleusercontent.com/Jv5jsIAl-T4igxFWaFFxmsbkZ_byqfUOrY7NLvKFPD2yucmutsD30EE8QRfJCVUawr0RHQZSIHLHD7bX=w60-h60-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://lh3.googleusercontent.com/Jv5jsIAl-T4igxFWaFFxmsbkZ_byqfUOrY7NLvKFPD2yucmutsD30EE8QRfJCVUawr0RHQZSIHLHD7bX=w120-h120-l90-rj",
+        "width": 120,
+        "height": 120
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "episode",
+    "title": "Tony Iommi (Black Sabbath) documentary | Diederik's Beach Bar #38",
+    "videoId": "ysq75be5kxA",
+    "videoType": "MUSIC_VIDEO_TYPE_PODCAST_EPISODE",
+    "live": false,
+    "date": "Oct 2, 2024",
+    "podcast": {
+      "id": "MPSPPLR86ZqLQv8HL23WsjUbIxVSqQv-hjGUEm",
+      "name": "DIEDERIK'S BEACH BAR PODCAST FULL EPISODES"
+    },
+    "thumbnails": [
+      {
+        "url": "https://i.ytimg.com/vi/ysq75be5kxA/hqdefault.jpg?sqp=-oaymwEWCOADEI4CIAQqCggAEOADGC0guwJIWg&rs=AMzJL3m_Dsn5YoEvrl74N1GmwBw8zNE9KQ",
+        "width": 480,
+        "height": 270
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "episode",
+    "title": "RIP Ozzy Osbourne 🦇 HILARIOUS Interview on Black Sabbath Reunion, Oasis & His Rock Legacy",
+    "videoId": "Wa4roNImoVs",
+    "videoType": "MUSIC_VIDEO_TYPE_PODCAST_EPISODE",
+    "live": false,
+    "date": "Jul 4, 2025",
+    "podcast": {
+      "id": "MPSPPLKLUICuvYh4WRsdjy1xrDsqhVYMbfDlYY",
+      "name": "Heavy Metal Archive: Rare & Restored Interviews 🎸🔥"
+    },
+    "thumbnails": [
+      {
+        "url": "https://i.ytimg.com/vi/Wa4roNImoVs/hqdefault.jpg?sqp=-oaymwEWCOADEI4CIAQqCggAEOADGC0guwJIWg&rs=AMzJL3nrz-xwFeqYpVODNFxhCaQd1DMDnA",
+        "width": 480,
+        "height": 270
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "episode",
+    "title": "Sabbath Bloody Sabbath [Black Sabbath Reaction] + A National Acrobat - Couple's first time hearing",
+    "videoId": "e9XrXf1tzfM",
+    "videoType": "MUSIC_VIDEO_TYPE_PODCAST_EPISODE",
+    "live": false,
+    "date": "Jun 28, 2025",
+    "podcast": {
+      "id": "MPSPPLIZxxo-jH0Lm2H8-bzGRn98UOF0kndaI8",
+      "name": "Music Reactions for Busy People"
+    },
+    "thumbnails": [
+      {
+        "url": "https://i.ytimg.com/vi/e9XrXf1tzfM/hqdefault.jpg?sqp=-oaymwEWCOADEI4CIAQqCggAEOADGC0guwJIWg&rs=AMzJL3koVicnJE6gDYZNPe1N-lZtCcLvrA",
+        "width": 480,
+        "height": 270
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "artist",
+    "artist": "Sabbath Cadabra - Brazil Santa Bárbara d'Oeste",
+    "browseId": "UCh6FMRQ4hz3JxukYc7RoPcw",
+    "thumbnails": [
+      {
+        "url": "https://yt3.googleusercontent.com/pmt3d_J1PwfBPpGlWmSamkQouA8fN20yYbNSS4YVwtx1GcW9eoJ-yXE9af4F8GjyBLZu1MVqXQ=w60-c-h60-k-c0x00ffffff-no-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/pmt3d_J1PwfBPpGlWmSamkQouA8fN20yYbNSS4YVwtx1GcW9eoJ-yXE9af4F8GjyBLZu1MVqXQ=w120-c-h120-k-c0x00ffffff-no-l90-rj",
+        "width": 120,
+        "height": 120
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "artist",
+    "artist": "Black Sabbath",
+    "browseId": "UCbM9pufbwJIcwXsKLYP8NIw",
+    "thumbnails": [
+      {
+        "url": "https://yt3.googleusercontent.com/ytc/AIdro_kvU3PomggKfeiVyImZFErVR1tD8qV7xdzb0PP1YB8=w60-c-h60-k-c0x00ffffff-no-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/ytc/AIdro_kvU3PomggKfeiVyImZFErVR1tD8qV7xdzb0PP1YB8=w120-c-h120-k-c0x00ffffff-no-l90-rj",
+        "width": 120,
+        "height": 120
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "artist",
+    "artist": "Wadadah II [Black Sabbath Sound]",
+    "browseId": "UCOdM-IO2bZtKXALsnCWy_UQ",
+    "thumbnails": [
+      {
+        "url": "https://yt3.googleusercontent.com/oagrIlZzu2keP63u8_t2x--vL2iQ0lJZPlf30lZhVz8b3bx8o8KEE0tPaLoMggn8D-7lWJA5LQ=w60-c-h60-k-c0x00ffffff-no-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/oagrIlZzu2keP63u8_t2x--vL2iQ0lJZPlf30lZhVz8b3bx8o8KEE0tPaLoMggn8D-7lWJA5LQ=w120-c-h120-k-c0x00ffffff-no-l90-rj",
+        "width": 120,
+        "height": 120
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "playlist",
+    "title": "Presenting Ozzy Osbourne",
+    "itemCount": 39,
+    "author": "YouTube Music",
+    "browseId": "VLRDCLAK5uy_kL4_LKGLEUe8Xo5u9P7n4Xot0OwrWZofQ",
+    "thumbnails": [
+      {
+        "url": "https://yt3.googleusercontent.com/LNDaKbA1NHk2J0qlo8-aaKLrSgwuNNxvBbMGQtxMbSAXrNqsIZVxmUuebbixSN6WgHNWnP2hYzD_PrI=w60-h60-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/LNDaKbA1NHk2J0qlo8-aaKLrSgwuNNxvBbMGQtxMbSAXrNqsIZVxmUuebbixSN6WgHNWnP2hYzD_PrI=w120-h120-l90-rj",
+        "width": 120,
+        "height": 120
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/LNDaKbA1NHk2J0qlo8-aaKLrSgwuNNxvBbMGQtxMbSAXrNqsIZVxmUuebbixSN6WgHNWnP2hYzD_PrI=w226-h226-l90-rj",
+        "width": 226,
+        "height": 226
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/LNDaKbA1NHk2J0qlo8-aaKLrSgwuNNxvBbMGQtxMbSAXrNqsIZVxmUuebbixSN6WgHNWnP2hYzD_PrI=w544-h544-l90-rj",
+        "width": 544,
+        "height": 544
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "playlist",
+    "title": "RockBR",
+    "itemCount": 75,
+    "author": "YouTube Music",
+    "browseId": "VLRDCLAK5uy_lWhQBQ0lm7E8qb_GqV_S6060iaVQICGEQ",
+    "thumbnails": [
+      {
+        "url": "https://yt3.googleusercontent.com/MrFysHhAWdQlFfxCA-gw8mRqSt2nMfqYkaTG0aDor6J5Hctqp63k7tdoYtJcvQgSLH_UmttBRH1qfDs=w60-h60-l90-rj",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/MrFysHhAWdQlFfxCA-gw8mRqSt2nMfqYkaTG0aDor6J5Hctqp63k7tdoYtJcvQgSLH_UmttBRH1qfDs=w120-h120-l90-rj",
+        "width": 120,
+        "height": 120
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/MrFysHhAWdQlFfxCA-gw8mRqSt2nMfqYkaTG0aDor6J5Hctqp63k7tdoYtJcvQgSLH_UmttBRH1qfDs=w226-h226-l90-rj",
+        "width": 226,
+        "height": 226
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/MrFysHhAWdQlFfxCA-gw8mRqSt2nMfqYkaTG0aDor6J5Hctqp63k7tdoYtJcvQgSLH_UmttBRH1qfDs=w544-h544-l90-rj",
+        "width": 544,
+        "height": 544
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "podcast",
+    "title": "🎙️ Black Sabbath",
+    "browseId": "MPSPPLaahM_d2UmagiaZAGjPFAr4ErYkpUdDNp",
+    "thumbnails": [
+      {
+        "url": "https://i.ytimg.com/pl_c/PLaahM_d2UmagiaZAGjPFAr4ErYkpUdDNp/studio_square_thumbnail.jpg?sqp=CPP_xM8G-oaymwEICDwQPCAASFqi85f_AwYI6MeFvQY&rs=AMzJL3mFAE86w3LoSpmv9yDB7U1YMwoUEA",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://i.ytimg.com/pl_c/PLaahM_d2UmagiaZAGjPFAr4ErYkpUdDNp/studio_square_thumbnail.jpg?sqp=CPP_xM8G-oaymwEICHgQeCAASFqi85f_AwYI6MeFvQY&rs=AMzJL3lxypV6ovlhiPnlG8NPsugcnCqwQw",
+        "width": 120,
+        "height": 120
+      },
+      {
+        "url": "https://i.ytimg.com/pl_c/PLaahM_d2UmagiaZAGjPFAr4ErYkpUdDNp/studio_square_thumbnail.jpg?sqp=CPP_xM8G-oaymwEKCOIBEOIBIABIWqLzl_8DBgjox4W9Bg&rs=AMzJL3kG6PlJ41AP1a0zNMeaC0AvJuoaLg",
+        "width": 226,
+        "height": 226
+      },
+      {
+        "url": "https://i.ytimg.com/pl_c/PLaahM_d2UmagiaZAGjPFAr4ErYkpUdDNp/studio_square_thumbnail.jpg?sqp=CPP_xM8G-oaymwEKCKAEEKAEIABIWqLzl_8DBgjox4W9Bg&rs=AMzJL3kvulR-NzZs8Rky6p9vnbkbw6pexw",
+        "width": 544,
+        "height": 544
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "podcast",
+    "title": "Into the Void: A Black Sabbath Podcast",
+    "browseId": "MPSPOLCEFbJhDKwlUcqEiHbt2xBxYnQE7ENniZw",
+    "thumbnails": [
+      {
+        "url": "https://i.ytimg.com/podcasts_artwork/OLCEFbJhDKwlUcqEiHbt2xBxYnQE7ENniZw/auto_created_podcast_show_avatar.jpg?sqp=CPP_xM8G-oaymwEICDwQPCAASFo&rs=AMzJL3m8rKslkZjUMpruVsVCuMA5uoWxqA",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://i.ytimg.com/podcasts_artwork/OLCEFbJhDKwlUcqEiHbt2xBxYnQE7ENniZw/auto_created_podcast_show_avatar.jpg?sqp=CPP_xM8G-oaymwEICHgQeCAASFo&rs=AMzJL3kVdGNCUzqPYLlJfp98doV3VOH5Kw",
+        "width": 120,
+        "height": 120
+      },
+      {
+        "url": "https://i.ytimg.com/podcasts_artwork/OLCEFbJhDKwlUcqEiHbt2xBxYnQE7ENniZw/auto_created_podcast_show_avatar.jpg?sqp=CPP_xM8G-oaymwEKCOIBEOIBIABIWg&rs=AMzJL3kJ1zLuAY4RMASgadpJty_tTHM6iw",
+        "width": 226,
+        "height": 226
+      },
+      {
+        "url": "https://i.ytimg.com/podcasts_artwork/OLCEFbJhDKwlUcqEiHbt2xBxYnQE7ENniZw/auto_created_podcast_show_avatar.jpg?sqp=CPP_xM8G-oaymwEKCKAEEKAEIABIWg&rs=AMzJL3l1nGNF03_4B0mhCx9meMaAvjWsKg",
+        "width": 544,
+        "height": 544
+      }
+    ]
+  },
+  {
+    "category": null,
+    "resultType": "podcast",
+    "title": "Album Rankings",
+    "browseId": "MPSPPLFiRCKf1w3RZXdk4aoG5fT70LrJ4gSLoI",
+    "thumbnails": [
+      {
+        "url": "https://i.ytimg.com/pl_c/PLFiRCKf1w3RZXdk4aoG5fT70LrJ4gSLoI/studio_square_thumbnail.jpg?sqp=CPP_xM8G-oaymwEICDwQPCAASFqi85f_AwYI8qyFzgY&rs=AMzJL3njgFpiDYf0jGrxqoqr-4gSmApCTA",
+        "width": 60,
+        "height": 60
+      },
+      {
+        "url": "https://i.ytimg.com/pl_c/PLFiRCKf1w3RZXdk4aoG5fT70LrJ4gSLoI/studio_square_thumbnail.jpg?sqp=CPP_xM8G-oaymwEICHgQeCAASFqi85f_AwYI8qyFzgY&rs=AMzJL3kTyKXfglCT3mpABjUrEezTPMQk8w",
+        "width": 120,
+        "height": 120
+      },
+      {
+        "url": "https://i.ytimg.com/pl_c/PLFiRCKf1w3RZXdk4aoG5fT70LrJ4gSLoI/studio_square_thumbnail.jpg?sqp=CPP_xM8G-oaymwEKCOIBEOIBIABIWqLzl_8DBgjyrIXOBg&rs=AMzJL3nX--zZWN_96c0OjT8u8_m7hLnBbw",
+        "width": 226,
+        "height": 226
+      },
+      {
+        "url": "https://i.ytimg.com/pl_c/PLFiRCKf1w3RZXdk4aoG5fT70LrJ4gSLoI/studio_square_thumbnail.jpg?sqp=CPP_xM8G-oaymwEKCKAEEKAEIABIWqLzl_8DBgjyrIXOBg&rs=AMzJL3n8elAilymXriErPvjapsSSlJQ07A",
+        "width": 544,
+        "height": 544
+      }
+    ]
+  }
+]

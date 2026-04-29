@@ -1,0 +1,50 @@
+{
+  "currentVideoEndpoint": {
+    "watchEndpoint": {
+      "videoId": "curlive001"
+    }
+  },
+  "contents": {
+    "twoColumnWatchNextResults": {
+      "results": {
+        "results": {
+          "contents": [
+            {
+              "videoPrimaryInfoRenderer": {
+                "title": {
+                  "runs": [
+                    {
+                      "text": "Euronews | Live News - Breaking News and Live Events"
+                    }
+                  ]
+                },
+                "badges": [
+                  {
+                    "liveBadgeRenderer": {
+                      "label": {
+                        "runs": [
+                          {
+                            "text": "LIVE NOW"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "metadata": {
+    "channelMetadataRenderer": {
+      "title": "@euronews",
+      "keywords": ""
+    }
+  },
+  "videoDetails": {
+    "isLiveContent": true
+  }
+}

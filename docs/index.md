@@ -31,5 +31,6 @@ tutubo queries YouTube and YouTube Music search endpoints and channel pages, ret
 - [Models Reference](models.md)
 - [Channel API](channel.md)
 - [Content-Type Classification](content_type.md)
+- [Locale System](locale.md)
 - [Downloading](downloading.md)
 - [Testing](testing.md)
