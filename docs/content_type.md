@@ -224,7 +224,7 @@ assert ct == ContentType.PODCAST
 - Audiobook vocabulary: `audiobook`, `full audio book`, `read aloud`, `narrated by`
 - Full-cast / drama vocabulary: `audio drama`, `audio play`, `radio play`, `radiodrama`, `full cast audio`, `dramatised`, `dramatized`
 
-There is no separate `AUDIO_DRAMA` type. Consumers who previously called `for_audio_dramas()` or `iterate_audio_dramas()` will now receive `AUDIOBOOK` results — the methods are retained as aliases.
+There is no separate `AUDIO_DRAMA` type — full-cast productions classify as `AUDIOBOOK`.
 
 ---
 

@@ -231,10 +231,6 @@ Fallback chain: `es-es` → `es` → `en-us`. Any missing `.voc` file is filled 
 
 Create `tutubo/locale/<lang>/` and add `.voc` files for each keyword category you want to translate. You only need to provide files for the patterns that differ — everything else falls back to `en-us`. See [docs/locale.md](docs/locale.md) for the full reference.
 
-### ContentType.SOCIAL_CLIP (renamed from SHORT)
-
-`ContentType.SHORT` has been renamed to `ContentType.SOCIAL_CLIP` (value: `"social_clip"`). Update any code that referenced `ContentType.SHORT` or compared against the string `"short"`. The corresponding search factory method `YoutubeSearch.iterate_shorts()` is now `iterate_social_clips()`.
-
 ## Examples
 
 | File | What it shows |

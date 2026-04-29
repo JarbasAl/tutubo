@@ -42,7 +42,7 @@ Every factory appends a fixed keyword phrase to the caller's query string, then 
 | `for_anime(query)` | `"{query} anime"` | `iterate_anime()` |
 | `for_tv_episodes(query)` | `"{query} full episode"` | `iterate_tv_episodes()` |
 | `for_audiobooks(query)` | `"{query} full audiobook"` | `iterate_audiobooks()` |
-| `for_audio_dramas(query)` | `"{query} audio drama"` | `iterate_audio_dramas()` — alias; yields AUDIOBOOK results |
+| `for_audio_dramas(query)` | `"{query} audio drama"` | `iterate_audio_dramas()` — yields AUDIOBOOK results |
 | `for_podcasts(query)` | `"{query} podcast"` | `iterate_podcasts()` |
 | `for_stand_up(query)` | `"{query} stand up comedy special"` | `iterate_stand_up()` |
 | `for_interviews(query)` | `"{query} interview"` | `iterate_interviews()` |
@@ -226,7 +226,7 @@ The typed convenience methods below are all thin wrappers around `iterate_by_con
 | `iterate_anime(max_res=-1)` | `ANIME` | |
 | `iterate_tv_episodes(max_res=-1)` | `TV_EPISODE` | |
 | `iterate_audiobooks(max_res=-1)` | `AUDIOBOOK` | |
-| `iterate_audio_dramas(max_res=-1)` | `AUDIOBOOK` | Alias — `AUDIO_DRAMA` no longer exists; filters for `AUDIOBOOK` |
+| `iterate_audio_dramas(max_res=-1)` | `AUDIOBOOK` | Filters for `AUDIOBOOK` (full-cast productions classify as audiobook) |
 | `iterate_podcasts(max_res=-1)` | `PODCAST` | Classification requires `is_podcast=True`; title keywords alone never produce PODCAST |
 | `iterate_stand_up(max_res=-1)` | `STAND_UP` | |
 | `iterate_interviews(max_res=-1)` | `INTERVIEW` | |
