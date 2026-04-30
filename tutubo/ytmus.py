@@ -84,6 +84,29 @@ class MusicTrack(YTMusicResult):
         return self._raw_data.get("videoId", "")
 
     @property
+    def artist_browse_id(self) -> str:
+        """Canonical artist ``browseId`` (typically ``UCxxx…``).
+
+        Empty string when the result didn't carry one — common for video-
+        type results where the uploader is just a channel, not a music
+        artist entity.
+        """
+        artists = self._raw_data.get("artists")
+        if isinstance(artists, list) and artists:
+            a = artists[0] or {}
+            if isinstance(a, dict):
+                return a.get("id") or a.get("browseId") or ""
+        return ""
+
+    @property
+    def album_browse_id(self) -> str:
+        """Canonical album ``browseId`` (``MPREb_xxx``), empty if missing."""
+        raw = self._raw_data.get("album")
+        if isinstance(raw, dict):
+            return raw.get("id") or raw.get("browseId") or ""
+        return ""
+
+    @property
     def length(self) -> Optional[int]:
         """Duration in seconds, or None if unknown."""
         secs = self._raw_data.get("duration_seconds")
@@ -154,6 +177,8 @@ class MusicTrack(YTMusicResult):
     def as_dict(self) -> dict:
         return {
             "videoId": self.video_id,
+            "artistBrowseId": self.artist_browse_id,
+            "albumBrowseId": self.album_browse_id,
             "title": self.title,
             "artist": self.artist,
             "album": self.album,
@@ -194,6 +219,25 @@ class MusicPlaylist(YTMusicResult):
         return self._raw_data.get("audioPlaylistId") or self._raw_data.get("playlistId", "")
 
     @property
+    def browse_id(self) -> str:
+        """Canonical entity ``browseId`` for this playlist/album.
+
+        For albums this is an ``MPREb_xxx`` release-group entity id; for
+        regular playlists it's the playlist id itself.
+        """
+        return self._raw_data.get("browseId") or ""
+
+    @property
+    def artist_browse_id(self) -> str:
+        """Primary artist's canonical ``browseId``, empty if absent."""
+        artists = self._raw_data.get("artists")
+        if isinstance(artists, list) and artists:
+            a = artists[0] or {}
+            if isinstance(a, dict):
+                return a.get("id") or a.get("browseId") or ""
+        return ""
+
+    @property
     def playlist_url(self) -> str:
         pid = self.playlist_id
         return f"https://music.youtube.com/playlist?list={pid}" if pid else ""
@@ -227,6 +271,9 @@ class MusicPlaylist(YTMusicResult):
     @property
     def as_dict(self) -> dict:
         return {
+            "browseId": self.browse_id,
+            "playlistId": self.playlist_id,
+            "artistBrowseId": self.artist_browse_id,
             "title": self.title,
             "artist": self.artist,
             "year": self.year,
@@ -289,6 +336,30 @@ class MusicArtist(YTMusicResult):
         return self.name
 
     @property
+    def browse_id(self) -> str:
+        """Canonical artist ``browseId`` (``UCxxx…``).
+
+        For YT Music artists this is the same value as the artist's
+        YouTube channel id, but it identifies the artist *entity* in YT
+        Music's catalog — distinct from a regular YouTube channel that
+        merely happens to upload music.
+        """
+        return (self._raw_data.get("browseId")
+                or self._raw_data.get("channelId")
+                or "")
+
+    @property
+    def channel_id(self) -> str:
+        """Alias for :attr:`browse_id` — YT Music artist browseIds are
+        ``UCxxx`` channel ids."""
+        return self.browse_id
+
+    @property
+    def channel_url(self) -> str:
+        bid = self.browse_id
+        return f"https://music.youtube.com/channel/{bid}" if bid else ""
+
+    @property
     def subscribers(self) -> str:
         """Subscriber count label, e.g. '1.2M subscribers'."""
         return self._raw_data.get("subscribers") or self._raw_data.get("views", "")
@@ -307,8 +378,11 @@ class MusicArtist(YTMusicResult):
     @property
     def as_dict(self) -> dict:
         return {
+            "browseId": self.browse_id,
+            "channelId": self.channel_id,
             "artist": self.name,
             "image": self.thumbnail_url,
+            "url": self.channel_url,
             "subscribers": self.subscribers,
             "description": self.description,
             "playlist": [t.as_dict for t in self.tracks],
