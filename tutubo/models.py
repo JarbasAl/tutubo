@@ -214,6 +214,21 @@ class VideoPreview(YoutubePreview):
             return ""
 
     @property
+    def channel_id(self) -> str:
+        """Canonical channel id (``UCxxx…``) of the uploader, or '' if missing.
+
+        Pulled from the renderer's ``browseId`` rather than parsed from
+        ``channel_url`` — the renderer always carries the canonical id
+        regardless of whether the channel publishes a custom ``/@handle``
+        or ``/c/name`` URL.
+        """
+        try:
+            return self._raw_data['ownerText']['runs'][0][
+                'navigationEndpoint']['browseEndpoint']['browseId']
+        except (KeyError, IndexError, TypeError):
+            return ""
+
+    @property
     def channel_thumbnail_url(self) -> str:
         """Channel avatar URL, available directly from search results."""
         thumbs = (self._raw_data
@@ -349,6 +364,7 @@ class VideoPreview(YoutubePreview):
     def as_dict(self) -> dict:
         return {
             'videoId': self.video_id,
+            'channelId': self.channel_id,
             'title': self.title,
             'author': self.author,
             'channel_url': self.channel_url,
