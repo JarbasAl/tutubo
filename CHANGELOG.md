@@ -1,69 +1,12 @@
 # Changelog
 
-## [V2.0.2a1](https://github.com/OpenJarbas/tutubo/tree/V2.0.2a1) (2024-09-06)
+## [4.1.0a1](https://github.com/TigreGotico/tutubo/tree/4.1.0a1) (2026-04-30)
 
-[Full Changelog](https://github.com/OpenJarbas/tutubo/compare/V2.0.1...V2.0.2a1)
-
-**Merged pull requests:**
-
-- fix:packaging [\#19](https://github.com/OpenJarbas/tutubo/pull/19) ([JarbasAl](https://github.com/JarbasAl))
-
-## [V2.0.1](https://github.com/OpenJarbas/tutubo/tree/V2.0.1) (2024-09-06)
-
-[Full Changelog](https://github.com/OpenJarbas/tutubo/compare/V2.0.1a1...V2.0.1)
-
-## [V2.0.1a1](https://github.com/OpenJarbas/tutubo/tree/V2.0.1a1) (2024-09-06)
-
-[Full Changelog](https://github.com/OpenJarbas/tutubo/compare/V2.0.0...V2.0.1a1)
-
-**Fixed bugs:**
-
-- fix/videos [\#3](https://github.com/OpenJarbas/tutubo/pull/3) ([JarbasAl](https://github.com/JarbasAl))
-- fix/channel\_playlist\_parsing [\#2](https://github.com/OpenJarbas/tutubo/pull/2) ([JarbasAl](https://github.com/JarbasAl))
+[Full Changelog](https://github.com/TigreGotico/tutubo/compare/4.0.0...4.1.0a1)
 
 **Merged pull requests:**
 
-- fix:one more test [\#18](https://github.com/OpenJarbas/tutubo/pull/18) ([JarbasAl](https://github.com/JarbasAl))
-
-## [V2.0.0](https://github.com/OpenJarbas/tutubo/tree/V2.0.0) (2024-09-06)
-
-[Full Changelog](https://github.com/OpenJarbas/tutubo/compare/V2.0.0a1...V2.0.0)
-
-## [V2.0.0a1](https://github.com/OpenJarbas/tutubo/tree/V2.0.0a1) (2024-09-06)
-
-[Full Changelog](https://github.com/OpenJarbas/tutubo/compare/V1.0.1...V2.0.0a1)
-
-## [V1.0.1](https://github.com/OpenJarbas/tutubo/tree/V1.0.1) (2024-09-06)
-
-[Full Changelog](https://github.com/OpenJarbas/tutubo/compare/V1.0.0...V1.0.1)
-
-## [V1.0.0](https://github.com/OpenJarbas/tutubo/tree/V1.0.0) (2024-09-06)
-
-[Full Changelog](https://github.com/OpenJarbas/tutubo/compare/V0.0.2a5...V1.0.0)
-
-## [V0.0.2a5](https://github.com/OpenJarbas/tutubo/tree/V0.0.2a5) (2024-09-06)
-
-[Full Changelog](https://github.com/OpenJarbas/tutubo/compare/V0.0.2a4...V0.0.2a5)
-
-## [V0.0.2a4](https://github.com/OpenJarbas/tutubo/tree/V0.0.2a4) (2024-09-06)
-
-[Full Changelog](https://github.com/OpenJarbas/tutubo/compare/V0.0.2a3...V0.0.2a4)
-
-## [V0.0.2a3](https://github.com/OpenJarbas/tutubo/tree/V0.0.2a3) (2024-09-06)
-
-[Full Changelog](https://github.com/OpenJarbas/tutubo/compare/V0.0.2...V0.0.2a3)
-
-## [V0.0.2](https://github.com/OpenJarbas/tutubo/tree/V0.0.2) (2024-06-22)
-
-[Full Changelog](https://github.com/OpenJarbas/tutubo/compare/V0.0.2a1...V0.0.2)
-
-**Fixed bugs:**
-
-- Zero-indexing where a list may be empty [\#1](https://github.com/OpenJarbas/tutubo/issues/1)
-
-## [V0.0.2a1](https://github.com/OpenJarbas/tutubo/tree/V0.0.2a1) (2024-05-24)
-
-[Full Changelog](https://github.com/OpenJarbas/tutubo/compare/cc472cda4ac3f28838dbb3f4d7197569dc8ddf2a...V0.0.2a1)
+- feat: surface canonical YouTube IDs \(channelId, browseId\) in search results [\#31](https://github.com/TigreGotico/tutubo/pull/31) ([JarbasAl](https://github.com/JarbasAl))
 
 
 
