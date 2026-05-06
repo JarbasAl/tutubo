@@ -9,7 +9,7 @@ from pathlib import Path
 import pytest
 
 from tutubo import YoutubeSearch
-from tutubo.content_type import ContentType
+from mediavocab.taxonomy import ContentType  # noqa
 from tutubo.models import VideoPreview, ChannelPreview, PlaylistPreview, RelatedSearch
 
 FIXTURES_DIR = Path(__file__).parent / "fixtures"

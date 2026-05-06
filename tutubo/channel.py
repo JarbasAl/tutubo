@@ -71,7 +71,7 @@ class Video:
     @property
     def content_type(self) -> "object":
         """Semantic ``ContentType`` inferred from title, description and channel tags."""
-        from tutubo.content_type import classify_video
+        from mediavocab.text import classify_video
         return classify_video(
             title=self._title or "",
             description=self.description,
@@ -82,7 +82,7 @@ class Video:
     @property
     def tags(self) -> List[str]:
         """Freeform labels from title and description (genre, era, format sub-type, etc.)."""
-        from tutubo.content_type import extract_tags
+        from mediavocab.text import extract_tags
         return extract_tags(self._title or "", self.description)
 
     @property

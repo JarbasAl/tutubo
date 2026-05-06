@@ -13,8 +13,9 @@ Coverage:
   - Direct VideoPreview.content_type via conftest patch_innertube
 """
 import pytest
-from tutubo.content_type import (
-    ContentType, classify_video,
+from mediavocab.taxonomy import ContentType  # noqa
+from mediavocab.text import classify_video
+from mediavocab.text.classify import (
     _MOVIE_MIN_SECONDS, _TRAILER_MAX_SECONDS, _SHORT_FILM_MAX_SECONDS,
 )
 
@@ -1204,7 +1205,8 @@ class TestIPTV:
 # extract_tags — freeform label extraction
 # ===========================================================================
 
-from tutubo.content_type import extract_tags
+from mediavocab.taxonomy import ContentType  # noqa
+from mediavocab.text import extract_tags  # noqa
 
 
 class TestExtractTags:

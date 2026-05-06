@@ -6,7 +6,7 @@ Shows how the same channel can contain both DOCUMENTARY and INTERVIEW content,
 and how the podcast tab differs from the video tab.
 """
 from tutubo.channel import Channel
-from tutubo.content_type import ContentType
+from mediavocab.taxonomy import ContentType  # noqa
 
 print("PBS Documentaries\n" + "─" * 50)
 c = Channel("https://www.youtube.com/@pbsdocumentaries/videos")

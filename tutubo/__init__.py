@@ -3,14 +3,21 @@
 Public API:
     YoutubeSearch, YoutubeMusicSearch, SearchType, search_yt, search_yt_music
     Channel, Playlist, Video, PodcastPreview
-    ContentType, classify_video, extract_tags
+    ContentType, classify_video, classify_video_dict, extract_tags
+    TitleParseResult, parse_title
     download, download_playlist
     MusicTrack, MusicVideo, MusicAlbum, MusicPlaylist, MusicArtist
-    set_lang, get_lang
+
+ContentType, classify_video, parse_title and the locale system live in
+``mediavocab``; for non-default languages pass ``lang="xx-yy"`` to the
+function call (the locale system is stateless / thread-safe).
 """
 from tutubo.search import YoutubeSearch, YoutubeMusicSearch, SearchType, search_yt, search_yt_music
 from tutubo.channel import Channel, Playlist, Video, PodcastPreview
-from tutubo.content_type import ContentType, classify_video, extract_tags
+from mediavocab.taxonomy import ContentType
+from mediavocab.text import (
+    classify_video, classify_video_dict, extract_tags,
+    parse_title, TitleParseResult,
+)
 from tutubo.download import download, download_playlist
 from tutubo.ytmus import MusicTrack, MusicVideo, MusicAlbum, MusicPlaylist, MusicArtist
-from tutubo._locale import set_lang, get_lang

@@ -307,11 +307,13 @@ The fallback chain is: exact locale → language-only code → `en-us`. For exam
 ### Setting the language
 
 ```python
-import tutubo
-tutubo.set_lang("fr-fr")   # affects all subsequent classify_video() calls
+from tutubo import classify_video
 
-# or at process start:
-# TUTUBO_LANG=fr-fr python my_script.py
+# Per-call (recommended for concurrent / multi-tenant use):
+classify_video("Film complet en français", length=7200, lang="fr-fr")
+
+# Or set the process-wide default at startup:
+# MEDIAVOCAB_LANG=fr-fr python my_script.py
 ```
 
 See [docs/locale.md](locale.md) for the full reference.

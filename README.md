@@ -194,20 +194,23 @@ paths = download_playlist(
 
 ## Language Support
 
-Classification keywords are locale-aware. The default language is English (`en-us`).
+Classification keywords are locale-aware. The default language is English
+(`en-us`). The locale system is **stateless** — pass `lang=` to each
+classification call so concurrent callers do not share global state.
 
 ### Setting the language
 
 ```python
-import tutubo
-tutubo.set_lang("fr-fr")   # switch to French
-print(tutubo.get_lang())   # "fr-fr"
+from tutubo import classify_video, parse_title
+
+ct = classify_video("Película completa HD", length=7200, lang="es")
+parsed = parse_title("Star Wars [Edição do Director]", lang="pt-pt")
 ```
 
-Or via environment variable before starting the process:
+Set the process-wide default via environment variable before starting:
 
 ```bash
-TUTUBO_LANG=es-es python my_script.py
+MEDIAVOCAB_LANG=es-es python my_script.py
 ```
 
 ### Supported language codes
@@ -229,7 +232,7 @@ Fallback chain: `es-es` → `es` → `en-us`. Any missing `.voc` file is filled 
 
 ### Adding a new language
 
-Create `tutubo/locale/<lang>/` and add `.voc` files for each keyword category you want to translate. You only need to provide files for the patterns that differ — everything else falls back to `en-us`. See [docs/locale.md](docs/locale.md) for the full reference.
+Create `mediavocab/locale/<lang>/` (the locale tree lives in mediavocab and is shared by every consumer) and add `.voc` files for each keyword category you want to translate. You only need to provide files for the patterns that differ — everything else falls back to `en-us`. See [docs/locale.md](docs/locale.md) for the full reference.
 
 ## Examples
 

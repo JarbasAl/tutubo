@@ -6,7 +6,7 @@ Uses Channel.live (/@handle/live redirect) to check the current on-air stream.
 Uses Channel.streams (/@handle/streams tab) for the recent stream archive.
 """
 from tutubo.channel import Channel
-from tutubo.content_type import ContentType
+from mediavocab.taxonomy import ContentType  # noqa
 
 NEWS_CHANNELS = [
     ("Euronews EN",  "https://www.youtube.com/@euronews"),

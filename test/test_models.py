@@ -5,7 +5,7 @@ structures returned by the YouTube innertube API.  No network or fixtures needed
 """
 import pytest
 from tutubo.models import VideoPreview, ChannelPreview, PlaylistPreview, RelatedSearch
-from tutubo.content_type import ContentType
+from mediavocab.taxonomy import ContentType  # noqa
 
 
 # ---------------------------------------------------------------------------

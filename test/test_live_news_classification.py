@@ -11,7 +11,7 @@ All four are 24/7 live news streams. Expected classification: LIVE_NEWS.
 import pytest
 
 from tutubo.channel import Channel
-from tutubo.content_type import ContentType
+from mediavocab.taxonomy import ContentType  # noqa
 
 LIVE_NEWS_CHANNELS = [
     ("@euronews",         "https://www.youtube.com/@euronews/live"),
