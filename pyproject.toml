@@ -13,7 +13,7 @@ dependencies = [
     "bs4",
     "requests",
     "ytmusicapi",
-    "mediavocab>=0.1.0",
+    "mediavocab>=0.1.1",
 ]
 
 [project.optional-dependencies]
