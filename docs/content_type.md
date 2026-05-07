@@ -1,9 +1,24 @@
 # Content-Type Classification
 
-`ContentType` — `tutubo/content_type.py:246`
-`classify_video` — `tutubo/content_type.py:281`
+`ContentType` is defined in `mediavocab.taxonomy.content_type`.
+`classify_video` lives in `mediavocab.text.classify`.
 
-tutubo classifies every video into one of 30 semantic content types using only information already available in search results or channel-page data. No additional per-video network fetches are performed.
+tutubo consumes them to classify every YouTube video into one of 30
+semantic content types using only information already available in
+search results or channel-page data. No additional per-video network
+fetches are performed.
+
+```python
+from mediavocab.taxonomy import ContentType
+from mediavocab.text import classify_video, extract_tags
+# or, equivalently, from the tutubo top-level for convenience:
+from tutubo import ContentType, classify_video, extract_tags
+```
+
+`ContentType.to_routing()` returns `(MediaType, content_genres)` for
+downstream routing. Trailers, behind-the-scenes, and reactions all map
+to `MediaType.GENERIC` (with a content_genre tag) — never `MOVIE` —
+because they are supplementary material, not primary works.
 
 ---
 
@@ -12,7 +27,7 @@ tutubo classifies every video into one of 30 semantic content types using only i
 `ContentType` is both a `str` and an `enum.Enum`, so values compare equal to their string representations:
 
 ```python
-from tutubo.content_type import ContentType
+from mediavocab.taxonomy import ContentType
 
 ContentType.MOVIE == "movie"   # True
 str(ContentType.MOVIE)         # "ContentType.movie"
@@ -206,7 +221,8 @@ The substring check (`"news" in tag`) is intentionally broader than a set lookup
 The correct source for `is_podcast=True` is `Channel.podcasts`, which reads from the YouTube Podcasts tab — a tab that only appears when the channel owner has explicitly created podcast shows. Episodesfrom that tab can then be classified via:
 
 ```python
-from tutubo.content_type import classify_video, ContentType
+from mediavocab.text import classify_video
+from mediavocab.taxonomy import ContentType
 
 ct = classify_video(
     title=ep_title,
@@ -250,7 +266,7 @@ Returns a sorted list of freeform string labels derived from the title, descript
 | Niche | `lovecraft`, `wayne-june` |
 
 ```python
-from tutubo.content_type import extract_tags
+from mediavocab.text import extract_tags
 
 extract_tags("Lovecraft narrated by Wayne June")
 # ["lovecraft", "narrated", "wayne-june"]

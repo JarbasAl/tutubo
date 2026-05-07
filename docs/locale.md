@@ -1,14 +1,16 @@
 # Locale System
 
-`mediavocab.locale` (lifted from `tutubo._locale` in 0.2.x)
+`mediavocab.locale` is the canonical home for the keyword vocab and the
+loader API. tutubo just consumes it; nothing locale-related ships in
+tutubo any more.
 
 Classification keywords are stored in plain `.voc` files, one phrase per
 line, organised by language. This lets tutubo classify content in
 languages other than English without changing Python code.
 
-The locale loader lives in **mediavocab** so every consumer in the
-ecosystem (tutubo, metadatarr, media-archivist) shares the same vocab
-tree.
+The locale loader is **stateless** — there is no `set_lang()` /
+`get_lang()` / `TUTUBO_LANG` any more. Pass `lang="xx-yy"` per call;
+the default is read once from `MEDIAVOCAB_LANG` at import.
 
 ---
 
@@ -260,7 +262,8 @@ files where the English phrases will work (episode codes, brand names).
 ### Step 3 — Test your translation
 
 ```python
-from mediavocab.text import classify_video, ContentType
+from mediavocab.text import classify_video
+from mediavocab.taxonomy import ContentType
 
 assert classify_video("Der Pate — Ganzer Film Deutsch", lang="de-de") == ContentType.MOVIE
 assert classify_video("Metallica — Live in Berlin — Komplettes Konzert", lang="de-de") == ContentType.CONCERT

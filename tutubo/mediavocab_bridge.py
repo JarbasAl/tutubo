@@ -4,29 +4,23 @@ All mapping logic is centralised here.  Each tutubo class delegates to a
 function in this module via a thin ``to_work()`` / ``to_release()`` /
 ``to_entity()`` method — no mapping logic leaks into the model files.
 
-mediavocab is a required dependency but its import is guarded so that tutubo
-remains importable even when mediavocab is not installed; an informative
-RuntimeError is raised only when a bridge function is actually called.
+mediavocab is a hard runtime dependency of tutubo (declared in pyproject).
 """
 from __future__ import annotations
 
 from typing import TYPE_CHECKING, List, Optional, Tuple
 
-try:
-    from mediavocab import (
-        Work, Release, Entity, EntityRef, Credit,
-        MediaType, VariantKind, StreamMode, ReleaseStatus,
-        EntityKind, RelationRole, CreditSection,
-    )
-    from mediavocab.models.work import AccessibilityTrack, Appearance
-    from mediavocab.taxonomy.genre import (
-        GENRE_SHORT_FILM, GENRE_NEWS, GENRE_TRAILER, GENRE_DOCUMENTARY,
-        GENRE_ANIME, GENRE_STAND_UP, GENRE_EDUCATIONAL, GENRE_SPORTS,
-        GENRE_CONCERT, GENRE_BEHIND_SCENES,
-    )
-    _MEDIAVOCAB_AVAILABLE = True
-except ImportError:
-    _MEDIAVOCAB_AVAILABLE = False
+from mediavocab import (
+    Work, Release, Entity, EntityRef, Credit,
+    MediaType, VariantKind, StreamMode, ReleaseStatus,
+    EntityKind, RelationRole, CreditSection,
+)
+from mediavocab.models.work import AccessibilityTrack, Appearance
+from mediavocab.taxonomy.genre import (
+    GENRE_SHORT_FILM, GENRE_NEWS, GENRE_TRAILER, GENRE_DOCUMENTARY,
+    GENRE_ANIME, GENRE_STAND_UP, GENRE_EDUCATIONAL, GENRE_SPORTS,
+    GENRE_CONCERT, GENRE_BEHIND_SCENES,
+)
 
 if TYPE_CHECKING:
     from mediavocab.taxonomy import ContentType  # noqa
@@ -34,14 +28,6 @@ if TYPE_CHECKING:
     from tutubo.channel import Video, Channel, PodcastPreview
     from tutubo.models import VideoPreview, ChannelPreview, PlaylistPreview
     from tutubo.ytmus import MusicTrack, MusicAlbum, MusicPlaylist, MusicArtist
-
-
-def _require_mediavocab() -> None:
-    if not _MEDIAVOCAB_AVAILABLE:
-        raise RuntimeError(
-            "mediavocab is required for tutubo mediavocab bridge methods. "
-            "Install it with: pip install mediavocab"
-        )
 
 
 # ---------------------------------------------------------------------------
@@ -124,7 +110,6 @@ def video_to_work(
     channel_id: str,
     tags: List[str],
 ) -> "Work":
-    _require_mediavocab()
     from mediavocab.text import parse_title
 
     parsed = parse_title(title or "")
@@ -167,7 +152,6 @@ def video_to_release(
     regions_available: Optional[List[str]],
     container: str = "",
 ) -> "Release":
-    _require_mediavocab()
     from mediavocab.taxonomy import ContentType as CT
 
     # Live linear / IPTV broadcast (RADIO and TV) is continuous by definition
@@ -201,7 +185,6 @@ def video_to_release(
 # ---------------------------------------------------------------------------
 
 def music_track_to_work(track: "MusicTrack") -> "Work":
-    _require_mediavocab()
     media_type = MediaType.MUSIC_VIDEO if track.is_music_video else MediaType.MUSIC
     genres = ["explicit"] if track.is_explicit else []
     credits = []
@@ -237,7 +220,6 @@ def music_track_to_work(track: "MusicTrack") -> "Work":
 
 
 def music_track_to_release(track: "MusicTrack", work: "Work") -> "Release":
-    _require_mediavocab()
     return Release(
         work=work,
         uri=track.watch_url,
@@ -250,7 +232,6 @@ def music_track_to_release(track: "MusicTrack", work: "Work") -> "Release":
 
 def music_video_to_release(track: "MusicTrack", work: "Work") -> "Release":
     """Like music_track_to_release but uses youtube.com URIs (for MusicVideo)."""
-    _require_mediavocab()
     return Release(
         work=work,
         uri=f"https://www.youtube.com/watch?v={track.video_id}" if track.video_id else "",
@@ -266,7 +247,6 @@ def music_video_to_release(track: "MusicTrack", work: "Work") -> "Release":
 # ---------------------------------------------------------------------------
 
 def music_playlist_to_work(pl: "MusicPlaylist") -> "Work":
-    _require_mediavocab()
     credits = []
     if pl.artist:
         ext = {"youtube_channel": pl.artist_browse_id} if pl.artist_browse_id else {}
@@ -304,7 +284,6 @@ def music_playlist_to_work(pl: "MusicPlaylist") -> "Work":
 
 
 def music_playlist_to_release(pl: "MusicPlaylist", work: "Work") -> "Release":
-    _require_mediavocab()
     return Release(
         work=work,
         uri=pl.playlist_url,
@@ -319,7 +298,6 @@ def music_playlist_to_release(pl: "MusicPlaylist", work: "Work") -> "Release":
 
 
 def music_album_to_release(album: "MusicAlbum", work: "Work") -> "Release":
-    _require_mediavocab()
     label_ref = None
     if album.label:
         label_ref = EntityRef(name=album.label, kind=EntityKind.ORGANISATION)
@@ -342,7 +320,6 @@ def music_album_to_release(album: "MusicAlbum", work: "Work") -> "Release":
 # ---------------------------------------------------------------------------
 
 def channel_to_entity(channel: "Channel") -> "Entity":
-    _require_mediavocab()
     aliases = [channel.vanity_url] if channel.vanity_url else []
     ext = {}
     if channel.channel_id:
@@ -363,7 +340,6 @@ def channel_to_entity(channel: "Channel") -> "Entity":
 
 
 def channel_preview_to_entity(preview: "ChannelPreview") -> "Entity":
-    _require_mediavocab()
     ext = {}
     if preview.channel_id:
         ext["youtube_channel"] = preview.channel_id
@@ -380,7 +356,6 @@ def channel_preview_to_entity(preview: "ChannelPreview") -> "Entity":
 # ---------------------------------------------------------------------------
 
 def music_artist_to_entity(artist: "MusicArtist") -> "Entity":
-    _require_mediavocab()
     ext = {}
     if artist.browse_id:
         ext["youtube_channel"] = artist.browse_id
@@ -399,7 +374,6 @@ def music_artist_to_entity(artist: "MusicArtist") -> "Entity":
 # ---------------------------------------------------------------------------
 
 def podcast_preview_to_work(pod: "PodcastPreview") -> "Work":
-    _require_mediavocab()
     return Work(
         title=pod.title,
         media_type=MediaType.PODCAST,
@@ -413,7 +387,6 @@ def podcast_preview_to_work(pod: "PodcastPreview") -> "Work":
 
 
 def podcast_preview_to_release(pod: "PodcastPreview", work: "Work") -> "Release":
-    _require_mediavocab()
     return Release(
         work=work,
         uri=pod.playlist_url,

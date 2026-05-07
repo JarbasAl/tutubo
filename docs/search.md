@@ -202,7 +202,7 @@ Because `iterate_by_content_type()` consumes from `iterate_videos()` without a q
 
 ```python
 from tutubo import YoutubeSearch
-from tutubo.content_type import ContentType
+from mediavocab.taxonomy import ContentType
 
 # Factory biases YouTube's ranking; typed iterator enforces classification
 for v in YoutubeSearch.for_documentaries("nature ocean").iterate_documentaries(max_res=10):

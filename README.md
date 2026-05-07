@@ -10,7 +10,21 @@ pip install tutubo
 pip install yt-dlp
 ```
 
-Dependencies: `requests`, `ytmusicapi`, `bs4`.
+Dependencies: `requests`, `ytmusicapi`, `bs4`, `mediavocab` (hard runtime dep — provides the title parser, content-type taxonomy, locale system, and the `Work`/`Release`/`Entity` data model).
+
+```python
+# Title parser, classifier, and ContentType live in mediavocab now.
+# tutubo just consumes them for its YouTube use case.
+from mediavocab.text import parse_title, classify_video, extract_tags
+from mediavocab.taxonomy import ContentType
+from mediavocab.locale import voc_regex, voc_set     # stateless — pass lang= per call
+```
+
+For convenience the same names are re-exported from the top-level `tutubo` package:
+
+```python
+from tutubo import parse_title, classify_video, extract_tags, ContentType, TitleParseResult
+```
 
 ## Feature Overview
 
@@ -77,7 +91,7 @@ for v in YoutubeSearch.for_tutorials("python asyncio").iterate_tutorials():
 `extract_tags()` returns freeform labels covering genre, era, format subtype, audience, and niche — orthogonal to `ContentType`.
 
 ```python
-from tutubo.content_type import extract_tags
+from mediavocab.text import extract_tags
 
 extract_tags("Lovecraft narrated by Wayne June")
 # ["lovecraft", "narrated", "wayne-june"]
@@ -89,7 +103,7 @@ extract_tags("Lovecraft narrated by Wayne June")
 
 ```python
 from tutubo import YoutubeSearch
-from tutubo.content_type import ContentType
+from mediavocab.taxonomy import ContentType
 
 s = YoutubeSearch("free movies")
 for v in s.iterate_by_content_type(ContentType.MOVIE, max_res=10):
