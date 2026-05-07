@@ -180,13 +180,9 @@ for q in YoutubeSearch("iron maiden").iterate_queries():
 | `SearchType.PLAYLISTS` | `PlaylistPreview` only |
 | `SearchType.YOUTUBE_MIX` | `YoutubeMixPreview` only |
 | `SearchType.RELATED_QUERIES` | `RelatedSearch` only |
-| `SearchType.MUSIC` | All YouTube Music types (`MusicTrack`, `MusicVideo`, `MusicAlbum`, `MusicPlaylist`, `MusicArtist`) — default for `iterate_youtube_music` |
-| `SearchType.MUSIC_TRACK` | `MusicTrack` only |
-| `SearchType.MUSIC_VIDEO` | `MusicVideo` only |
-| `SearchType.MUSIC_ALBUM` | `MusicAlbum` only |
-| `SearchType.MUSIC_PLAYLIST` | `MusicPlaylist` only |
-| `SearchType.MUSIC_ARTIST` | `MusicArtist` only |
-| `SearchType.ALL` | YouTube + Music types mixed (use with `iterate_youtube_music`) |
+| `SearchType.ALL` | All YouTube result types mixed |
+
+`SearchType` applies only to `YoutubeSearch.iterate_youtube()`. It is a parse-time filter on the YouTube search response — it does not affect `YoutubeMusicSearch`.
 
 ---
 
@@ -250,45 +246,51 @@ The typed convenience methods below are all thin wrappers around `iterate_by_con
 
 ---
 
-## YouTube Music search
+## YouTube Music search — `YoutubeMusicSearch`
 
-### `iterate_youtube_music(search_type=SearchType.MUSIC)`
+`tutubo/search.py:416`
 
-`tutubo/search.py:404`
-
-Queries the YouTube Music API via `ytmusicapi` and yields typed result objects. For albums, playlists, and artists, tutubo automatically fetches the full detail page to populate `tracks`, `label`, `description`, and `subscribers` — one additional API call per such item. If any of these detail fetches fail, the item is silently skipped.
+`YoutubeMusicSearch` is a **separate class** from `YoutubeSearch`. It queries the YouTube Music API via `ytmusicapi` and yields music-domain objects. `ContentType` classification does not apply to its results.
 
 ```python
-from tutubo import YoutubeSearch
-from tutubo.search import SearchType
+from tutubo import YoutubeMusicSearch
 
-s = YoutubeSearch("black sabbath")
+s = YoutubeMusicSearch("black sabbath")
 
-# All music result types mixed
-for r in s.iterate_youtube_music():
-    print(type(r).__name__, r.title)
-
-# Albums only — each result has full track listing
-for album in s.iterate_music_albums(max_res=3):
+# Albums — each result has full track listing fetched
+for album in s.iterate_albums(max_res=3):
     print(album.title, album.year, f"({album.track_count} tracks)")
     for t in album.tracks:
         print(f"  {t.track_number}. {t.title} [{t.length}s]")
         print(f"    audio_only={t.is_audio_only}  music_video={t.is_music_video}")
+
+# Tracks
+for track in s.iterate_tracks(max_res=5):
+    print(track.title, track.artist, track.length)
+
+# Artists (enriched with top-tracks)
+for artist in s.iterate_artists(max_res=2):
+    print(artist.name, artist.subscribers)
+
+# All result types in API order
+for obj in s.iterate_all(max_res=10):
+    print(type(obj).__name__, obj.title)
 ```
 
-The `ytmusicapi` singleton is created lazily on first call and cached globally. If the initial connection fails, `_get_ytmus()` retries up to 5 times with a short exponential back-off before returning `None`. Callers should handle the case where `None` is returned if operating in restricted network environments.
+The `ytmusicapi` singleton is created lazily on first call and cached globally. If the initial connection fails, `_get_ytmus()` retries up to 5 times with a short exponential back-off before returning `None`.
 
-### Convenience iterators for YouTube Music
+### `YoutubeMusicSearch` iterators
 
-All accept `max_res=-1`:
+All accept `max_res=-1`. For albums, playlists, and artists, tutubo automatically fetches the full detail page (one extra API call per item); if any detail fetch fails, the item is silently skipped.
 
 | Method | Result type | URL domain | Notes |
 |---|---|---|---|
-| `iterate_music_tracks(max_res=-1)` | `MusicTrack` | `music.youtube.com` | Songs from the Music catalogue |
-| `iterate_music_albums(max_res=-1)` | `MusicAlbum` | `music.youtube.com` | Full album + track listing fetched |
-| `iterate_music_playlists(max_res=-1)` | `MusicPlaylist` | `music.youtube.com` | Community / editorial playlists |
-| `iterate_music_artists(max_res=-1)` | `MusicArtist` | — | Full artist page including top tracks |
-| `iterate_yt_music_videos(max_res=-1)` | `MusicVideo` | `youtube.com` | Music videos from regular YouTube |
+| `iterate_tracks(max_res=-1)` | `MusicTrack` or `MusicVideo` | `music.youtube.com` | Songs from the Music catalogue |
+| `iterate_videos(max_res=-1)` | `MusicVideo` | `youtube.com` | Music videos from regular YouTube |
+| `iterate_albums(max_res=-1)` | `MusicAlbum` | `music.youtube.com` | Full album + track listing fetched |
+| `iterate_playlists(max_res=-1)` | `MusicPlaylist` | `music.youtube.com` | Community / editorial playlists |
+| `iterate_artists(max_res=-1)` | `MusicArtist` | — | Full artist page including top tracks |
+| `iterate_all(max_res=-1)` | mixed | — | All result types in API order |
 
 `MusicTrack.watch_url` points to `music.youtube.com/watch?v=…`; `MusicVideo.watch_url` points to `youtube.com/watch?v=…`. Call `MusicVideo.get()` to obtain a `Video` object from the regular channel layer.
 

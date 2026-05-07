@@ -82,7 +82,7 @@ These are constructed at `__init__` time from the canonical channel URL and neve
 ```python
 c.videos_url     # str — /videos tab
 c.shorts_url     # str — /shorts tab
-c.live_url       # str — /streams tab
+c.streams_url    # str — /streams tab
 c.playlists_url  # str — /playlists tab
 c.podcasts_url   # str — /podcasts tab
 ```
@@ -122,22 +122,14 @@ for short in c.shorts:
     print(short.title, short.video_id)
 ```
 
-## Streams tab — `channel.live`
+## Streams tab — `channel.streams`
 
-`tutubo/channel.py:570`
+`tutubo/channel.py:600`
 
-> **Naming note:** Despite the name, `channel.live` is NOT a single on-air stream. It fetches
-> `/@handle/streams` — the channel's **browse tab** listing all livestream videos (past and current).
-> To get the single currently-airing stream, use `channel.current_live` instead.
->
-> `/@handle/live` and `/@handle/streams` are two different YouTube URLs:
-> - `/@handle/streams` is a paginated browse tab (what `channel.live` reads).
-> - `/@handle/live` redirects to the active watch page for the most recent livestream — it is not a browse tab (what `channel.current_live` reads).
-
-Returns a `DeferredGeneratorList` of `Video` objects from the `/streams` tab. This tab contains the channel's full stream archive — both currently active streams (`is_live=True`) and recordings of past streams (`is_live=False`).
+Returns a `DeferredGeneratorList` of `Video` objects from the `/@handle/streams` tab. This tab contains the channel's full stream archive — both currently active streams (`is_live=True`) and recordings of past streams (`is_live=False`).
 
 ```python
-for stream in c.live:
+for stream in c.streams:
     if stream.is_live:
         print("ON AIR:", stream.title, stream.watch_url)
     else:
@@ -147,26 +139,22 @@ for stream in c.live:
 Because archived streams appear after active ones, you can break early to avoid fetching the full archive:
 
 ```python
-for stream in c.live:
+for stream in c.streams:
     if not stream.is_live:
         break
     print("currently live:", stream.title, stream.watch_url)
 ```
 
-## Current live stream — `channel.current_live`
+## Current live stream — `channel.live`
 
-`tutubo/channel.py:578`
-
-> **Naming note:** `channel.current_live` returns **one `Video` or `None`** — it is not a list.
-> Despite the similar name, it is unrelated to `channel.live` (the `/streams` browse tab).
-> Use this property only when you need to know whether the channel is airing right now.
+`tutubo/channel.py:610`
 
 Returns a single `Video` object representing the stream currently on air, or `None` if the channel is offline.
 
-This property fetches `{channel_url}/live` — YouTube's `/@handle/live` URL, which **redirects to a watch page** for the most recent livestream video. It is not a channel browse tab. tutubo reads `currentVideoEndpoint.watchEndpoint.videoId` from the page data and confirms liveness via `playerMicroformat.liveBroadcastDetails.isLiveNow`. When no stream is active, the redirect leads to a regular video or the channel home; tutubo returns `None` in that case.
+This property fetches `{channel_url}/live` — YouTube's `/@handle/live` URL, which redirects to a watch page for the most recent livestream video. It is not a browse tab. tutubo reads `currentVideoEndpoint.watchEndpoint.videoId` from the page data and confirms liveness via `playerMicroformat.liveBroadcastDetails.isLiveNow`. When no stream is active, the redirect leads to a regular video or the channel home; tutubo returns `None` in that case.
 
 ```python
-live = c.current_live
+live = c.live
 if live:
     print("LIVE NOW:", live.title)
     print("Watch:", live.watch_url)
@@ -175,7 +163,14 @@ else:
     print("Channel is offline")
 ```
 
-`current_live` returns `None` (never raises) on network errors or if the page cannot be parsed. The returned `Video` has `is_live=True` and `channel_tags` populated from `c.keywords`, enabling content-type sub-classification (e.g. `LIVE_NEWS` for a news channel).
+`live` returns `None` (never raises) on network errors or if the page cannot be parsed. The returned `Video` has `is_live=True` and `channel_tags` populated from `c.keywords`, enabling content-type sub-classification (e.g. `LIVE_NEWS` for a news channel).
+
+**`channel.streams` vs `channel.live` at a glance:**
+
+| Property | URL fetched | Returns | Use case |
+|---|---|---|---|
+| `channel.streams` | `/@handle/streams` | `DeferredGeneratorList[Video]` | Browse the full stream archive |
+| `channel.live` | `/@handle/live` | `Video` or `None` | Check if channel is on air right now |
 
 ---
 

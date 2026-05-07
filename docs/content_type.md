@@ -1,7 +1,7 @@
 # Content-Type Classification
 
-`ContentType` is defined in `mediavocab.taxonomy.content_type`.
-`classify_video` lives in `mediavocab.text.classify`.
+`ContentType` — `mediavocab.taxonomy.ContentType` (mediavocab package).
+`classify_video` — `mediavocab.text.classify_video` (mediavocab package).
 
 tutubo consumes them to classify every YouTube video into one of 30
 semantic content types using only information already available in
@@ -70,7 +70,7 @@ ContentType.MOVIE.value        # "movie"
 
 ## `classify_video()` signature
 
-`tutubo/content_type.py:281`
+`mediavocab.text.classify_video`
 
 ```python
 classify_video(
@@ -246,7 +246,7 @@ There is no separate `AUDIO_DRAMA` type — full-cast productions classify as `A
 
 ## Auto-tagging
 
-`extract_tags` — `tutubo/content_type.py`
+`extract_tags` — `mediavocab.text.extract_tags`
 
 ```python
 extract_tags(title: str, description: str = "", channel_tags: list = None) -> list[str]
@@ -293,7 +293,7 @@ Because full albums are typically 30–90 minutes long, the 900-second MUSIC_VID
 
 ## Locale-driven keyword matching
 
-Most keyword patterns in `classify_video()` come from `.voc` files under `tutubo/locale/<lang>/`, loaded by `tutubo/_locale.py`. This makes classification work across multiple languages without changing Python code.
+Most keyword patterns in `classify_video()` come from `.voc` files under `mediavocab/locale/<lang>/` (in the mediavocab package). This makes classification work across multiple languages without changing Python code.
 
 Structural patterns that stay in Python (not in `.voc` files):
 - Episode codes (`S01E02`, `Season N Episode N`)
@@ -338,11 +338,13 @@ See [docs/locale.md](locale.md) for the full reference.
 
 ## Extending: adding a new ContentType
 
-1. Add a value to the `ContentType` enum in `tutubo/content_type.py:246`.
-2. Define a compiled regex (`re.compile(...)`) near the top of the file alongside the other `_*_RE` constants.
+`ContentType` and `classify_video` live in the mediavocab package. To extend them, modify mediavocab directly:
+
+1. Add a value to the `ContentType` enum in mediavocab.
+2. Define a compiled regex alongside the other `_*_RE` constants in `mediavocab/text/classify.py`.
 3. Optionally define a channel-tag set (`_CHANNEL_*_TAGS = {…}`) for channel-context boosting.
 4. Insert the classification block in `classify_video()` at the appropriate priority position. Follow the existing `if` / `return` pattern.
-5. Add test cases to `test/test_content_type.py` — at minimum one positive title, one negative title, and one priority-conflict case.
+5. Add test cases — at minimum one positive title, one negative title, and one priority-conflict case.
 
 Example — adding `ContentType.COMMENTARY`:
 
