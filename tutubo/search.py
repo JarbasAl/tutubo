@@ -7,17 +7,17 @@ typed previews / full objects.  ``YoutubeMusicSearch`` wraps the YT Music API
 from __future__ import annotations
 
 import enum
-from typing import Iterator, Optional, Union
+from typing import Iterator, Optional
 
 from tutubo._innertube import search as _innertube_search
 from tutubo.channel import Channel, Video, Playlist
 from tutubo.models import (
-    YoutubePreview, VideoPreview, RelatedVideoPreview, ChannelPreview,
+    VideoPreview, RelatedVideoPreview, ChannelPreview,
     PlaylistPreview, YoutubeMixPreview, RelatedSearch,
 )
 from tutubo.ytmus import (
     MusicTrack, MusicVideo, MusicAlbum, MusicPlaylist, MusicArtist,
-    search_yt_music,
+    search_yt_music as search_yt_music,  # re-exported via tutubo package
 )
 
 

@@ -9,7 +9,6 @@ from __future__ import annotations
 import json
 import logging
 from typing import Iterable, List, Optional, Tuple
-from urllib.parse import urlencode
 
 import requests
 

@@ -7,7 +7,7 @@ additional network requests).
 """
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import List
 
 from tutubo.channel import Video, Channel, Playlist
 from mediavocab.taxonomy import ContentType  # noqa

@@ -12,7 +12,7 @@ from typing import TYPE_CHECKING, List, Optional, Tuple
 
 from mediavocab import (
     Work, Release, Entity, EntityRef, Credit,
-    MediaType, VariantKind, StreamMode, ReleaseStatus,
+    MediaType, StreamMode, ReleaseStatus,
     EntityKind, RelationRole, CreditSection,
 )
 from mediavocab.models.work import AccessibilityTrack, Appearance
@@ -20,9 +20,8 @@ from mediavocab.taxonomy.genre import GENRE_NEWS
 
 if TYPE_CHECKING:
     from mediavocab.taxonomy import ContentType  # noqa
-    from mediavocab.text import TitleParseResult
-    from tutubo.channel import Video, Channel, PodcastPreview
-    from tutubo.models import VideoPreview, ChannelPreview, PlaylistPreview
+    from tutubo.channel import Channel, PodcastPreview
+    from tutubo.models import ChannelPreview
     from tutubo.ytmus import MusicTrack, MusicAlbum, MusicPlaylist, MusicArtist
 
 
@@ -175,8 +174,6 @@ def video_to_release(
     container: str = "",
     resolution: str = "",
 ) -> "Release":
-    from mediavocab.taxonomy import ContentType as CT
-
     # Live linear / IPTV broadcast (RADIO and TV) is continuous by definition
     if work.media_type in (MediaType.RADIO, MediaType.TV):
         stream_mode = StreamMode.CONTINUOUS
