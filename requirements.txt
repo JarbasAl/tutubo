@@ -1,4 +1,4 @@
 requests
 bs4
 ytmusicapi
-mediavocab>=0.1.0
+mediavocab @ git+https://github.com/TigreGotico/mediavocab@dev
