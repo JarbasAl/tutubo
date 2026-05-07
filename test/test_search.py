@@ -6,11 +6,10 @@ Re-record with:  TUTUBO_RECORD_DIR=test/fixtures python test/record_fixtures.py
 import json
 from pathlib import Path
 
-import pytest
 
-from tutubo import YoutubeSearch
+from tutubo import YoutubeSearch, YoutubeMusicSearch
 from mediavocab.taxonomy import ContentType  # noqa
-from tutubo.models import VideoPreview, ChannelPreview, PlaylistPreview, RelatedSearch
+from tutubo.ytmus import MusicTrack, MusicAlbum, MusicArtist
 
 FIXTURES_DIR = Path(__file__).parent / "fixtures"
 
@@ -656,8 +655,6 @@ class TestWayneJuneLovecraft:
 # YoutubeMusicSearch — music.youtube.com, distinct from YoutubeSearch
 # ===========================================================================
 
-from tutubo import YoutubeMusicSearch
-from tutubo.ytmus import MusicTrack, MusicVideo, MusicAlbum, MusicArtist, MusicPlaylist
 
 
 class TestYoutubeMusicSearchSeparation:

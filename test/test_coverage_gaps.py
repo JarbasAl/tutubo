@@ -14,13 +14,11 @@ All tests are offline (no network, no yt-dlp binary required).
 from __future__ import annotations
 
 import json
-import subprocess
-from pathlib import Path
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 
 import pytest
 
-from tutubo import _innertube, _utils
+from tutubo import _innertube
 from tutubo._utils import (
     DeferredGeneratorList,
     _HTMLParseError,
@@ -1053,7 +1051,7 @@ class TestSearchYtConvenience:
         from tutubo import _innertube
         from tutubo.search import YoutubeSearch, SearchType
         from tutubo.models import (
-            VideoPreview, ChannelPreview, PlaylistPreview,
+            ChannelPreview, PlaylistPreview,
             YoutubeMixPreview, RelatedSearch, RelatedVideoPreview,
         )
 
@@ -1139,7 +1137,6 @@ class TestSearchYtConvenience:
         assert any(isinstance(r, PlaylistPreview) for r in YoutubeSearch("q").iterate_playlists())
 
     def test_iterate_message_renderer_terminates(self, monkeypatch):
-        from tutubo import _innertube
         from tutubo.search import YoutubeSearch
         synthetic = {"contents": {"twoColumnSearchResultsRenderer": {"primaryContents": {
             "sectionListRenderer": {"contents": [

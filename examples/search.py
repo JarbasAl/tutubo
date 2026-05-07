@@ -1,3 +1,5 @@
+from pprint import pprint
+
 from tutubo import YoutubeSearch, search_yt
 from tutubo.channel import Channel, Playlist
 from tutubo.models import (
@@ -30,7 +32,6 @@ def search(query, parse=False, max_res=50):
             res["videos"].append(v.as_dict)
     return res
 
-from pprint import pprint
 
 res = search("rob zombie", parse=False, max_res=50)
 

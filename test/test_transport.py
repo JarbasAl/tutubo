@@ -3,9 +3,8 @@ from __future__ import annotations
 
 import sys
 import types
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 
-import pytest
 
 
 def test_default_session_returns_requests_by_default(monkeypatch):

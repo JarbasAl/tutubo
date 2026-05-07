@@ -13,6 +13,7 @@ VariantKind.FANEDIT automatically.
 """
 from tutubo.search import YoutubeSearch
 from mediavocab import VariantKind
+from mediavocab.text import parse_title
 
 SEED_QUERIES = [
     "Lord of the Rings fan edit",
@@ -74,8 +75,6 @@ print("Seed videos — parse known fan-edit titles")
 print("=" * 60)
 
 # Demonstrate title parser on known-good fanedit titles without network calls
-from mediavocab.text import parse_title
-
 KNOWN_TITLES = [
     ("wFZ9mv_ke88", "The Fellowship of the Ring - Purist Edition [Fan Edit] (2001) [Extended]"),
     ("S3VMfzoBO7Y", "Star Wars: The Phantom Menace [Fan Edit] (1999)"),

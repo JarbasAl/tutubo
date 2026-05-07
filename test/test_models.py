@@ -3,8 +3,7 @@
 These tests verify that the model properties correctly parse the renderer
 structures returned by the YouTube innertube API.  No network or fixtures needed.
 """
-import pytest
-from tutubo.models import VideoPreview, ChannelPreview, PlaylistPreview, RelatedSearch
+from tutubo.models import VideoPreview, ChannelPreview, PlaylistPreview
 from mediavocab.taxonomy import ContentType  # noqa
 
 

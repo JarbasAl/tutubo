@@ -12,12 +12,9 @@ Coverage:
   - Real-world titles from recorded fixtures
   - Direct VideoPreview.content_type via conftest patch_innertube
 """
-import pytest
 from mediavocab.taxonomy import ContentType  # noqa
 from mediavocab.text import classify_video
-from mediavocab.text.classify import (
-    _MOVIE_MIN_SECONDS, _TRAILER_MAX_SECONDS, _SHORT_FILM_MAX_SECONDS,
-)
+from mediavocab.text.classify import _MOVIE_MIN_SECONDS
 
 
 # ===========================================================================

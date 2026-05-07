@@ -23,11 +23,11 @@ os.environ["TUTUBO_RECORD_DIR"] = record_dir
 # Patch channel.py requests.get to also record HTML responses
 # ---------------------------------------------------------------------------
 
-import json
-import pathlib as _pl
-import re
+import json  # noqa: E402
+import pathlib as _pl  # noqa: E402
+import re  # noqa: E402
 
-import requests as _requests
+import requests as _requests  # noqa: E402
 
 _out = _pl.Path(record_dir)
 _out.mkdir(parents=True, exist_ok=True)
@@ -215,7 +215,7 @@ for query in MUSIC_QUERIES:
 
 from tutubo._utils import initial_data as _initial_data  # noqa: E402
 from tutubo.channel import _YT_HEADERS, _YT_COOKIES      # noqa: E402
-import requests as _req
+import requests as _req  # noqa: E402
 
 CHANNEL_FIXTURES = [
     # (handle, videos_url, fixture_slug)

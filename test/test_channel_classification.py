@@ -10,14 +10,12 @@ Coverage:
   - Podcast channel: publisher-defined PodcastPreview objects; video titles → VIDEO
   - New ContentType values: TV_EPISODE, SHORT_FILM, INTERVIEW, LECTURE, CONCERT
 """
-import json
 from pathlib import Path
 
 import pytest
 
 from tutubo.channel import Channel
 from mediavocab.taxonomy import ContentType  # noqa
-from mediavocab.text import classify_video
 
 FIXTURES_DIR = Path(__file__).parent / "fixtures"
 

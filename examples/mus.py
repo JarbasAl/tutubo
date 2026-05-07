@@ -1,4 +1,9 @@
-from tutubo.ytmus import *
+from tutubo.ytmus import (
+    MusicAlbum,
+    MusicArtist,
+    MusicPlaylist,
+    search_yt_music,
+)
 
 
 def test_search(phrase):
