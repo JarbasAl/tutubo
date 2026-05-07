@@ -1,4 +1,0 @@
-requests
-bs4
-ytmusicapi
-mediavocab>=0.1.1
