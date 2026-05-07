@@ -1,5 +1,24 @@
 # Changelog
 
+## 4.2.0 — unreleased
+
+### Added
+- `mediavocab` is now a hard runtime dependency; tutubo emits canonical mediavocab `Work` / `Release` / `Episode` models instead of ad-hoc dicts.
+- Resolution is now derived from YouTube quality badges (e.g. `4K`, `1080p`, `HDR`) and surfaced on the emitted `Release`.
+- Search-result routing to the correct mediavocab `ContentType` is delegated to `ContentType.to_routing()`, removing duplicated branching here.
+
+### Changed
+- Title parsing (`parse_title`), content classification (`classify_video`) and locale helpers have been lifted out of tutubo and moved into `mediavocab`. Tutubo now consumes them as a library, ensuring consistent parsing across all sibling clients.
+- HDR / SDR and audio-channel hints, where derivable from badges, are attached to the emitted `Release`.
+- Public client methods now yield mediavocab models — downstream consumers should migrate from raw dicts to the typed models.
+
+### Removed
+- Local copies of the title parser and content classifier (now provided by `mediavocab`).
+
+### Migration notes
+- `mediavocab` is installed automatically as a dependency. Code that consumed tutubo's raw dicts must switch to attribute access on `Work` / `Release` / `Episode`.
+- `parse_title` / `classify_video` imports must be re-pointed at `mediavocab`.
+
 ## [4.1.0a1](https://github.com/TigreGotico/tutubo/tree/4.1.0a1) (2026-04-30)
 
 [Full Changelog](https://github.com/TigreGotico/tutubo/compare/4.0.0...4.1.0a1)
