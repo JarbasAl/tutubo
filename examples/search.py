@@ -1,5 +1,9 @@
 from tutubo import YoutubeSearch, search_yt
-from tutubo.models import *
+from tutubo.channel import Channel, Playlist
+from tutubo.models import (
+    YoutubeMixPreview, RelatedSearch, ChannelPreview,
+    PlaylistPreview, RelatedVideoPreview,
+)
 
 
 def search(query, parse=False, max_res=50):
@@ -20,7 +24,7 @@ def search(query, parse=False, max_res=50):
             res["channels"].append(v.as_dict)
         elif isinstance(v, PlaylistPreview) or isinstance(v, Playlist):
             res["playlists"].append(v.as_dict)
-        elif isinstance(v, RelatedVideoPreview) or isinstance(v, RelatedVideo):
+        elif isinstance(v, RelatedVideoPreview):
             res["related_videos"].append(v.as_dict)
         else:
             res["videos"].append(v.as_dict)

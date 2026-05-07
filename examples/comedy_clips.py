@@ -33,7 +33,7 @@ for name, url in CHANNELS:
         if channel_hits >= 15:
             break
 
-hits.sort(reverse=True)
+hits.sort(reverse=True, key=lambda h: h[0])
 for views, channel, v in hits[:15]:
     print(f"  {views:>10,}  [{channel}]  {v.title}")
     print(f"             {v.watch_url}")

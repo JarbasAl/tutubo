@@ -7,7 +7,7 @@ turn the resulting ``ContentType`` into ``(MediaType, content_genres)`` via
 that any mediavocab-aware resolver can route on.
 """
 from mediavocab import Signals
-from mediavocab.taxonomy.modality import PlaybackModality, infer_modality
+from mediavocab.taxonomy.modality import infer_modality
 from mediavocab.text import parse_title, classify_video
 
 
