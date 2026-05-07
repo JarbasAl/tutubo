@@ -8,7 +8,34 @@ YouTube and YouTube Music metadata library. No pytube dependency. Searches video
 pip install tutubo
 # Downloading requires yt-dlp (optional):
 pip install yt-dlp
+# Optional stealth transport (browser-fingerprinted TLS via curl_cffi):
+pip install tutubo[stealth]
 ```
+
+### Stealth transport (optional)
+
+Channel and playlist HTML pages are fetched through a pluggable HTTP
+session. By default this is `requests.Session`. To swap in
+[`curl_cffi`](https://github.com/lexiforest/curl_cffi) — which mimics a
+real Chrome TLS/JA3 fingerprint and bypasses some bot-detection — install
+the extra and set the env var:
+
+```bash
+pip install tutubo[stealth]
+export TUTUBO_TRANSPORT=curl_cffi
+```
+
+You can also inject any session-like object explicitly:
+
+```python
+from tutubo.channel import Channel
+from curl_cffi import requests as cffi_requests
+ch = Channel("https://www.youtube.com/@LinusTechTips",
+             session=cffi_requests.Session(impersonate="chrome"))
+```
+
+Note: `tutubo._innertube._post` (used by the search path) uses stdlib
+`urllib.request` directly and is not affected by the transport setting.
 
 Dependencies: `requests`, `ytmusicapi`, `bs4`, `mediavocab` (hard runtime dep — provides the title parser, content-type taxonomy, locale system, and the `Work`/`Release`/`Entity` data model).
 

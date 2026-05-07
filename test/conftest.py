@@ -182,8 +182,24 @@ def patch_channel_data(monkeypatch):
     class _FakePostResp:
         text = _EMPTY_CONT
 
+        def raise_for_status(self):
+            pass
+
+    class _FakeSession:
+        def get(self, *a, **kw):
+            return _FakePostResp()
+
+        def post(self, *a, **kw):
+            return _FakePostResp()
+
     monkeypatch.setattr(_ch.Channel, "_get_data", _fake_get_data)
-    monkeypatch.setattr(_ch.requests, "post", lambda *a, **kw: _FakePostResp())
+    monkeypatch.setattr(_ch, "default_session", lambda: _FakeSession())
+    # ``yt_api_key`` would otherwise trigger a real HTTP fetch via ``_get_html``
+    # to scrape ytcfg; short-circuit it for offline fixture-driven tests.
+    monkeypatch.setattr(
+        _ch.Channel, "yt_api_key",
+        property(lambda self: "AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8"),
+    )
 
 
 @pytest.fixture
@@ -215,7 +231,14 @@ def patch_channel_requests(monkeypatch):
             )
         return _FakeResponse(html_path.read_text())
 
-    monkeypatch.setattr(_ch.requests, "get", _fake_get)
+    class _FakeSession:
+        def get(self, url, **kwargs):
+            return _fake_get(url, **kwargs)
+
+        def post(self, *a, **kw):
+            return _FakeResponse("")
+
+    monkeypatch.setattr(_ch, "default_session", lambda: _FakeSession())
 
 
 @pytest.fixture

@@ -43,7 +43,13 @@ _HEADERS = {
 
 
 def _post(endpoint: str, params: dict, body: dict) -> dict:
-    """POST to a YouTube innertube endpoint and return the parsed JSON response."""
+    """POST to a YouTube innertube endpoint and return the parsed JSON response.
+
+    NOTE: this path uses stdlib ``urllib.request`` directly and therefore
+    bypasses :func:`tutubo.transport.default_session` — sessions injected
+    elsewhere (e.g. into ``Channel`` / ``Playlist``) do not apply here, and
+    the ``TUTUBO_TRANSPORT=curl_cffi`` env var has no effect on this call.
+    """
     url = f"{_BASE_URL}/{endpoint}?{parse.urlencode(params)}"
     data = json.dumps(body).encode()
     req = urllib_request.Request(url, data=data, headers=_HEADERS, method="POST")

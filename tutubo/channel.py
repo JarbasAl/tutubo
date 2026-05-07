@@ -10,9 +10,8 @@ import json
 import logging
 from typing import Iterable, List, Optional, Tuple
 
-import requests
-
 from tutubo._utils import channel_name, initial_data, get_ytcfg, DeferredGeneratorList
+from tutubo.transport import default_session
 
 logger = logging.getLogger(__name__)
 
@@ -106,7 +105,7 @@ class Video:
 class Playlist:
     """A YouTube playlist — fetches video URLs from the playlist page."""
 
-    def __init__(self, url: str) -> None:
+    def __init__(self, url: str, session: Optional[object] = None) -> None:
         from urllib.parse import urlparse, parse_qs
         parsed = urlparse(url)
         ids = parse_qs(parsed.query).get("list", [])
@@ -117,6 +116,7 @@ class Playlist:
         self._initial_data: Optional[dict] = None
         self._ytcfg: Optional[dict] = None
         self._title: Optional[str] = None
+        self._session = session if session is not None else default_session()
 
     @property
     def playlist_id(self) -> str:
@@ -130,7 +130,7 @@ class Playlist:
     def html(self) -> str:
         """Cached HTML of the playlist page (fetched on first access)."""
         if not self._html:
-            resp = requests.get(
+            resp = self._session.get(
                 self.playlist_url,
                 headers={**_YT_HEADERS, "Accept-Language": "en-US,en;q=0.9"},
                 cookies=_YT_COOKIES,
@@ -203,7 +203,7 @@ class Playlist:
     def _continuation_post(self, token: str) -> str:
         """POST a continuation token to the browse endpoint and return raw JSON text."""
         url = f"{_BROWSE_URL}?key={self.yt_api_key}"
-        resp = requests.post(url, json={
+        resp = self._session.post(url, json={
             "continuation": token,
             "context": _BROWSE_CONTEXT,
         }, timeout=30)
@@ -268,7 +268,8 @@ class PodcastPreview:
 class Channel:
     """YouTube Channel — fetches metadata, videos, shorts, live streams, and playlists."""
 
-    def __init__(self, url: str, language: str = "en-US,en;q=0.9") -> None:
+    def __init__(self, url: str, language: str = "en-US,en;q=0.9",
+                 session: Optional[object] = None) -> None:
         self._channel_uri = channel_name(url)
         self.language = language
         self.channel_url = f"https://www.youtube.com{self._channel_uri}"
@@ -282,11 +283,12 @@ class Channel:
         self._initial_data_cache: dict = {}
         self._ytcfg: Optional[dict] = None
         self._visitor_data: Optional[str] = None
+        self._session = session if session is not None else default_session()
 
     def _get_html(self, url: str) -> str:
         """Fetch ``url`` (memoised per-instance) with consent cookies set."""
         if url not in self._html_cache:
-            resp = requests.get(
+            resp = self._session.get(
                 url,
                 headers={**_YT_HEADERS, "Accept-Language": self.language},
                 cookies=_YT_COOKIES,
@@ -408,7 +410,7 @@ class Channel:
     def _continuation_post(self, token: str) -> str:
         """POST a browse continuation; ``visitorData`` is required for newer feeds."""
         url = f"{_BROWSE_URL}?key={self.yt_api_key}"
-        resp = requests.post(url, json={
+        resp = self._session.post(url, json={
             "continuation": token,
             "context": _BROWSE_CONTEXT,
             **({"visitorData": self._visitor_data} if self._visitor_data else {}),
@@ -711,7 +713,8 @@ class Channel:
         data = self._get_data(self.playlists_url)
         ids, _ = self._extract_playlist_ids(data)
         for pid in ids:
-            yield Playlist(f"https://www.youtube.com/playlist?list={pid}")
+            yield Playlist(f"https://www.youtube.com/playlist?list={pid}",
+                           session=self._session)
 
     @property
     def playlist_urls(self) -> List[str]:

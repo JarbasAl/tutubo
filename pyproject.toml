@@ -18,6 +18,7 @@ dependencies = [
 
 [project.optional-dependencies]
 test = ["pytest", "vcrpy", "pytest-vcr"]
+stealth = ["curl-cffi"]
 
 [project.urls]
 Homepage = "https://github.com/OpenJarbas/tutubo"
