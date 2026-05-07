@@ -10,13 +10,12 @@ Coverage:
   - Podcast channel: publisher-defined PodcastPreview objects; video titles → VIDEO
   - New ContentType values: TV_EPISODE, SHORT_FILM, INTERVIEW, LECTURE, CONCERT
 """
-import json
 from pathlib import Path
 
 import pytest
 
 from tutubo.channel import Channel
-from tutubo.content_type import ContentType, classify_video
+from mediavocab.taxonomy import ContentType  # noqa
 
 FIXTURES_DIR = Path(__file__).parent / "fixtures"
 
@@ -316,7 +315,7 @@ class TestBMPromotion:
         )
 
     def test_metal_tag_extracted(self, patch_channel_data):
-        from tutubo.content_type import extract_tags
+        from mediavocab.text import extract_tags
         c = Channel("https://www.youtube.com/@bmpromotion")
         videos = list(c.videos)[:10]
         videos_with_metal_tag = [

@@ -10,7 +10,7 @@ tutubo queries YouTube and YouTube Music search endpoints and channel pages, ret
 
 | Class | Purpose | Source |
 |---|---|---|
-| `YoutubeSearch` | Search YouTube and YouTube Music | `tutubo/search.py` |
+| `YoutubeSearch` | Search YouTube by query, yield typed results | `tutubo/search.py:37` |
 | `VideoPreview` | Video result from a YouTube search | `tutubo/models.py:170` |
 | `ChannelPreview` | Channel result from a YouTube search | `tutubo/models.py:89` |
 | `PlaylistPreview` | Playlist result from a YouTube search | `tutubo/models.py:14` |
@@ -21,16 +21,19 @@ tutubo queries YouTube and YouTube Music search endpoints and channel pages, ret
 | `Playlist` | Playlist object with video iteration | `tutubo/channel.py` |
 | `Video` | Video stub from a channel tab | `tutubo/channel.py` |
 | `PodcastPreview` | Podcast show card from channel podcasts tab | `tutubo/channel.py` |
-| `ContentType` | Enum of semantic video content types | `tutubo/content_type.py:246` |
-| `classify_video` | Infer `ContentType` from metadata | `tutubo/content_type.py:281` |
+| `YoutubeMusicSearch` | Search YouTube Music catalogue, yield music entities | `tutubo/search.py:416` |
+| `ContentType` | Enum of semantic video content types | `mediavocab.taxonomy.ContentType` |
+| `classify_video` | Infer `ContentType` from metadata | `mediavocab.text.classify_video` |
 
 ## Contents
 
 - [Installation & Quick Start](../README.md)
-- [Search API](search.md)
-- [Models Reference](models.md)
-- [Channel API](channel.md)
-- [Content-Type Classification](content_type.md)
-- [Locale System](locale.md)
-- [Downloading](downloading.md)
-- [Testing](testing.md)
+- [Search API](search.md) — `YoutubeSearch`, 24 factories, `YoutubeMusicSearch`
+- [Models Reference](models.md) — all preview types, `Video`, `MusicTrack`, `MusicAlbum`, etc.
+- [Channel API](channel.md) — `Channel`, `Playlist`, `PodcastPreview`, `Video`
+- [Content-Type Classification](content_type.md) — `ContentType` enum, 30-step priority chain
+- [mediavocab Integration](mediavocab.md) — `to_work()` / `to_release()` / `to_entity()` bridge
+- [Transport](transport.md) — pluggable session, `curl_cffi` stealth extra, `TUTUBO_TRANSPORT`
+- [Locale System](locale.md) — `.voc` files, `lang=` parameter, `MEDIAVOCAB_LANG`
+- [Downloading](downloading.md) — `download()` and `download_playlist()` via yt-dlp
+- [Testing](testing.md) — fixture-based offline test suite

@@ -7,17 +7,17 @@ typed previews / full objects.  ``YoutubeMusicSearch`` wraps the YT Music API
 from __future__ import annotations
 
 import enum
-from typing import Iterator, Optional, Union
+from typing import Iterator, Optional
 
 from tutubo._innertube import search as _innertube_search
 from tutubo.channel import Channel, Video, Playlist
 from tutubo.models import (
-    YoutubePreview, VideoPreview, RelatedVideoPreview, ChannelPreview,
+    VideoPreview, RelatedVideoPreview, ChannelPreview,
     PlaylistPreview, YoutubeMixPreview, RelatedSearch,
 )
 from tutubo.ytmus import (
     MusicTrack, MusicVideo, MusicAlbum, MusicPlaylist, MusicArtist,
-    search_yt_music,
+    search_yt_music as search_yt_music,  # re-exported via tutubo package
 )
 
 
@@ -329,7 +329,7 @@ class YoutubeSearch:
                     break
 
     def _iter_ct(self, ct_name: str, max_res: int) -> Iterator:
-        from tutubo.content_type import ContentType
+        from mediavocab.taxonomy import ContentType  # noqa
         return self.iterate_by_content_type(ContentType[ct_name], max_res=max_res)
 
     def iterate_movies(self, max_res: int = -1) -> Iterator:

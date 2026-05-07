@@ -5,7 +5,7 @@ Channel: @livenation
 Classifies videos and separates full concerts from clips and trailers.
 """
 from tutubo.channel import Channel
-from tutubo.content_type import ContentType
+from mediavocab.taxonomy import ContentType  # noqa
 
 url = "https://www.youtube.com/@livenation/videos"
 c = Channel(url)

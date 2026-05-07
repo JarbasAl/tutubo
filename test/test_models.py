@@ -3,9 +3,8 @@
 These tests verify that the model properties correctly parse the renderer
 structures returned by the YouTube innertube API.  No network or fixtures needed.
 """
-import pytest
-from tutubo.models import VideoPreview, ChannelPreview, PlaylistPreview, RelatedSearch
-from tutubo.content_type import ContentType
+from tutubo.models import VideoPreview, ChannelPreview, PlaylistPreview
+from mediavocab.taxonomy import ContentType  # noqa
 
 
 # ---------------------------------------------------------------------------
@@ -260,3 +259,68 @@ def test_playlist_preview():
     assert pl.title == "My Playlist"
     assert pl.video_count == 42
     assert pl.featured_videos == []
+
+
+# ---------------------------------------------------------------------------
+# VideoPreview → mediavocab Release: rich-output regression
+# ---------------------------------------------------------------------------
+
+def test_to_release_resolution_from_4k_badge():
+    """4K badge ⇒ Release.resolution = '2160p' (no fabricated default otherwise)."""
+    from mediavocab import StreamMode
+    raw = _video_renderer(
+        title="Some Movie",
+        length_text="1:42:00",
+        badges=[{"metadataBadgeRenderer": {"label": "4K"}}],
+    )
+    rel = VideoPreview(raw).to_release()
+    assert rel.resolution == "2160p"
+    assert rel.platform == "youtube"
+    assert rel.stream_mode == StreamMode.ON_DEMAND
+
+
+def test_to_release_resolution_from_8k_badge():
+    raw = _video_renderer(badges=[{"metadataBadgeRenderer": {"label": "8K"}}])
+    rel = VideoPreview(raw).to_release()
+    assert rel.resolution == "4320p"
+
+
+def test_to_release_resolution_unknown_when_no_badge():
+    """No quality badge ⇒ resolution stays empty (do not invent)."""
+    rel = VideoPreview(_video_renderer()).to_release()
+    assert rel.resolution == ""
+
+
+def test_to_release_accessibility_from_cc_badge():
+    raw = _video_renderer(badges=[{"metadataBadgeRenderer": {"label": "CC"}}])
+    rel = VideoPreview(raw).to_release()
+    assert any(t.kind == "captions" for t in rel.accessibility)
+
+
+def test_to_release_no_accessibility_when_no_cc():
+    rel = VideoPreview(_video_renderer()).to_release()
+    assert rel.accessibility == []
+
+
+def test_content_type_routing_uses_mediavocab_table():
+    """Routing for non-divergent ContentTypes must match mediavocab.to_routing()."""
+    from mediavocab.taxonomy import ContentType
+    from tutubo.mediavocab_bridge import _content_type_to_media_type
+    for ct in [ContentType.MOVIE, ContentType.DOCUMENTARY, ContentType.SHORT_FILM,
+               ContentType.PODCAST, ContentType.MUSIC_VIDEO, ContentType.ANIME]:
+        media, genres, _ = _content_type_to_media_type(ct, is_live=False)
+        ref_media, ref_genres = ct.to_routing()
+        assert media == ref_media
+        assert genres == ref_genres
+
+
+def test_content_type_routing_live_news_divergence():
+    """LIVE_NEWS deliberately diverges: mediavocab=TV, tutubo=GENERIC+news."""
+    from mediavocab import MediaType, StreamMode
+    from mediavocab.taxonomy import ContentType
+    from mediavocab.taxonomy.genre import GENRE_NEWS
+    from tutubo.mediavocab_bridge import _content_type_to_media_type
+    media, genres, sm = _content_type_to_media_type(ContentType.LIVE_NEWS)
+    assert media == MediaType.GENERIC
+    assert GENRE_NEWS in genres
+    assert sm == StreamMode.LIVE

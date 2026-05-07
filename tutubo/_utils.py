@@ -6,7 +6,7 @@ import json
 import logging
 import re
 import urllib.parse
-from typing import Any, Iterator, List, Optional, Tuple
+from typing import Any, Iterator, List
 from urllib.parse import parse_qs
 
 logger = logging.getLogger(__name__)
@@ -92,8 +92,8 @@ def _parse_object(html: str, start: int) -> Any:
     except json.JSONDecodeError:
         try:
             return ast.literal_eval(raw)
-        except (ValueError, SyntaxError):
-            raise _HTMLParseError("Could not parse object")
+        except (ValueError, SyntaxError) as exc:
+            raise _HTMLParseError("Could not parse object") from exc
 
 
 def initial_data(html: str) -> dict:

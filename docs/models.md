@@ -286,13 +286,14 @@ a.as_dict             # {artist, image, subscribers, description,
 
 ## ContentType / classify_video
 
-`ContentType` — `tutubo/content_type.py:246`
-`classify_video` — `tutubo/content_type.py:281`
+`ContentType` — `mediavocab.taxonomy.ContentType` (mediavocab package)
+`classify_video` — `mediavocab.text.classify_video` (mediavocab package)
 
 An enum (also a `str` subclass) representing the semantic content type of a YouTube video. `VideoPreview` and `Video` both expose a `.content_type` computed property that calls `classify_video()` automatically.
 
 ```python
-from tutubo.content_type import ContentType, classify_video
+from mediavocab.taxonomy import ContentType
+from mediavocab.text import classify_video
 
 ct = classify_video(
     title="My Documentary Film",

@@ -7,10 +7,11 @@ additional network requests).
 """
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import List
 
 from tutubo.channel import Video, Channel, Playlist
-from tutubo.content_type import classify_video, extract_tags, ContentType
+from mediavocab.taxonomy import ContentType  # noqa
+from mediavocab.text import classify_video, extract_tags
 
 
 class YoutubePreview:
@@ -356,6 +357,41 @@ class VideoPreview(YoutubePreview):
     def keywords(self) -> List[str]:
         """Always empty for previews — full Video objects expose channel-level keywords."""
         return []
+
+    def to_work(self) -> object:
+        """Return a ``mediavocab.Work`` for this video preview."""
+        from tutubo.mediavocab_bridge import video_to_work
+        return video_to_work(
+            title=self.title,
+            video_id=self.video_id,
+            content_type=self.content_type,
+            length=self.length,
+            is_live=self.is_live,
+            is_upcoming=self.is_upcoming,
+            author=self.author,
+            channel_id=self.channel_id,
+            tags=self.tags,
+        )
+
+    def to_release(self) -> object:
+        """Return a ``mediavocab.Release`` for this video preview."""
+        from tutubo.mediavocab_bridge import video_to_release, _resolution_from_badges
+        from mediavocab.text import parse_title
+        parsed = parse_title(self.title or "")
+        work = self.to_work()
+        return video_to_release(
+            work=work,
+            video_id=self.video_id,
+            watch_url=self.watch_url,
+            thumbnail_url=self.thumbnail_url,
+            is_live=self.is_live,
+            is_upcoming=self.is_upcoming,
+            has_captions=self.has_captions,
+            regions_available=None,
+            container=parsed.source_format or "",
+            resolution=_resolution_from_badges(self.badges),
+        )
+
 
     def __str__(self) -> str:
         return self.title

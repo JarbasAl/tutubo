@@ -1,9 +1,24 @@
 # Content-Type Classification
 
-`ContentType` — `tutubo/content_type.py:246`
-`classify_video` — `tutubo/content_type.py:281`
+`ContentType` — `mediavocab.taxonomy.ContentType` (mediavocab package).
+`classify_video` — `mediavocab.text.classify_video` (mediavocab package).
 
-tutubo classifies every video into one of 30 semantic content types using only information already available in search results or channel-page data. No additional per-video network fetches are performed.
+tutubo consumes them to classify every YouTube video into one of 30
+semantic content types using only information already available in
+search results or channel-page data. No additional per-video network
+fetches are performed.
+
+```python
+from mediavocab.taxonomy import ContentType
+from mediavocab.text import classify_video, extract_tags
+# or, equivalently, from the tutubo top-level for convenience:
+from tutubo import ContentType, classify_video, extract_tags
+```
+
+`ContentType.to_routing()` returns `(MediaType, content_genres)` for
+downstream routing. Trailers, behind-the-scenes, and reactions all map
+to `MediaType.GENERIC` (with a content_genre tag) — never `MOVIE` —
+because they are supplementary material, not primary works.
 
 ---
 
@@ -12,7 +27,7 @@ tutubo classifies every video into one of 30 semantic content types using only i
 `ContentType` is both a `str` and an `enum.Enum`, so values compare equal to their string representations:
 
 ```python
-from tutubo.content_type import ContentType
+from mediavocab.taxonomy import ContentType
 
 ContentType.MOVIE == "movie"   # True
 str(ContentType.MOVIE)         # "ContentType.movie"
@@ -55,7 +70,7 @@ ContentType.MOVIE.value        # "movie"
 
 ## `classify_video()` signature
 
-`tutubo/content_type.py:281`
+`mediavocab.text.classify_video`
 
 ```python
 classify_video(
@@ -206,7 +221,8 @@ The substring check (`"news" in tag`) is intentionally broader than a set lookup
 The correct source for `is_podcast=True` is `Channel.podcasts`, which reads from the YouTube Podcasts tab — a tab that only appears when the channel owner has explicitly created podcast shows. Episodesfrom that tab can then be classified via:
 
 ```python
-from tutubo.content_type import classify_video, ContentType
+from mediavocab.text import classify_video
+from mediavocab.taxonomy import ContentType
 
 ct = classify_video(
     title=ep_title,
@@ -230,7 +246,7 @@ There is no separate `AUDIO_DRAMA` type — full-cast productions classify as `A
 
 ## Auto-tagging
 
-`extract_tags` — `tutubo/content_type.py`
+`extract_tags` — `mediavocab.text.extract_tags`
 
 ```python
 extract_tags(title: str, description: str = "", channel_tags: list = None) -> list[str]
@@ -250,7 +266,7 @@ Returns a sorted list of freeform string labels derived from the title, descript
 | Niche | `lovecraft`, `wayne-june` |
 
 ```python
-from tutubo.content_type import extract_tags
+from mediavocab.text import extract_tags
 
 extract_tags("Lovecraft narrated by Wayne June")
 # ["lovecraft", "narrated", "wayne-june"]
@@ -277,7 +293,7 @@ Because full albums are typically 30–90 minutes long, the 900-second MUSIC_VID
 
 ## Locale-driven keyword matching
 
-Most keyword patterns in `classify_video()` come from `.voc` files under `tutubo/locale/<lang>/`, loaded by `tutubo/_locale.py`. This makes classification work across multiple languages without changing Python code.
+Most keyword patterns in `classify_video()` come from `.voc` files under `mediavocab/locale/<lang>/` (in the mediavocab package). This makes classification work across multiple languages without changing Python code.
 
 Structural patterns that stay in Python (not in `.voc` files):
 - Episode codes (`S01E02`, `Season N Episode N`)
@@ -307,11 +323,13 @@ The fallback chain is: exact locale → language-only code → `en-us`. For exam
 ### Setting the language
 
 ```python
-import tutubo
-tutubo.set_lang("fr-fr")   # affects all subsequent classify_video() calls
+from tutubo import classify_video
 
-# or at process start:
-# TUTUBO_LANG=fr-fr python my_script.py
+# Per-call (recommended for concurrent / multi-tenant use):
+classify_video("Film complet en français", length=7200, lang="fr-fr")
+
+# Or set the process-wide default at startup:
+# MEDIAVOCAB_LANG=fr-fr python my_script.py
 ```
 
 See [docs/locale.md](locale.md) for the full reference.
@@ -320,11 +338,13 @@ See [docs/locale.md](locale.md) for the full reference.
 
 ## Extending: adding a new ContentType
 
-1. Add a value to the `ContentType` enum in `tutubo/content_type.py:246`.
-2. Define a compiled regex (`re.compile(...)`) near the top of the file alongside the other `_*_RE` constants.
+`ContentType` and `classify_video` live in the mediavocab package. To extend them, modify mediavocab directly:
+
+1. Add a value to the `ContentType` enum in mediavocab.
+2. Define a compiled regex alongside the other `_*_RE` constants in `mediavocab/text/classify.py`.
 3. Optionally define a channel-tag set (`_CHANNEL_*_TAGS = {…}`) for channel-context boosting.
 4. Insert the classification block in `classify_video()` at the appropriate priority position. Follow the existing `if` / `return` pattern.
-5. Add test cases to `test/test_content_type.py` — at minimum one positive title, one negative title, and one priority-conflict case.
+5. Add test cases — at minimum one positive title, one negative title, and one priority-conflict case.
 
 Example — adding `ContentType.COMMENTARY`:
 
