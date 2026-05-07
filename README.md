@@ -40,6 +40,7 @@ from tutubo import parse_title, classify_video, extract_tags, ContentType, Title
 | Lazy iteration | `DeferredGeneratorList` — network calls only as items are consumed |
 | Downloading | `download()` and `download_playlist()` via yt-dlp subprocess |
 | Offline testing | Fixture-based test suite — no network required once fixtures are recorded |
+| Typed mediavocab output | `VideoPreview.to_work()` / `to_release()` emit `mediavocab.Work` + `Release` with title-parsed year / variant / edition / source_format, badge-derived `resolution` (`4K`→`2160p`, `8K`→`4320p`, `HD`→`1080p`), CC badge → `AccessibilityTrack(kind="captions")`, channel as `Credit`, content-type-routed `MediaType` + `content_genres`, and `external_ids={"youtube": …}`. See [`examples/rich_release.py`](examples/rich_release.py). |
 
 ## 5-Minute Quickstart
 

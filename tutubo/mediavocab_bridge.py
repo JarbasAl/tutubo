@@ -16,11 +16,7 @@ from mediavocab import (
     EntityKind, RelationRole, CreditSection,
 )
 from mediavocab.models.work import AccessibilityTrack, Appearance
-from mediavocab.taxonomy.genre import (
-    GENRE_SHORT_FILM, GENRE_NEWS, GENRE_TRAILER, GENRE_DOCUMENTARY,
-    GENRE_ANIME, GENRE_STAND_UP, GENRE_EDUCATIONAL, GENRE_SPORTS,
-    GENRE_CONCERT, GENRE_BEHIND_SCENES,
-)
+from mediavocab.taxonomy.genre import GENRE_NEWS
 
 if TYPE_CHECKING:
     from mediavocab.taxonomy import ContentType  # noqa
@@ -34,51 +30,58 @@ if TYPE_CHECKING:
 # ContentType → (MediaType, content_genres, StreamMode)
 # ---------------------------------------------------------------------------
 
+# StreamMode overrides — only ContentTypes whose StreamMode is not the default
+# ON_DEMAND. Everything else is ON_DEMAND (becomes LIVE if the caller flags
+# ``is_live=True``). MediaType + content_genres come from
+# ``ContentType.to_routing()`` so this stays the single-source-of-truth.
+_STREAM_MODE_OVERRIDES: dict = {
+    # filled at first call to avoid import-time enum lookups
+}
+
+
+def _build_stream_mode_overrides() -> dict:
+    from mediavocab.taxonomy import ContentType as CT
+    return {
+        CT.LIVE:        StreamMode.LIVE,
+        CT.LIVE_NEWS:   StreamMode.LIVE,
+        CT.LIVE_RADIO:  StreamMode.CONTINUOUS,
+        CT.IPTV:        StreamMode.CONTINUOUS,
+    }
+
+
 def _content_type_to_media_type(
     ct: "ContentType", is_live: bool = False
 ) -> Tuple["MediaType", List[str], "StreamMode"]:
-    """Map a tutubo ContentType to (MediaType, content_genres, StreamMode)."""
+    """Map a tutubo ContentType to (MediaType, content_genres, StreamMode).
+
+    MediaType + content_genres are sourced from ``ContentType.to_routing()``
+    (mediavocab is the canonical owner of that table).  StreamMode is a
+    tutubo-local concern — broadcast continuity is not part of routing.
+
+    One deliberate divergence from mediavocab routing:
+
+      * ``LIVE_NEWS``: mediavocab routes to ``MediaType.TV``; tutubo
+        emits ``MediaType.GENERIC + [GENRE_NEWS]``.  YouTube live-news
+        uploads are individual videos, not EPG-shaped TV channels — they
+        lack the schedule/programme schema TV downstream consumers
+        (e.g. EPG providers) expect.  GENERIC + content_genres carries
+        the routing signal without the schema mismatch.
+    """
     from mediavocab.taxonomy import ContentType as CT
 
-    _MAP = {
-        CT.VIDEO:            (MediaType.GENERIC,     [],                              StreamMode.ON_DEMAND),
-        CT.SOCIAL_CLIP:      (MediaType.GENERIC,     ["social-clip"],                StreamMode.ON_DEMAND),
-        CT.SHORT_FILM:       (MediaType.MOVIE,       [GENRE_SHORT_FILM],             StreamMode.ON_DEMAND),
-        CT.LIVE:             (MediaType.GENERIC,     [],                              StreamMode.LIVE),
-        CT.UPCOMING:         (MediaType.GENERIC,     [],                              StreamMode.ON_DEMAND),
-        CT.LIVE_RADIO:       (MediaType.RADIO,       [],                              StreamMode.CONTINUOUS),
-        CT.LIVE_NEWS:        (MediaType.GENERIC,     [GENRE_NEWS],                   StreamMode.LIVE),
-        CT.IPTV:             (MediaType.TV,          [],                              StreamMode.CONTINUOUS),
-        CT.MOVIE:            (MediaType.MOVIE,       [],                              StreamMode.ON_DEMAND),
-        # Trailers and BTS are supplementary material, not primary works (spec §4.1 exclusion table).
-        # GENERIC avoids false MOVIE matches in external databases (IMDB, TMDB).
-        CT.TRAILER:          (MediaType.GENERIC,     [GENRE_TRAILER],                StreamMode.ON_DEMAND),
-        CT.BEHIND_THE_SCENES:(MediaType.GENERIC,     [GENRE_BEHIND_SCENES],          StreamMode.ON_DEMAND),
-        CT.DOCUMENTARY:      (MediaType.MOVIE,       [GENRE_DOCUMENTARY],            StreamMode.ON_DEMAND),
-        CT.ANIME:            (MediaType.EPISODIC_SERIES, [GENRE_ANIME],               StreamMode.ON_DEMAND),
-        CT.TV_EPISODE:       (MediaType.EPISODIC_SERIES, [],                           StreamMode.ON_DEMAND),
-        CT.AUDIOBOOK:        (MediaType.AUDIOBOOK,   [],                              StreamMode.ON_DEMAND),
-        CT.PODCAST:          (MediaType.PODCAST,     [],                              StreamMode.ON_DEMAND),
-        # Stand-up on YouTube is a recording, not a live venue production.
-        # Spec §4.1: STAGE is for live-in-venue; "recorded release … is MOVIE/AUDIO_DRAMA".
-        CT.STAND_UP:         (MediaType.MOVIE,       [GENRE_STAND_UP],               StreamMode.ON_DEMAND),
-        CT.INTERVIEW:        (MediaType.PODCAST,     ["interview"],                   StreamMode.ON_DEMAND),
-        CT.LECTURE:          (MediaType.PODCAST,     [GENRE_EDUCATIONAL],            StreamMode.ON_DEMAND),
-        CT.CONCERT:          (MediaType.MUSIC_VIDEO, [GENRE_CONCERT],                StreamMode.ON_DEMAND),
-        CT.NEWS:             (MediaType.GENERIC,     [GENRE_NEWS],                   StreamMode.ON_DEMAND),
-        CT.SPORT:            (MediaType.GENERIC,     [GENRE_SPORTS],                 StreamMode.ON_DEMAND),
-        CT.GAMING:           (MediaType.GENERIC,     ["gaming"],                      StreamMode.ON_DEMAND),
-        CT.TUTORIAL:         (MediaType.GENERIC,     [GENRE_EDUCATIONAL],            StreamMode.ON_DEMAND),
-        CT.REACTION:         (MediaType.GENERIC,     ["reaction"],                    StreamMode.ON_DEMAND),
-        CT.COMPILATION:      (MediaType.GENERIC,     ["compilation"],                 StreamMode.ON_DEMAND),
-        CT.KIDS:             (MediaType.GENERIC,     ["kids"],                        StreamMode.ON_DEMAND),
-        CT.MUSIC_VIDEO:      (MediaType.MUSIC_VIDEO, [],                              StreamMode.ON_DEMAND),
-        CT.MUSIC_AUDIO:      (MediaType.MUSIC,       [],                              StreamMode.ON_DEMAND),
-    }
-    media_type, genres, stream_mode = _MAP.get(ct, (MediaType.GENERIC, [], StreamMode.ON_DEMAND))
+    global _STREAM_MODE_OVERRIDES
+    if not _STREAM_MODE_OVERRIDES:
+        _STREAM_MODE_OVERRIDES = _build_stream_mode_overrides()
+
+    if ct == CT.LIVE_NEWS:
+        media_type, genres = MediaType.GENERIC, [GENRE_NEWS]
+    else:
+        media_type, genres = ct.to_routing()
+
+    stream_mode = _STREAM_MODE_OVERRIDES.get(ct, StreamMode.ON_DEMAND)
     if is_live and stream_mode == StreamMode.ON_DEMAND:
         stream_mode = StreamMode.LIVE
-    return media_type, genres, stream_mode
+    return media_type, list(genres), stream_mode
 
 
 # ---------------------------------------------------------------------------
@@ -141,6 +144,25 @@ def video_to_work(
     )
 
 
+def _resolution_from_badges(badges: List[str]) -> str:
+    """Return a ``Release.resolution`` string parsed from YouTube quality badges.
+
+    YouTube only emits a quality badge when the video offers that quality
+    track — so the badge is a true upper-bound signal, not a heuristic.
+    Recognised badges: ``8K``, ``4K``, ``HD``.  Empty string for everything
+    else (no badge ⇒ unknown, do not invent).
+    """
+    for label in badges:
+        upper = label.upper()
+        if upper == "8K":
+            return "4320p"
+        if upper == "4K":
+            return "2160p"
+        if upper == "HD":
+            return "1080p"
+    return ""
+
+
 def video_to_release(
     work: "Work",
     video_id: str,
@@ -151,6 +173,7 @@ def video_to_release(
     has_captions: bool,
     regions_available: Optional[List[str]],
     container: str = "",
+    resolution: str = "",
 ) -> "Release":
     from mediavocab.taxonomy import ContentType as CT
 
@@ -173,6 +196,7 @@ def video_to_release(
         container=container,
         platform="youtube",
         stream_mode=stream_mode,
+        resolution=resolution,
         release_status=ReleaseStatus.ANNOUNCED if is_upcoming else ReleaseStatus.RELEASED,
         accessibility=accessibility,
         regions_available=regions_available or [],

@@ -375,7 +375,7 @@ class VideoPreview(YoutubePreview):
 
     def to_release(self) -> object:
         """Return a ``mediavocab.Release`` for this video preview."""
-        from tutubo.mediavocab_bridge import video_to_release
+        from tutubo.mediavocab_bridge import video_to_release, _resolution_from_badges
         from mediavocab.text import parse_title
         parsed = parse_title(self.title or "")
         work = self.to_work()
@@ -389,6 +389,7 @@ class VideoPreview(YoutubePreview):
             has_captions=self.has_captions,
             regions_available=None,
             container=parsed.source_format or "",
+            resolution=_resolution_from_badges(self.badges),
         )
 
 

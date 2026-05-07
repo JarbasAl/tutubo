@@ -13,7 +13,7 @@ dependencies = [
     "bs4",
     "requests",
     "ytmusicapi",
-    "mediavocab @ git+https://github.com/TigreGotico/mediavocab@dev",
+    "mediavocab>=0.1.0",
 ]
 
 [project.optional-dependencies]
