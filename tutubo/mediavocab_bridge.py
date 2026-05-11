@@ -16,7 +16,7 @@ from mediavocab import (
     EntityKind, RelationRole, CreditSection,
 )
 from mediavocab.models.work import AccessibilityTrack, Appearance
-from mediavocab.taxonomy.genre import GENRE_NEWS
+
 
 if TYPE_CHECKING:
     from mediavocab.taxonomy import ContentType  # noqa
@@ -60,7 +60,7 @@ def _content_type_to_media_type(
     One deliberate divergence from mediavocab routing:
 
       * ``LIVE_NEWS``: mediavocab routes to ``MediaType.TV``; tutubo
-        emits ``MediaType.GENERIC + [GENRE_NEWS]``.  YouTube live-news
+        emits ``MediaType.GENERIC + ["news"]``.  YouTube live-news
         uploads are individual videos, not EPG-shaped TV channels — they
         lack the schedule/programme schema TV downstream consumers
         (e.g. EPG providers) expect.  GENERIC + content_genres carries
@@ -73,9 +73,15 @@ def _content_type_to_media_type(
         _STREAM_MODE_OVERRIDES = _build_stream_mode_overrides()
 
     if ct == CT.LIVE_NEWS:
-        media_type, genres = MediaType.GENERIC, [GENRE_NEWS]
+        media_type, genres = MediaType.MOVIE, ["news"]
     else:
-        media_type, genres = ct.to_routing()
+        media_type, _form, genres, _pf = ct.to_routing()
+
+    # mediavocab 1.0 rejects sentinel MediaTypes (GENERIC/NOT_MEDIA/CONTROL)
+    # at Work construction (T8).  For tutubo's YouTube-video shape, MOVIE is
+    # the closest concrete fallback — content_genres carries the divergence.
+    if media_type == MediaType.GENERIC:
+        media_type = MediaType.MOVIE
 
     stream_mode = _STREAM_MODE_OVERRIDES.get(ct, StreamMode.ON_DEMAND)
     if is_live and stream_mode == StreamMode.ON_DEMAND:
@@ -232,7 +238,7 @@ def music_track_to_work(track: "MusicTrack") -> "Work":
         release_status=ReleaseStatus.RELEASED,
         credits=credits,
         external_ids=ext_ids,
-        extra={k: v for k, v in {
+        extra={k: str(v) for k, v in {
             "track_number": track.track_number,
             "album": track.album,
             "youtube_video_type": track.video_type,
@@ -352,7 +358,7 @@ def channel_to_entity(channel: "Channel") -> "Entity":
         kind=EntityKind.GROUP,
         aliases=aliases,
         external_ids=ext,
-        extra={k: v for k, v in {
+        extra={k: str(v) for k, v in {
             "subscribers": channel.subscribers,
             "keywords": channel.keywords,
             "available_countries": channel.available_countries,
@@ -368,7 +374,7 @@ def channel_preview_to_entity(preview: "ChannelPreview") -> "Entity":
         name=preview.title,
         kind=EntityKind.GROUP,
         external_ids=ext,
-        extra={"verified": preview.is_verified},
+        extra={"verified": str(preview.is_verified)},
     )
 
 
@@ -384,7 +390,7 @@ def music_artist_to_entity(artist: "MusicArtist") -> "Entity":
         name=artist.name,
         kind=EntityKind.GROUP,
         external_ids=ext,
-        extra={k: v for k, v in {
+        extra={k: str(v) for k, v in {
             "subscribers": artist.subscribers,
         }.items() if v},
     )
@@ -400,7 +406,7 @@ def podcast_preview_to_work(pod: "PodcastPreview") -> "Work":
         media_type=MediaType.PODCAST,
         release_status=ReleaseStatus.RELEASED,
         external_ids={"youtube_playlist": pod.playlist_id} if pod.playlist_id else {},
-        extra={k: v for k, v in {
+        extra={k: str(v) for k, v in {
             "episode_count": pod.episode_count,
             "last_updated": pod.last_updated,
         }.items() if v},

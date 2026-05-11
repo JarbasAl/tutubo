@@ -501,7 +501,7 @@ class TestEntityBridge:
         ent = channel_preview_to_entity(cp)
         assert ent.name == "Foo"
         assert ent.external_ids["youtube_channel"] == "UCxxx"
-        assert ent.extra["verified"] is True
+        assert ent.extra["verified"] == "True"
 
     def test_music_artist_to_entity(self):
         from tutubo.ytmus import MusicArtist

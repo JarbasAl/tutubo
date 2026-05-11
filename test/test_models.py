@@ -309,18 +309,22 @@ def test_content_type_routing_uses_mediavocab_table():
     for ct in [ContentType.MOVIE, ContentType.DOCUMENTARY, ContentType.SHORT_FILM,
                ContentType.PODCAST, ContentType.MUSIC_VIDEO, ContentType.ANIME]:
         media, genres, _ = _content_type_to_media_type(ct, is_live=False)
-        ref_media, ref_genres = ct.to_routing()
+        ref_media, _ref_form, ref_genres, _ref_pf = ct.to_routing()
         assert media == ref_media
         assert genres == ref_genres
 
 
 def test_content_type_routing_live_news_divergence():
-    """LIVE_NEWS deliberately diverges: mediavocab=TV, tutubo=GENERIC+news."""
+    """LIVE_NEWS deliberately diverges: mediavocab=TV, tutubo=MOVIE+news.
+
+    mediavocab 1.0 rejects GENERIC at Work construction (T8), so tutubo
+    promotes the GENERIC fallback to MOVIE while keeping the ``news`` genre.
+    """
     from mediavocab import MediaType, StreamMode
     from mediavocab.taxonomy import ContentType
-    from mediavocab.taxonomy.genre import GENRE_NEWS
+
     from tutubo.mediavocab_bridge import _content_type_to_media_type
     media, genres, sm = _content_type_to_media_type(ContentType.LIVE_NEWS)
-    assert media == MediaType.GENERIC
-    assert GENRE_NEWS in genres
+    assert media == MediaType.MOVIE
+    assert "news" in genres
     assert sm == StreamMode.LIVE
