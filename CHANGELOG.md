@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.3.0a1](https://github.com/TigreGotico/tutubo/tree/4.3.0a1) (2026-05-29)
+
+[Full Changelog](https://github.com/TigreGotico/tutubo/compare/4.2.0a1...4.3.0a1)
+
+**Merged pull requests:**
+
+- feat: route HTTP through unblock\_requests \(pre-emptive anti-bot\) [\#38](https://github.com/TigreGotico/tutubo/pull/38) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [4.2.0a1](https://github.com/TigreGotico/tutubo/tree/4.2.0a1) (2026-05-07)
 
 [Full Changelog](https://github.com/TigreGotico/tutubo/compare/4.1.0a1...4.2.0a1)
