@@ -263,7 +263,7 @@ files where the English phrases will work (episode codes, brand names).
 
 ```python
 from mediavocab.text import classify_video
-from mediavocab.taxonomy import ContentType
+from tutubo import ContentType
 
 assert classify_video("Der Pate — Ganzer Film Deutsch", lang="de-de") == ContentType.MOVIE
 assert classify_video("Metallica — Live in Berlin — Komplettes Konzert", lang="de-de") == ContentType.CONCERT

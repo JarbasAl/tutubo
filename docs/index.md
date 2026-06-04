@@ -31,7 +31,7 @@ tutubo queries YouTube and YouTube Music search endpoints and channel pages, ret
 - [Search API](search.md) — `YoutubeSearch`, 24 factories, `YoutubeMusicSearch`
 - [Models Reference](models.md) — all preview types, `Video`, `MusicTrack`, `MusicAlbum`, etc.
 - [Channel API](channel.md) — `Channel`, `Playlist`, `PodcastPreview`, `Video`
-- [Content-Type Classification](content_type.md) — `ContentType` enum, 30-step priority chain
+- [Content classification](content_type.md) — `Category` facets and the `classify_category` collapse
 - [mediavocab Integration](mediavocab.md) — `to_work()` / `to_release()` / `to_entity()` bridge
 - [Transport](transport.md) — pluggable session, `curl_cffi` stealth extra, `TUTUBO_TRANSPORT`
 - [Locale System](locale.md) — `.voc` files, `lang=` parameter, `MEDIAVOCAB_LANG`

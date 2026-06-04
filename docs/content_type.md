@@ -1,37 +1,45 @@
-# Content-Type Classification
+# Content classification
 
-`ContentType` — `mediavocab.taxonomy.ContentType` (mediavocab package).
-`classify_video` — `mediavocab.text.classify_video` (mediavocab package).
+Classification is multi-axis. `mediavocab.text.classify_video` returns a
+`ClassificationResult` with orthogonal fields — `media_type`,
+`content_form`, `programme_format`, `content_genres` — using only
+information already available in search results or channel-page data (no
+extra per-video network fetches).
 
-tutubo consumes them to classify every YouTube video into one of 30
-semantic content types using only information already available in
-search results or channel-page data. No additional per-video network
-fetches are performed.
+tutubo's search API is organised around single, human-facing **facets**
+("documentaries", "live news", "music videos"), so
+`tutubo.classification.Category` collapses a `ClassificationResult` (plus
+the live / upcoming flags) to one facet via `classify_category`. Every
+video exposes both:
+
+- `Video.classification` → the full `ClassificationResult` (rich, multi-axis)
+- `Video.content_type` → a single `Category` facet (for filtering / display)
 
 ```python
-from mediavocab.taxonomy import ContentType
-from mediavocab.text import classify_video, extract_tags
-# or, equivalently, from the tutubo top-level for convenience:
-from tutubo import ContentType, classify_video, extract_tags
+from tutubo import Category, classify_category, classify_video
+
+result = classify_video(title="Dune: Part Two — Official Trailer")
+result.media_type        # MediaType.MOVIE
+result.content_form      # ContentForm.TRAILER
+classify_category(result)  # Category.TRAILER
 ```
 
-`ContentType.to_routing()` returns `(MediaType, content_genres)` for
-downstream routing. Trailers, behind-the-scenes, and reactions all map
-to `MediaType.GENERIC` (with a content_genre tag) — never `MOVIE` —
-because they are supplementary material, not primary works.
+`Category` is tutubo-owned; mediavocab is the source of truth for the
+underlying classification logic (priority order, keyword vocabularies,
+duration thresholds). `ContentType` remains as a back-compat alias of
+`Category`.
 
 ---
 
-## ContentType enum
+## Category facets
 
-`ContentType` is both a `str` and an `enum.Enum`, so values compare equal to their string representations:
+`Category` is both a `str` and an `enum.Enum`, so values compare equal to their string representations:
 
 ```python
-from mediavocab.taxonomy import ContentType
+from tutubo import Category
 
-ContentType.MOVIE == "movie"   # True
-str(ContentType.MOVIE)         # "ContentType.movie"
-ContentType.MOVIE.value        # "movie"
+Category.MOVIE == "movie"   # True
+Category.MOVIE.value        # "movie"
 ```
 
 | Value | String | Description | Example title |
@@ -222,7 +230,7 @@ The correct source for `is_podcast=True` is `Channel.podcasts`, which reads from
 
 ```python
 from mediavocab.text import classify_video
-from mediavocab.taxonomy import ContentType
+from tutubo import ContentType
 
 ct = classify_video(
     title=ep_title,

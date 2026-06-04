@@ -126,7 +126,7 @@ Home page fixtures (`*_home`) are loaded when `Channel._get_data` is called for 
 ```python
 def test_short_film_channel(patch_channel_data):
     from tutubo import Channel
-    from mediavocab.taxonomy import ContentType
+    from tutubo import ContentType
     c = Channel("https://www.youtube.com/@watchdust")
     for v in c.videos:
         assert v.content_type in (ContentType.SHORT_FILM, ContentType.VIDEO)

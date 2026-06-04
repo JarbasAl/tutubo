@@ -19,7 +19,7 @@ All mapping logic lives in `tutubo/mediavocab_bridge.py`. Model classes delegate
 ```python
 from tutubo import (
     ContentType,
-    classify_video, classify_video_dict, extract_tags,
+    classify_video, extract_tags,
     parse_title, TitleParseResult,
 )
 ```
@@ -27,8 +27,8 @@ from tutubo import (
 These are re-exported for convenience. They are identical to importing directly from mediavocab:
 
 ```python
-from mediavocab.taxonomy import ContentType
-from mediavocab.text import classify_video, classify_video_dict, extract_tags, parse_title, TitleParseResult
+from tutubo import ContentType
+from mediavocab.text import classify_video, extract_tags, parse_title, TitleParseResult
 ```
 
 ---
@@ -57,12 +57,14 @@ Fields populated from search-result data (no extra network calls):
 |---|---|
 | `title` | `parse_title(v.title).title` — cleaned of year/edition/format tokens |
 | `year` | `parse_title(v.title).year` |
-| `media_type` | `ContentType.to_routing()` |
+| `media_type` | `classification.media_type` |
+| `content_form` | `classification.content_form` (PRIMARY / TRAILER / REACTION / …) |
+| `programme_format` | `classification.programme_format` (DOCUMENTARY / NEWS / …) |
 | `runtime` | `v.length` (seconds) |
 | `season`, `episode` | `parse_title()` |
 | `variant_kind` | `parse_title()` — e.g. `FANEDIT`, `DIRECTORS_CUT` |
 | `edition` | `parse_title().edition` |
-| `content_genres` | From `ContentType.to_routing()` + `extract_tags()` tags, deduped |
+| `content_genres` | `classification.content_genres` + `extract_tags()` tags, deduped |
 | `credits` | Channel name + channel ID as a `Credit(role="channel")` |
 | `external_ids` | `{"youtube": video_id}` |
 
@@ -72,7 +74,7 @@ Fields populated from search-result data (no extra network calls):
 | `platform` | `"youtube"` |
 | `resolution` | Badge: `"4K"` → `"2160p"`, `"8K"` → `"4320p"`, `"HD"` → `"1080p"` |
 | `container` | `parse_title().source_format` (e.g. `"WEBRip"`, `"BluRay"`) |
-| `stream_mode` | `LIVE` / `CONTINUOUS` / `ON_DEMAND` from `ContentType` |
+| `stream_mode` | `CONTINUOUS` for RADIO/TV works, else `LIVE` if `is_live` else `ON_DEMAND` |
 | `accessibility` | `AccessibilityTrack(kind="captions")` when CC badge present |
 | `external_ids` | `{"youtube": video_id}` |
 
@@ -100,23 +102,13 @@ Fields **not** populated (YouTube search renderers do not expose them): codec, b
 
 ---
 
-## `ContentType` → `MediaType` routing
+## Classification → `Work` routing
 
-`tutubo/mediavocab_bridge.py:51`
-
-`ContentType.to_routing()` (in mediavocab) returns `(MediaType, content_genres)`. One deliberate override in tutubo:
-
-- `LIVE_NEWS` → `MediaType.GENERIC + [GENRE_NEWS]` instead of mediavocab's default `MediaType.TV`. YouTube live-news uploads are individual video files, not EPG-shaped TV channels — routing them to `TV` would mismatch the schema that EPG-aware downstream consumers expect.
-
-`StreamMode` overrides (`tutubo/mediavocab_bridge.py:42`):
-
-| `ContentType` | `StreamMode` |
-|---|---|
-| `LIVE` | `LIVE` |
-| `LIVE_NEWS` | `LIVE` |
-| `LIVE_RADIO` | `CONTINUOUS` |
-| `IPTV` | `CONTINUOUS` |
-| everything else | `ON_DEMAND` (or `LIVE` if `is_live=True`) |
+`video_to_work` takes the `ClassificationResult` directly — `media_type`,
+`content_form`, `programme_format` and `content_genres` flow straight onto
+the `Work`, with no `ContentType`→routing table to maintain. `StreamMode` is
+decided in `video_to_release`: `CONTINUOUS` for broadcast media types
+(RADIO/TV), `LIVE` when `is_live`, otherwise `ON_DEMAND`.
 
 ---
 
