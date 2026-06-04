@@ -67,8 +67,9 @@ class Video:
         return self._is_live
 
     @property
-    def content_type(self) -> "object":
-        """Semantic ``ContentType`` inferred from title, description and channel tags."""
+    def classification(self):
+        """Full mediavocab ``ClassificationResult`` inferred from title,
+        description and channel tags."""
         from mediavocab.text import classify_video
         return classify_video(
             title=self._title or "",
@@ -76,6 +77,13 @@ class Video:
             is_live=self._is_live,
             channel_tags=self.channel_tags,
         )
+
+    @property
+    def content_type(self) -> "object":
+        """Single tutubo search facet (:class:`~tutubo.classification.Category`),
+        collapsed from :attr:`classification`."""
+        from tutubo.classification import classify_category
+        return classify_category(self.classification, is_live=self._is_live)
 
     @property
     def tags(self) -> List[str]:

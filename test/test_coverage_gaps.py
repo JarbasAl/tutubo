@@ -226,12 +226,13 @@ class TestInnertube:
 
 class TestVideoBridge:
     def test_video_to_work_basic(self):
-        from mediavocab.taxonomy import ContentType
+        from mediavocab import MediaType
+        from mediavocab.text.classify import ClassificationResult
         from tutubo.mediavocab_bridge import video_to_work
         w = video_to_work(
             title="Cool Movie (2020)",
             video_id="abc123",
-            content_type=ContentType.MOVIE,
+            classification=ClassificationResult(media_type=MediaType.MOVIE),
             length=7200,
             is_live=False,
             is_upcoming=False,
@@ -240,18 +241,19 @@ class TestVideoBridge:
             tags=["action"],
         )
         assert w.title
+        assert w.media_type == MediaType.MOVIE
         assert w.external_ids["youtube"] == "abc123"
         assert w.runtime == 7200
         assert w.credits, "channel credit should be attached"
 
     def test_video_to_work_upcoming(self):
         from mediavocab import ReleaseStatus
-        from mediavocab.taxonomy import ContentType
+        from mediavocab.text.classify import ClassificationResult
         from tutubo.mediavocab_bridge import video_to_work
         w = video_to_work(
             title="Upcoming",
             video_id="x",
-            content_type=ContentType.VIDEO,
+            classification=ClassificationResult(),
             length=0,
             is_live=False,
             is_upcoming=True,
@@ -263,27 +265,46 @@ class TestVideoBridge:
         assert w.credits == []
 
     def test_video_to_work_dedupes_genres(self):
-        from mediavocab.taxonomy import ContentType
+        from mediavocab import MediaType
+        from mediavocab.text.classify import ClassificationResult
         from tutubo.mediavocab_bridge import video_to_work
         w = video_to_work(
             title="x",
             video_id="x",
-            content_type=ContentType.MOVIE,
+            classification=ClassificationResult(media_type=MediaType.MOVIE,
+                                                content_genres=["action"]),
             length=100,
             is_live=False,
             is_upcoming=False,
             author="a",
             channel_id="c",
-            tags=["movie", "movie", "action"],
+            tags=["action", "action", "drama"],
         )
         # genre list should not have dupes
         assert len(w.content_genres) == len(set(w.content_genres))
 
+    def test_video_to_work_propagates_form_and_format(self):
+        from mediavocab import MediaType, ContentForm, ProgrammeFormat
+        from mediavocab.text.classify import ClassificationResult
+        from tutubo.mediavocab_bridge import video_to_work
+        w = video_to_work(
+            title="The Making Of", video_id="v",
+            classification=ClassificationResult(
+                media_type=MediaType.MOVIE,
+                content_form=ContentForm.BEHIND_SCENES,
+                programme_format=ProgrammeFormat.DOCUMENTARY,
+            ),
+            length=600, is_live=False, is_upcoming=False,
+            author="", channel_id="", tags=[],
+        )
+        assert w.content_form == ContentForm.BEHIND_SCENES
+        assert w.programme_format == ProgrammeFormat.DOCUMENTARY
+
     def test_video_to_release_live(self):
         from mediavocab import StreamMode
+        from mediavocab.text.classify import ClassificationResult
         from tutubo.mediavocab_bridge import video_to_release, video_to_work
-        from mediavocab.taxonomy import ContentType
-        w = video_to_work("t", "v", ContentType.VIDEO, 0, True, False, "", "", [])
+        w = video_to_work("t", "v", ClassificationResult(), 0, True, False, "", "", [])
         r = video_to_release(
             work=w, video_id="v", watch_url="u", thumbnail_url="i",
             is_live=True, is_upcoming=False, has_captions=True,
@@ -308,9 +329,9 @@ class TestVideoBridge:
 
     def test_video_to_release_announced_when_upcoming(self):
         from mediavocab import ReleaseStatus
-        from mediavocab.taxonomy import ContentType
+        from mediavocab.text.classify import ClassificationResult
         from tutubo.mediavocab_bridge import video_to_release, video_to_work
-        w = video_to_work("t", "v", ContentType.VIDEO, 0, False, True, "", "", [])
+        w = video_to_work("t", "v", ClassificationResult(), 0, False, True, "", "", [])
         r = video_to_release(
             work=w, video_id="v", watch_url="u", thumbnail_url="i",
             is_live=False, is_upcoming=True, has_captions=False,
@@ -326,19 +347,18 @@ class TestVideoBridge:
         assert _resolution_from_badges(["CC"]) == ""
         assert _resolution_from_badges([]) == ""
 
-    def test_stream_mode_iptv_continuous(self):
-        from mediavocab import StreamMode
-        from mediavocab.taxonomy import ContentType
-        from tutubo.mediavocab_bridge import _content_type_to_media_type
-        _, _, sm = _content_type_to_media_type(ContentType.IPTV)
-        assert sm == StreamMode.CONTINUOUS
-
-    def test_stream_mode_live_radio_continuous(self):
-        from mediavocab import StreamMode
-        from mediavocab.taxonomy import ContentType
-        from tutubo.mediavocab_bridge import _content_type_to_media_type
-        _, _, sm = _content_type_to_media_type(ContentType.LIVE_RADIO)
-        assert sm == StreamMode.CONTINUOUS
+    def test_stream_mode_tv_continuous(self):
+        # Continuity for broadcast media types is decided in video_to_release
+        # (TV/RADIO → CONTINUOUS), not a ContentType→StreamMode table.
+        from mediavocab import MediaType, StreamMode, ReleaseStatus
+        from mediavocab.models.work import Work
+        from tutubo.mediavocab_bridge import video_to_release
+        w = Work(title="t", media_type=MediaType.TV, release_status=ReleaseStatus.RELEASED)
+        r = video_to_release(
+            work=w, video_id="v", watch_url="u", thumbnail_url="i",
+            is_live=False, is_upcoming=False, has_captions=False, regions_available=None,
+        )
+        assert r.stream_mode == StreamMode.CONTINUOUS
 
 
 class TestMusicBridge:
@@ -996,7 +1016,7 @@ class TestSearchYtConvenience:
     def test_iterate_shortcuts_route_to_content_type(self, monkeypatch, method, ct_name):
         """Each iterate_* shortcut must call iterate_by_content_type with the right ContentType."""
         from tutubo import YoutubeSearch
-        from mediavocab.taxonomy import ContentType
+        from tutubo import ContentType
         captured = {}
 
         def fake(self, ct, max_res=-1):
@@ -1160,7 +1180,7 @@ class TestSearchYtConvenience:
 
     def test_iterate_by_content_type_max_res(self, patch_innertube):
         from tutubo import YoutubeSearch
-        from mediavocab.taxonomy import ContentType
+        from tutubo import ContentType
         # max_res=1: must yield at most 1 even if more match
         out = list(YoutubeSearch("rob zombie").iterate_by_content_type(
             ContentType.MUSIC_VIDEO, max_res=1

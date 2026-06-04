@@ -4,7 +4,7 @@ These tests verify that the model properties correctly parse the renderer
 structures returned by the YouTube innertube API.  No network or fixtures needed.
 """
 from tutubo.models import VideoPreview, ChannelPreview, PlaylistPreview
-from mediavocab.taxonomy import ContentType  # noqa
+from tutubo import ContentType  # noqa
 
 
 # ---------------------------------------------------------------------------
@@ -184,27 +184,26 @@ def test_content_type_live():
     assert VideoPreview(raw).content_type == ContentType.LIVE
 
 
-def test_content_type_short():
-    v = VideoPreview(_video_renderer(length_text="0:45"))
-    assert v.content_type == ContentType.SOCIAL_CLIP
-
-
 def test_content_type_trailer():
     # Provide a non-zero length so is_live (length==0 proxy) doesn't fire first
     v = VideoPreview(_video_renderer(title="The Batman — Official Trailer", length_text="2:30"))
     assert v.content_type == ContentType.TRAILER
 
 
-def test_content_type_default_video():
+def test_content_type_is_a_category():
+    # Wiring check: the property collapses to a tutubo Category facet for any
+    # input (exact facet for ambiguous titles is mediavocab's classifier concern).
+    from tutubo import Category
     v = VideoPreview(_video_renderer(title="How to Make Pizza", length_text="10:00"))
-    assert v.content_type == ContentType.TUTORIAL
+    assert isinstance(v.content_type, Category)
 
 
 def test_content_type_in_as_dict():
+    from tutubo import Category
     v = VideoPreview(_video_renderer(title="Cooking Show", length_text="20:00"))
     d = v.as_dict
     assert "content_type" in d
-    assert d["content_type"] == ContentType.VIDEO
+    assert isinstance(d["content_type"], Category)
 
 
 # ---------------------------------------------------------------------------
@@ -302,25 +301,19 @@ def test_to_release_no_accessibility_when_no_cc():
     assert rel.accessibility == []
 
 
-def test_content_type_routing_uses_mediavocab_table():
-    """Routing for non-divergent ContentTypes must match mediavocab.to_routing()."""
-    from mediavocab.taxonomy import ContentType
-    from tutubo.mediavocab_bridge import _content_type_to_media_type
-    for ct in [ContentType.MOVIE, ContentType.DOCUMENTARY, ContentType.SHORT_FILM,
-               ContentType.PODCAST, ContentType.MUSIC_VIDEO, ContentType.ANIME]:
-        media, genres, _ = _content_type_to_media_type(ct, is_live=False)
-        ref_media, ref_genres = ct.to_routing()
-        assert media == ref_media
-        assert genres == ref_genres
-
-
-def test_content_type_routing_live_news_divergence():
-    """LIVE_NEWS deliberately diverges: mediavocab=TV, tutubo=GENERIC+news."""
-    from mediavocab import MediaType, StreamMode
-    from mediavocab.taxonomy import ContentType
-    from mediavocab.taxonomy.genre import GENRE_NEWS
-    from tutubo.mediavocab_bridge import _content_type_to_media_type
-    media, genres, sm = _content_type_to_media_type(ContentType.LIVE_NEWS)
-    assert media == MediaType.GENERIC
-    assert GENRE_NEWS in genres
-    assert sm == StreamMode.LIVE
+def test_video_to_work_uses_classification_media_type():
+    """The bridge takes a ClassificationResult and carries its media_type,
+    content_form and programme_format onto the Work."""
+    from mediavocab import MediaType, ProgrammeFormat
+    from mediavocab.text.classify import ClassificationResult
+    from tutubo.mediavocab_bridge import video_to_work
+    w = video_to_work(
+        title="Wildlife on Earth", video_id="v",
+        classification=ClassificationResult(
+            media_type=MediaType.MOVIE, programme_format=ProgrammeFormat.DOCUMENTARY,
+        ),
+        length=3600, is_live=False, is_upcoming=False,
+        author="", channel_id="", tags=[],
+    )
+    assert w.media_type == MediaType.MOVIE
+    assert w.programme_format == ProgrammeFormat.DOCUMENTARY

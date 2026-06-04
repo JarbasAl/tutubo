@@ -8,7 +8,7 @@ mediavocab is a hard runtime dependency of tutubo (declared in pyproject).
 """
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, List, Optional, Tuple
+from typing import TYPE_CHECKING, List, Optional
 
 from mediavocab import (
     Work, Release, Entity, EntityRef, Credit,
@@ -16,71 +16,12 @@ from mediavocab import (
     EntityKind, RelationRole, CreditSection,
 )
 from mediavocab.models.work import AccessibilityTrack, Appearance
-from mediavocab.taxonomy.genre import GENRE_NEWS
 
 if TYPE_CHECKING:
-    from mediavocab.taxonomy import ContentType  # noqa
+    from mediavocab.text.classify import ClassificationResult
     from tutubo.channel import Channel, PodcastPreview
     from tutubo.models import ChannelPreview
     from tutubo.ytmus import MusicTrack, MusicAlbum, MusicPlaylist, MusicArtist
-
-
-# ---------------------------------------------------------------------------
-# ContentType → (MediaType, content_genres, StreamMode)
-# ---------------------------------------------------------------------------
-
-# StreamMode overrides — only ContentTypes whose StreamMode is not the default
-# ON_DEMAND. Everything else is ON_DEMAND (becomes LIVE if the caller flags
-# ``is_live=True``). MediaType + content_genres come from
-# ``ContentType.to_routing()`` so this stays the single-source-of-truth.
-_STREAM_MODE_OVERRIDES: dict = {
-    # filled at first call to avoid import-time enum lookups
-}
-
-
-def _build_stream_mode_overrides() -> dict:
-    from mediavocab.taxonomy import ContentType as CT
-    return {
-        CT.LIVE:        StreamMode.LIVE,
-        CT.LIVE_NEWS:   StreamMode.LIVE,
-        CT.LIVE_RADIO:  StreamMode.CONTINUOUS,
-        CT.IPTV:        StreamMode.CONTINUOUS,
-    }
-
-
-def _content_type_to_media_type(
-    ct: "ContentType", is_live: bool = False
-) -> Tuple["MediaType", List[str], "StreamMode"]:
-    """Map a tutubo ContentType to (MediaType, content_genres, StreamMode).
-
-    MediaType + content_genres are sourced from ``ContentType.to_routing()``
-    (mediavocab is the canonical owner of that table).  StreamMode is a
-    tutubo-local concern — broadcast continuity is not part of routing.
-
-    One deliberate divergence from mediavocab routing:
-
-      * ``LIVE_NEWS``: mediavocab routes to ``MediaType.TV``; tutubo
-        emits ``MediaType.GENERIC + [GENRE_NEWS]``.  YouTube live-news
-        uploads are individual videos, not EPG-shaped TV channels — they
-        lack the schedule/programme schema TV downstream consumers
-        (e.g. EPG providers) expect.  GENERIC + content_genres carries
-        the routing signal without the schema mismatch.
-    """
-    from mediavocab.taxonomy import ContentType as CT
-
-    global _STREAM_MODE_OVERRIDES
-    if not _STREAM_MODE_OVERRIDES:
-        _STREAM_MODE_OVERRIDES = _build_stream_mode_overrides()
-
-    if ct == CT.LIVE_NEWS:
-        media_type, genres = MediaType.GENERIC, [GENRE_NEWS]
-    else:
-        media_type, genres = ct.to_routing()
-
-    stream_mode = _STREAM_MODE_OVERRIDES.get(ct, StreamMode.ON_DEMAND)
-    if is_live and stream_mode == StreamMode.ON_DEMAND:
-        stream_mode = StreamMode.LIVE
-    return media_type, list(genres), stream_mode
 
 
 # ---------------------------------------------------------------------------
@@ -104,7 +45,7 @@ def _channel_credit(name: str, channel_id: str = "") -> "Credit":
 def video_to_work(
     title: Optional[str],
     video_id: str,
-    content_type: "ContentType",
+    classification: "ClassificationResult",
     length: int,
     is_live: bool,
     is_upcoming: bool,
@@ -115,19 +56,21 @@ def video_to_work(
     from mediavocab.text import parse_title
 
     parsed = parse_title(title or "")
-    media_type, ct_genres, _ = _content_type_to_media_type(content_type, is_live)
+    media_type = classification.media_type or MediaType.EPISODIC_SERIES
 
-    # Deduplicate genres while preserving order
+    # Deduplicate genres while preserving order (classifier genres then tags)
     seen: set = set()
     all_genres: List[str] = []
-    for g in ct_genres + tags:
-        if g not in seen:
+    for g in list(classification.content_genres) + tags:
+        if g and g not in seen:
             seen.add(g)
             all_genres.append(g)
 
     return Work(
         title=parsed.title or title or "",
         media_type=media_type,
+        content_form=classification.content_form,
+        programme_format=classification.programme_format,
         year=parsed.year,
         runtime=float(length) if length else None,
         season=parsed.season,

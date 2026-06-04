@@ -10,7 +10,7 @@ from __future__ import annotations
 from typing import List
 
 from tutubo.channel import Video, Channel, Playlist
-from mediavocab.taxonomy import ContentType  # noqa
+from tutubo.classification import Category, classify_category
 from mediavocab.text import classify_video, extract_tags
 
 
@@ -331,8 +331,9 @@ class VideoPreview(YoutubePreview):
         return f"https://img.youtube.com/vi/{self.video_id}/default.jpg"
 
     @property
-    def content_type(self) -> ContentType:
-        """Semantic content type inferred from title, description snippet, duration, and badges.
+    def classification(self):
+        """The full mediavocab ``ClassificationResult`` (media_type,
+        content_form, programme_format, content_genres) for this video.
 
         Channel-tag boosting (MOVIE/DOCUMENTARY/ANIME/etc. via channel keyword tags) is NOT
         applied here because search results don't include channel tags — those require fetching
@@ -346,6 +347,16 @@ class VideoPreview(YoutubePreview):
             is_live=self.is_live,
             is_upcoming=self.is_upcoming,
             is_official_artist=self.is_official_artist_channel,
+        )
+
+    @property
+    def content_type(self) -> Category:
+        """Single tutubo search facet (:class:`Category`) for this video,
+        collapsed from :attr:`classification` plus the live/upcoming flags."""
+        return classify_category(
+            self.classification,
+            is_live=self.is_live,
+            is_upcoming=self.is_upcoming,
         )
 
     @property
@@ -364,7 +375,7 @@ class VideoPreview(YoutubePreview):
         return video_to_work(
             title=self.title,
             video_id=self.video_id,
-            content_type=self.content_type,
+            classification=self.classification,
             length=self.length,
             is_live=self.is_live,
             is_upcoming=self.is_upcoming,
