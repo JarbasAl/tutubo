@@ -36,7 +36,7 @@ for v in YoutubeSearch.for_movies("blade runner").iterate_movies(max_res=3):
 | `YoutubeMusicSearch` | Searches music.youtube.com; yields `MusicTrack`, `MusicAlbum`, `MusicArtist`, `MusicPlaylist`, `MusicVideo` |
 | `Channel` | Fetches a channel page; exposes `.videos`, `.shorts`, `.streams`, `.live`, `.playlists`, `.podcasts` |
 | `Playlist` | Fetches a playlist page; exposes `.videos` (lazy-paginated generator) |
-| `ContentType` | 30-value enum inferred from title, duration, badges, and channel tags |
+| `Category` | Single search facet (`.content_type` on a video) collapsed from mediavocab's multi-axis `ClassificationResult`. `ContentType` is a back-compat alias |
 
 ## Key invariants
 
@@ -121,11 +121,11 @@ for pod in c2.podcasts:
 
 ## mediavocab integration
 
-mediavocab is a hard runtime dependency. It provides `ContentType`, `classify_video()`, `parse_title()`, `extract_tags()`, and the `Work` / `Release` / `Entity` data model.
+mediavocab is a hard runtime dependency. It provides `classify_video()` (returning a multi-axis `ClassificationResult`), `parse_title()`, `extract_tags()`, and the `Work` / `Release` / `Entity` data model. tutubo adds the `Category` search facet and `classify_category()` collapse.
 
 ```python
-# ContentType and classifiers re-exported from tutubo for convenience
-from tutubo import ContentType, classify_video, parse_title, extract_tags
+# Classifiers re-exported from tutubo for convenience
+from tutubo import Category, classify_category, classify_video, parse_title, extract_tags
 
 # Convert a search result to typed mediavocab objects
 from tutubo import YoutubeSearch
@@ -181,7 +181,7 @@ ch = Channel("https://www.youtube.com/@LinusTechTips",
 | `examples/08_fanedits.py` | Fan-edit detection via `parse_title()` + `VariantKind.FANEDIT` |
 | `examples/09_to_mediavocab.py` | All mediavocab fields from `to_work()` / `to_release()` |
 | `examples/10_custom_session.py` | Pluggable session, `TUTUBO_TRANSPORT`, `curl_cffi` injection |
-| `examples/11_pipeline.py` | Full `parse_title` → `classify` → `to_routing()` → `Signals` pipeline |
+| `examples/11_pipeline.py` | Full `parse_title` → `classify_video` → `Signals` pipeline |
 
 ## Documentation
 
@@ -189,7 +189,7 @@ ch = Channel("https://www.youtube.com/@LinusTechTips",
 - [docs/search.md](docs/search.md) — `YoutubeSearch`, 24 factories, `YoutubeMusicSearch`
 - [docs/channel.md](docs/channel.md) — `Channel`, `Playlist`, `Video`, `PodcastPreview`
 - [docs/models.md](docs/models.md) — all model types with typed field reference
-- [docs/content_type.md](docs/content_type.md) — `ContentType` enum and classification internals
+- [docs/content_type.md](docs/content_type.md) — `Category` facets and the `classify_category` collapse
 - [docs/mediavocab.md](docs/mediavocab.md) — `to_work()` / `to_release()` bridge
 - [docs/transport.md](docs/transport.md) — pluggable session and stealth transport
 - [docs/locale.md](docs/locale.md) — locale system and supported languages

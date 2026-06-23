@@ -329,8 +329,8 @@ class YoutubeSearch:
                     break
 
     def _iter_ct(self, ct_name: str, max_res: int) -> Iterator:
-        from mediavocab.taxonomy import ContentType  # noqa
-        return self.iterate_by_content_type(ContentType[ct_name], max_res=max_res)
+        from tutubo.classification import Category
+        return self.iterate_by_content_type(Category[ct_name], max_res=max_res)
 
     def iterate_movies(self, max_res: int = -1) -> Iterator:
         return self._iter_ct("MOVIE", max_res)
