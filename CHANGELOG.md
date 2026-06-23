@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.3.1a1](https://github.com/TigreGotico/tutubo/tree/4.3.1a1) (2026-06-23)
+
+[Full Changelog](https://github.com/TigreGotico/tutubo/compare/4.3.0a1...4.3.1a1)
+
+**Merged pull requests:**
+
+- fix: migrate off removed ContentType enum onto ClassificationResult [\#40](https://github.com/TigreGotico/tutubo/pull/40) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [4.3.0a1](https://github.com/TigreGotico/tutubo/tree/4.3.0a1) (2026-05-29)
 
 [Full Changelog](https://github.com/TigreGotico/tutubo/compare/4.2.0a1...4.3.0a1)
@@ -18,11 +26,15 @@
 
 ## [4.1.0a1](https://github.com/TigreGotico/tutubo/tree/4.1.0a1) (2026-04-30)
 
-[Full Changelog](https://github.com/TigreGotico/tutubo/compare/4.0.0...4.1.0a1)
+[Full Changelog](https://github.com/TigreGotico/tutubo/compare/4.0.0a1...4.1.0a1)
 
 **Merged pull requests:**
 
 - feat: surface canonical YouTube IDs \(channelId, browseId\) in search results [\#31](https://github.com/TigreGotico/tutubo/pull/31) ([JarbasAl](https://github.com/JarbasAl))
+
+## [4.0.0a1](https://github.com/TigreGotico/tutubo/tree/4.0.0a1) (2026-04-29)
+
+[Full Changelog](https://github.com/TigreGotico/tutubo/compare/4.0.0...4.0.0a1)
 
 
 
