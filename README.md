@@ -1,6 +1,6 @@
 # tutubo
 
-YouTube and YouTube Music metadata library. Searches videos, channels, playlists, music tracks, albums, and artists — with per-item content-type classification and lazy channel tab iteration. No pytube dependency.
+A YouTube and YouTube Music metadata library. It searches videos, channels, playlists, music tracks, albums, and artists. It classifies each item by content type and iterates channel tabs lazily. tutubo has no pytube dependency.
 
 ## Install
 
@@ -8,7 +8,7 @@ YouTube and YouTube Music metadata library. Searches videos, channels, playlists
 pip install tutubo
 # Downloading requires yt-dlp (optional):
 pip install yt-dlp
-# Stealth transport — browser-fingerprinted TLS via curl_cffi (optional):
+# Stealth transport: browser-fingerprinted TLS via curl_cffi (optional)
 pip install tutubo[stealth]
 ```
 
@@ -23,7 +23,7 @@ for v in YoutubeSearch("rob zombie").iterate_videos(max_res=5):
     print("  content_type:", v.content_type)
     print("  badges:", v.badges)
 
-# Intent-focused factory — appends "full movie" to the query
+# Intent-focused factory: appends "full movie" to the query
 for v in YoutubeSearch.for_movies("blade runner").iterate_movies(max_res=3):
     print(v.title, v.length)
 ```
@@ -32,24 +32,24 @@ for v in YoutubeSearch.for_movies("blade runner").iterate_movies(max_res=3):
 
 | Class | What it gives you |
 |---|---|
-| `YoutubeSearch` | Searches youtube.com; yields `VideoPreview`, `ChannelPreview`, `PlaylistPreview`, mixes, related queries |
-| `YoutubeMusicSearch` | Searches music.youtube.com; yields `MusicTrack`, `MusicAlbum`, `MusicArtist`, `MusicPlaylist`, `MusicVideo` |
-| `Channel` | Fetches a channel page; exposes `.videos`, `.shorts`, `.streams`, `.live`, `.playlists`, `.podcasts` |
-| `Playlist` | Fetches a playlist page; exposes `.videos` (lazy-paginated generator) |
+| `YoutubeSearch` | Searches youtube.com. Yields `VideoPreview`, `ChannelPreview`, `PlaylistPreview`, mixes, related queries |
+| `YoutubeMusicSearch` | Searches music.youtube.com. Yields `MusicTrack`, `MusicAlbum`, `MusicArtist`, `MusicPlaylist`, `MusicVideo` |
+| `Channel` | Fetches a channel page. Exposes `.videos`, `.shorts`, `.streams`, `.live`, `.playlists`, `.podcasts` |
+| `Playlist` | Fetches a playlist page. Exposes `.videos` (lazy-paginated generator) |
 | `Category` | Single search facet (`.content_type` on a video) collapsed from mediavocab's multi-axis `ClassificationResult`. `ContentType` is a back-compat alias |
 
 ## Key invariants
 
-- A `Video` from a channel tab has `view_count` as a human string (e.g. `"31K views"`) and `published_time` as a relative string (e.g. `"5 hours ago"`). It has **no `length` field** — duration is not available from channel-page renderers.
+- A `Video` from a channel tab has `view_count` as a human string (e.g. `"31K views"`) and `published_time` as a relative string (e.g. `"5 hours ago"`). It has **no `length` field** because duration is not available from channel-page renderers.
 - A `VideoPreview` from a search result has `length` as seconds (int) and `view_count` as an exact integer.
 - `MusicAlbum` is a subclass of `MusicPlaylist`. Both expose `.tracks` as a `list[MusicTrack]`, `.track_count`, `.year`, and `.playlist_url`.
-- `Channel.live` — fetches `/@handle/live` (a watch-page redirect); returns **one `Video` or `None`** — the currently on-air stream.
-- `Channel.streams` — fetches `/@handle/streams` (a browse tab); returns a lazy list of **all** livestream videos (past + current).
-- `VideoPreview.content_type` does not use channel tags (search results don't include them). `Video.content_type` (from `Channel.videos`) does, giving better accuracy for ambiguous titles.
+- `Channel.live` fetches `/@handle/live` (a watch-page redirect) and returns **one `Video` or `None`**, the stream that is currently on air.
+- `Channel.streams` fetches `/@handle/streams` (a browse tab) and returns a lazy list of **all** livestream videos (past and current).
+- `VideoPreview.content_type` does not use channel tags, because search results do not include them. `Video.content_type` (from `Channel.videos`) does use channel tags, and this gives better accuracy for ambiguous titles.
 
-## Factory classmethods — 24 intent-focused search shortcuts
+## Factory classmethods: 24 intent-focused search shortcuts
 
-Every factory appends a keyword phrase to improve YouTube's ranking. Pair with the matching typed iterator for content-type enforcement:
+Every factory appends a keyword phrase to improve YouTube's ranking. Pair each factory with the matching typed iterator for content-type enforcement:
 
 ```python
 from tutubo import YoutubeSearch
@@ -100,12 +100,12 @@ for video in c.videos:
     print(video.title, video.view_count, video.published_time)
     print("  content_type:", video.content_type)
 
-# Currently on-air stream — one Video or None (reads /@handle/live)
+# Currently on-air stream: one Video or None (reads /@handle/live)
 live = c.live
 if live:
     print("LIVE:", live.title, live.watch_url)
 
-# Full stream archive — paginated list from /@handle/streams
+# Full stream archive: paginated list from /@handle/streams
 for stream in c.streams:
     print(stream.title, stream.is_live)
 
@@ -121,7 +121,7 @@ for pod in c2.podcasts:
 
 ## mediavocab integration
 
-mediavocab is a hard runtime dependency. It provides `classify_video()` (returning a multi-axis `ClassificationResult`), `parse_title()`, `extract_tags()`, and the `Work` / `Release` / `Entity` data model. tutubo adds the `Category` search facet and `classify_category()` collapse.
+mediavocab is a hard runtime dependency. It provides `classify_video()` (which returns a multi-axis `ClassificationResult`), `parse_title()`, `extract_tags()`, and the `Work` / `Release` / `Entity` data model. tutubo adds the `Category` search facet and the `classify_category()` collapse.
 
 ```python
 # Classifiers re-exported from tutubo for convenience
@@ -138,11 +138,11 @@ for v in YoutubeSearch.for_movies("nosferatu").iterate_movies(max_res=3):
     print(release.external_ids)   # {"youtube": "<video_id>"}
 ```
 
-Badge → resolution mapping: `"4K"` → `"2160p"`, `"8K"` → `"4320p"`, `"HD"` → `"1080p"`. CC badge → `AccessibilityTrack(kind="captions")`. See [docs/mediavocab.md](docs/mediavocab.md).
+Badge to resolution mapping: `"4K"` maps to `"2160p"`, `"8K"` maps to `"4320p"`, `"HD"` maps to `"1080p"`. A CC badge maps to `AccessibilityTrack(kind="captions")`. See [docs/mediavocab.md](docs/mediavocab.md).
 
 ## Pluggable session and `TUTUBO_TRANSPORT`
 
-Channel and playlist HTML pages are fetched via a pluggable session (`requests.Session` by default). Set `TUTUBO_TRANSPORT=curl_cffi` to use browser-fingerprinted TLS:
+tutubo fetches channel and playlist HTML pages through a pluggable session (`requests.Session` by default). Set `TUTUBO_TRANSPORT=curl_cffi` to use browser-fingerprinted TLS:
 
 ```bash
 export TUTUBO_TRANSPORT=curl_cffi   # requires: pip install tutubo[stealth]
@@ -158,14 +158,14 @@ ch = Channel("https://www.youtube.com/@LinusTechTips",
              session=cffi_requests.Session(impersonate="chrome"))
 ```
 
-**Note:** `tutubo._innertube._post` (the search path) uses stdlib `urllib.request` and is not affected by the transport setting. See [docs/transport.md](docs/transport.md).
+**Note:** `tutubo._innertube._post` (the search path) uses stdlib `urllib.request` and ignores the transport setting. See [docs/transport.md](docs/transport.md).
 
 ## Configuration
 
 | Env var | Effect |
 |---|---|
 | `TUTUBO_TRANSPORT` | Set to `curl_cffi` to enable stealth transport for channel/playlist fetches |
-| `MEDIAVOCAB_LANG` | Default language for classification (e.g. `es-es`, `fr-fr`); default `en-us` |
+| `MEDIAVOCAB_LANG` | Default language for classification (e.g. `es-es`, `fr-fr`). Default is `en-us` |
 
 ## Examples
 
@@ -176,7 +176,7 @@ ch = Channel("https://www.youtube.com/@LinusTechTips",
 | `examples/03_channel.py` | Channel metadata, videos tab, `Channel.live` vs `Channel.streams` |
 | `examples/04_playlist.py` | Channel playlists and direct playlist iteration |
 | `examples/05_podcasts.py` | Podcast shows, episode listing, `is_podcast=True` classification |
-| `examples/06_music_search.py` | `YoutubeMusicSearch` — tracks, artists, community playlists |
+| `examples/06_music_search.py` | `YoutubeMusicSearch`: tracks, artists, community playlists |
 | `examples/07_music_album.py` | `MusicAlbum` with full track listing |
 | `examples/08_fanedits.py` | Fan-edit detection via `parse_title()` + `VariantKind.FANEDIT` |
 | `examples/09_to_mediavocab.py` | All mediavocab fields from `to_work()` / `to_release()` |
@@ -185,16 +185,16 @@ ch = Channel("https://www.youtube.com/@LinusTechTips",
 
 ## Documentation
 
-- [docs/index.md](docs/index.md) — class index and overview
-- [docs/search.md](docs/search.md) — `YoutubeSearch`, 24 factories, `YoutubeMusicSearch`
-- [docs/channel.md](docs/channel.md) — `Channel`, `Playlist`, `Video`, `PodcastPreview`
-- [docs/models.md](docs/models.md) — all model types with typed field reference
-- [docs/content_type.md](docs/content_type.md) — `Category` facets and the `classify_category` collapse
-- [docs/mediavocab.md](docs/mediavocab.md) — `to_work()` / `to_release()` bridge
-- [docs/transport.md](docs/transport.md) — pluggable session and stealth transport
-- [docs/locale.md](docs/locale.md) — locale system and supported languages
-- [docs/downloading.md](docs/downloading.md) — `download()` and `download_playlist()`
-- [docs/testing.md](docs/testing.md) — fixture-based offline testing
+- [docs/index.md](docs/index.md): class index and overview
+- [docs/search.md](docs/search.md): `YoutubeSearch`, 24 factories, `YoutubeMusicSearch`
+- [docs/channel.md](docs/channel.md): `Channel`, `Playlist`, `Video`, `PodcastPreview`
+- [docs/models.md](docs/models.md): all model types with typed field reference
+- [docs/content_type.md](docs/content_type.md): `Category` facets and the `classify_category` collapse
+- [docs/mediavocab.md](docs/mediavocab.md): `to_work()` / `to_release()` bridge
+- [docs/transport.md](docs/transport.md): pluggable session and stealth transport
+- [docs/locale.md](docs/locale.md): locale system and supported languages
+- [docs/downloading.md](docs/downloading.md): `download()` and `download_playlist()`
+- [docs/testing.md](docs/testing.md): fixture-based offline testing
 
 ## License
 

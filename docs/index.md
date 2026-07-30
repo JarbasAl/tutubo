@@ -1,12 +1,12 @@
 # tutubo
 
-YouTube and YouTube Music metadata library. Searches videos, music tracks, albums, artists, podcasts, and channels — with rich per-item metadata and content-type classification. No pytube dependency.
+A YouTube and YouTube Music metadata library. It searches videos, music tracks, albums, artists, podcasts, and channels, and returns rich per-item metadata with content-type classification. tutubo has no pytube dependency.
 
 ## Overview
 
-tutubo queries YouTube and YouTube Music search endpoints and channel pages, returning typed Python objects. All metadata comes from search results or channel tabs — no per-video page fetches required unless you explicitly call `.get()`.
+tutubo queries YouTube and YouTube Music search endpoints and channel pages, and returns typed Python objects. All metadata comes from search results or channel tabs. tutubo fetches a video's own page only when you call `.get()`.
 
-## Key Classes
+## Key classes
 
 | Class | Purpose | Source |
 |---|---|---|
@@ -27,13 +27,13 @@ tutubo queries YouTube and YouTube Music search endpoints and channel pages, ret
 
 ## Contents
 
-- [Installation & Quick Start](../README.md)
-- [Search API](search.md) — `YoutubeSearch`, 24 factories, `YoutubeMusicSearch`
-- [Models Reference](models.md) — all preview types, `Video`, `MusicTrack`, `MusicAlbum`, etc.
-- [Channel API](channel.md) — `Channel`, `Playlist`, `PodcastPreview`, `Video`
-- [Content classification](content_type.md) — `Category` facets and the `classify_category` collapse
-- [mediavocab Integration](mediavocab.md) — `to_work()` / `to_release()` / `to_entity()` bridge
-- [Transport](transport.md) — pluggable session, `curl_cffi` stealth extra, `TUTUBO_TRANSPORT`
-- [Locale System](locale.md) — `.voc` files, `lang=` parameter, `MEDIAVOCAB_LANG`
-- [Downloading](downloading.md) — `download()` and `download_playlist()` via yt-dlp
-- [Testing](testing.md) — fixture-based offline test suite
+- [Installation and quick start](../README.md)
+- [Search API](search.md): `YoutubeSearch`, 24 factories, `YoutubeMusicSearch`
+- [Models reference](models.md): all preview types, `Video`, `MusicTrack`, `MusicAlbum`, and more
+- [Channel API](channel.md): `Channel`, `Playlist`, `PodcastPreview`, `Video`
+- [Content classification](content_type.md): `Category` facets and the `classify_category` collapse
+- [mediavocab integration](mediavocab.md): the `to_work()` / `to_release()` / `to_entity()` bridge
+- [Transport](transport.md): pluggable session, `curl_cffi` stealth extra, `TUTUBO_TRANSPORT`
+- [Locale system](locale.md): `.voc` files, the `lang=` parameter, `MEDIAVOCAB_LANG`
+- [Downloading](downloading.md): `download()` and `download_playlist()` via yt-dlp
+- [Testing](testing.md): fixture-based offline test suite
