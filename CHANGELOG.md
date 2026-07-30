@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.3.1a2](https://github.com/TigreGotico/tutubo/tree/4.3.1a2) (2026-07-30)
+
+[Full Changelog](https://github.com/TigreGotico/tutubo/compare/4.3.1a1...4.3.1a2)
+
+**Merged pull requests:**
+
+- docs: rewrite README in Simplified Technical English [\#44](https://github.com/TigreGotico/tutubo/pull/44) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [4.3.1a1](https://github.com/TigreGotico/tutubo/tree/4.3.1a1) (2026-06-23)
 
 [Full Changelog](https://github.com/TigreGotico/tutubo/compare/4.3.0a1...4.3.1a1)
