@@ -9,10 +9,16 @@ description = "YouTube search and stream wrapper around a bundled pytube fork"
 license = { text = "Apache-2.0" }
 authors = [{ name = "jarbasAI", email = "jarbasai@mailfence.com" }]
 requires-python = ">=3.8"
-dependencies = ["bs4", "requests", "ytmusicapi"]
+dependencies = [
+    "bs4",
+    "requests",
+    "ytmusicapi",
+    "mediavocab>=1.0.0",
+]
 
 [project.optional-dependencies]
-test = ["pytest"]
+test = ["pytest", "vcrpy", "pytest-vcr"]
+stealth = ["curl-cffi", "unblock_requests"]
 
 [project.urls]
 Homepage = "https://github.com/OpenJarbas/tutubo"

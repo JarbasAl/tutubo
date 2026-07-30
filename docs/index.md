@@ -1,16 +1,16 @@
 # tutubo
 
-YouTube and YouTube Music metadata library. Searches videos, music tracks, albums, artists, podcasts, and channels — with rich per-item metadata and content-type classification. No pytube dependency.
+A YouTube and YouTube Music metadata library. It searches videos, music tracks, albums, artists, podcasts, and channels, and returns rich per-item metadata with content-type classification. tutubo has no pytube dependency.
 
 ## Overview
 
-tutubo queries YouTube and YouTube Music search endpoints and channel pages, returning typed Python objects. All metadata comes from search results or channel tabs — no per-video page fetches required unless you explicitly call `.get()`.
+tutubo queries YouTube and YouTube Music search endpoints and channel pages, and returns typed Python objects. All metadata comes from search results or channel tabs. tutubo fetches a video's own page only when you call `.get()`.
 
-## Key Classes
+## Key classes
 
 | Class | Purpose | Source |
 |---|---|---|
-| `YoutubeSearch` | Search YouTube and YouTube Music | `tutubo/search.py` |
+| `YoutubeSearch` | Search YouTube by query, yield typed results | `tutubo/search.py:37` |
 | `VideoPreview` | Video result from a YouTube search | `tutubo/models.py:170` |
 | `ChannelPreview` | Channel result from a YouTube search | `tutubo/models.py:89` |
 | `PlaylistPreview` | Playlist result from a YouTube search | `tutubo/models.py:14` |
@@ -21,16 +21,19 @@ tutubo queries YouTube and YouTube Music search endpoints and channel pages, ret
 | `Playlist` | Playlist object with video iteration | `tutubo/channel.py` |
 | `Video` | Video stub from a channel tab | `tutubo/channel.py` |
 | `PodcastPreview` | Podcast show card from channel podcasts tab | `tutubo/channel.py` |
-| `ContentType` | Enum of semantic video content types | `tutubo/content_type.py:246` |
-| `classify_video` | Infer `ContentType` from metadata | `tutubo/content_type.py:281` |
+| `YoutubeMusicSearch` | Search YouTube Music catalogue, yield music entities | `tutubo/search.py:416` |
+| `ContentType` | Enum of semantic video content types | `mediavocab.taxonomy.ContentType` |
+| `classify_video` | Infer `ContentType` from metadata | `mediavocab.text.classify_video` |
 
 ## Contents
 
-- [Installation & Quick Start](../README.md)
-- [Search API](search.md)
-- [Models Reference](models.md)
-- [Channel API](channel.md)
-- [Content-Type Classification](content_type.md)
-- [Locale System](locale.md)
-- [Downloading](downloading.md)
-- [Testing](testing.md)
+- [Installation and quick start](../README.md)
+- [Search API](search.md): `YoutubeSearch`, 24 factories, `YoutubeMusicSearch`
+- [Models reference](models.md): all preview types, `Video`, `MusicTrack`, `MusicAlbum`, and more
+- [Channel API](channel.md): `Channel`, `Playlist`, `PodcastPreview`, `Video`
+- [Content classification](content_type.md): `Category` facets and the `classify_category` collapse
+- [mediavocab integration](mediavocab.md): the `to_work()` / `to_release()` / `to_entity()` bridge
+- [Transport](transport.md): pluggable session, `curl_cffi` stealth extra, `TUTUBO_TRANSPORT`
+- [Locale system](locale.md): `.voc` files, the `lang=` parameter, `MEDIAVOCAB_LANG`
+- [Downloading](downloading.md): `download()` and `download_playlist()` via yt-dlp
+- [Testing](testing.md): fixture-based offline test suite
