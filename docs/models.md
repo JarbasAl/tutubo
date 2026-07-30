@@ -1,6 +1,6 @@
 # Models
 
-All model types are returned directly from search and channel iteration — no additional page fetches unless you call `.get()`. Preview types wrap raw YouTube renderer dicts; `.get()` hydrates a full object at the cost of one network request.
+All model types come directly from search and channel iteration. tutubo needs no additional page fetches unless you call `.get()`. Preview types wrap raw YouTube renderer dicts. `.get()` hydrates a full object at the cost of one network request.
 
 ---
 
@@ -11,40 +11,34 @@ All model types are returned directly from search and channel iteration — no a
 Returned by `iterate_videos()`, `iterate_related_videos()`, and `search_yt()`. Wraps a `videoRenderer` dict from the YouTube search API.
 
 ```python
-v.video_id               # str — 11-character YouTube video ID
-v.watch_url              # str — https://www.youtube.com/watch?v={video_id}
-v.title                  # str — full video title
-v.author                 # str — channel display name
-v.channel_url            # str — channel page URL (handle or /channel/UC...)
-v.channel_thumbnail_url  # str — channel avatar, available directly from search results
-
+v.video_id               # str: 11-character YouTube video ID
+v.watch_url              # str: https://www.youtube.com/watch?v={video_id}
+v.title                  # str: full video title
+v.author                 # str: channel display name
+v.channel_url            # str: channel page URL (handle or /channel/UC...)
+v.channel_thumbnail_url  # str: channel avatar, available directly from search results
 # Timing and engagement
-v.length                 # int — duration in seconds; 0 for live streams
-v.published_time         # str — relative label, e.g. "2 years ago"; empty for live streams
-v.view_count             # int — exact view count as an integer; 0 if unavailable
-v.short_view_count       # str — abbreviated label, e.g. "272M views"
-
+v.length                 # int: duration in seconds, 0 for live streams
+v.published_time         # str: relative label, e.g. "2 years ago", empty for live streams
+v.view_count             # int: exact view count as an integer, 0 if unavailable
+v.short_view_count       # str: abbreviated label, e.g. "272M views"
 # Thumbnails
-v.thumbnail_url          # str — standard YouTube thumbnail (img.youtube.com, default.jpg size)
-
+v.thumbnail_url          # str: standard YouTube thumbnail (img.youtube.com, default.jpg size)
 # Badges and signals
-v.is_live                # bool — True when the result has a "Live" badge or length == 0
-v.is_upcoming            # bool — True when the result has an "Upcoming" or "Premiere" badge
-v.has_captions           # bool — True when a CC badge is present
-v.is_verified_channel    # bool — channel has a standard verification badge
-v.is_official_artist_channel  # bool — channel has BADGE_STYLE_TYPE_VERIFIED_ARTIST
-
-v.badges                 # list[str] — all badge label strings, e.g. ['CC', '4K', 'Live']
-v.description_snippet    # str — short excerpt returned by search; empty if absent
-v.keywords               # list[str] — always [] (search API does not return per-video keywords)
-
+v.is_live                # bool: True when the result has a "Live" badge or length == 0
+v.is_upcoming            # bool: True when the result has an "Upcoming" or "Premiere" badge
+v.has_captions           # bool: True when a CC badge is present
+v.is_verified_channel    # bool: channel has a standard verification badge
+v.is_official_artist_channel  # bool: channel has BADGE_STYLE_TYPE_VERIFIED_ARTIST
+v.badges                 # list[str]: all badge label strings, e.g. ['CC', '4K', 'Live']
+v.description_snippet    # str: short excerpt returned by search, empty if absent
+v.keywords               # list[str]: always [] (search API does not return per-video keywords)
 # Classification
-v.content_type           # ContentType — inferred from title, length, is_live, is_upcoming,
+v.content_type           # ContentType: inferred from title, length, is_live, is_upcoming,
                          #               is_official_artist, and description_snippet
-v.tags                   # list[str] — freeform labels from extract_tags() covering genre,
+v.tags                   # list[str]: freeform labels from extract_tags() covering genre,
                          #             era, format subtype, audience, etc.
-
-v.get()                  # returns a Video object (channel layer; triggers a network fetch)
+v.get()                  # returns a Video object (channel layer, triggers a network fetch)
 v.as_dict                # full dict of all fields above
 ```
 
@@ -61,9 +55,9 @@ v.as_dict                # full dict of all fields above
 | `channel_tags` | always `[]` | list from `Channel.keywords` |
 | `is_live` | from badge | from badge in channel renderer |
 | `description` | `description_snippet` (search excerpt) | description snippet from channel page |
-| `content_type` | no `channel_tags`; uses `is_official_artist` | uses `channel_tags` for context |
+| `content_type` | no `channel_tags`, uses `is_official_artist` | uses `channel_tags` for context |
 
-`VideoPreview.content_type` is less accurate than `Video.content_type` for ambiguous titles because it has no access to channel keyword context. Use `Video` (via `Channel.videos`) when you need channel-boosted classification.
+`VideoPreview.content_type` is less accurate than `Video.content_type` for ambiguous titles, because it has no access to channel keyword context. Use `Video` (through `Channel.videos`) when you need channel-boosted classification.
 
 ### `RelatedVideoPreview`
 
@@ -80,22 +74,21 @@ Identical to `VideoPreview`. Returned by `iterate_related_videos()` from "shelf"
 Returned by `iterate_channels()`. Wraps a `channelRenderer` dict.
 
 ```python
-ch.title              # str — display name
-ch.channel_id         # str — UC... internal ID
-ch.channel_url        # str — https://www.youtube.com/channel/{channel_id}
-ch.description        # str — about snippet from the search result
-ch.subscriber_count   # str — label, e.g. "1.28M subscribers"
-ch.video_count        # int — count parsed from subscriber_count text (see note below)
-ch.thumbnail_url      # str — channel avatar (highest resolution in thumbnails list)
-ch.is_verified        # bool — has a VERIFIED or VERIFIED_ARTIST badge
-
+ch.title              # str: display name
+ch.channel_id         # str: UC... internal ID
+ch.channel_url        # str: https://www.youtube.com/channel/{channel_id}
+ch.description        # str: about snippet from the search result
+ch.subscriber_count   # str: label, e.g. "1.28M subscribers"
+ch.video_count        # int: count parsed from subscriber_count text (see note below)
+ch.thumbnail_url      # str: channel avatar (highest resolution in thumbnails list)
+ch.is_verified        # bool: has a VERIFIED or VERIFIED_ARTIST badge
 ch.get()              # returns a full Channel object (network fetch)
 ch.as_dict            # {channelId, title, image, url, description, verified}
 ```
 
-**Note on `video_count`:** The field is parsed from `subscriber_count` text by stripping non-digit characters. This is a quirk of the underlying `videoCountText` renderer field name — the field actually contains the subscriber count label, not a video count. Use `ch.subscriber_count` (the raw string) for display; `ch.video_count` gives you an integer for comparison but is named confusingly.
+**Note on `video_count`:** tutubo parses this field from `subscriber_count` text by stripping non-digit characters. This is a quirk of the underlying `videoCountText` renderer field name: that field actually holds the subscriber count label, not a video count. Use `ch.subscriber_count` (the raw string) for display. `ch.video_count` gives you an integer for comparison but carries a confusing name.
 
-`ch.channel_url` always uses the `/channel/UC…` format regardless of whether the channel has a handle. Call `ch.get()` to get a `Channel` object whose `vanity_url` property returns the handle form.
+`ch.channel_url` always uses the `/channel/UC…` format, regardless of whether the channel has a handle. Call `ch.get()` to get a `Channel` object whose `vanity_url` property returns the handle form.
 
 ---
 
@@ -108,12 +101,11 @@ Returned by `iterate_playlists()`. Wraps a `playlistRenderer` dict.
 ```python
 pl.title              # str
 pl.playlist_id        # str
-pl.playlist_url       # str — https://www.youtube.com/playlist?list={playlist_id}
-pl.video_count        # int — number of videos in the playlist
-pl.thumbnail_url      # str — last (highest-res) thumbnail in thumbnails list
+pl.playlist_url       # str: https://www.youtube.com/playlist?list={playlist_id}
+pl.video_count        # int: number of videos in the playlist
+pl.thumbnail_url      # str: last (highest-res) thumbnail in thumbnails list
 pl.featured_videos    # list of dicts: {videoId, url, image, title}
                       # Up to 3 sample videos shown in the search result card
-
 pl.get()              # returns a Playlist object (network fetch for full video list)
 pl.as_dict            # {playlistId, title, url, image, featured_videos}
 ```
@@ -124,7 +116,7 @@ pl.as_dict            # {playlistId, title, url, image, featured_videos}
 
 `tutubo/models.py:67`
 
-Returned by `iterate_mixes()`. Inherits from `PlaylistPreview` with a different thumbnail extraction path (reads from `thumbnail.thumbnails` rather than `thumbnails[].thumbnails[0]`). All other fields identical to `PlaylistPreview`.
+Returned by `iterate_mixes()`. Inherits from `PlaylistPreview` with a different thumbnail extraction path (reads from `thumbnail.thumbnails` rather than `thumbnails[].thumbnails[0]`). All other fields are identical to `PlaylistPreview`.
 
 YouTube Mix previews represent auto-generated radio-style playlists. `get()` returns a `Playlist` object.
 
@@ -137,13 +129,13 @@ YouTube Mix previews represent auto-generated radio-style playlists. `get()` ret
 Returned by `iterate_queries()`. Represents a "People also searched for" suggestion card.
 
 ```python
-rs.query              # str — the suggested search term
-rs.thumbnail_url      # str — representative image for the suggestion
+rs.query              # str: the suggested search term
+rs.thumbnail_url      # str: representative image for the suggestion
 rs.get(preview=True)  # returns a new YoutubeSearch for this query
 rs.as_dict            # {query, image}
 ```
 
-`rs.get()` is a lightweight factory — it constructs a new `YoutubeSearch` without triggering any network fetch. The search only runs when you iterate its results.
+`rs.get()` is a lightweight factory. It constructs a new `YoutubeSearch` without triggering any network fetch. The search only runs when you iterate its results.
 
 ```python
 for q in YoutubeSearch("iron maiden").iterate_queries():
@@ -162,24 +154,21 @@ Returned by `iterate_music_tracks()`. Represents a song from the YouTube Music c
 
 ```python
 t.title               # str
-t.artist              # str — comma-joined if multiple artists
-t.album               # str — album name, or "" if not in an album
+t.artist               # str: comma-joined if multiple artists
+t.album               # str: album name, or "" if not in an album
 t.year                # int or None
-t.watch_url           # str — https://music.youtube.com/watch?v=...
+t.watch_url           # str: https://music.youtube.com/watch?v=...
 t.video_id            # str
-t.length              # int or None — duration in seconds
-t.views               # str — e.g. "682M views" (empty if unavailable)
-
+t.length              # int or None: duration in seconds
+t.views               # str: e.g. "682M views" (empty if unavailable)
 # Content signals
-t.is_explicit         # bool — explicit content flag from ytmusicapi
-t.is_audio_only       # bool — True for ATV (auto-generated audio, no music video exists)
-t.is_music_video      # bool — True for OMV (official music video) or UGC
-t.video_type          # str — raw ytmusicapi video type string
-
-t.category            # str — result category, e.g. "Songs", "Videos"
+t.is_explicit         # bool: explicit content flag from ytmusicapi
+t.is_audio_only       # bool: True for ATV (auto-generated audio, no music video exists)
+t.is_music_video      # bool: True for OMV (official music video) or UGC
+t.video_type          # str: raw ytmusicapi video type string
+t.category            # str: result category, e.g. "Songs", "Videos"
 t.thumbnail_url       # str
-t.track_number        # int or None — position within an album
-
+t.track_number        # int or None: position within an album
 t.as_dict             # {videoId, title, artist, album, year, image, url, duration,
                       #  views, explicit, audio_only, music_video, video_type}
 ```
@@ -188,9 +177,9 @@ t.as_dict             # {videoId, title, artist, album, year, image, url, durati
 
 | `video_type` | `is_audio_only` | `is_music_video` | Meaning |
 |---|---|---|---|
-| `MUSIC_VIDEO_TYPE_ATV` | `True` | `False` | Official Audio — auto-generated by YouTube; no separately produced music video exists |
+| `MUSIC_VIDEO_TYPE_ATV` | `True` | `False` | Official Audio, auto-generated by YouTube, no separately produced music video exists |
 | `MUSIC_VIDEO_TYPE_OFFICIAL_SOURCE_MUSIC` | `True` | `False` | Official audio from a label upload |
-| `MUSIC_VIDEO_TYPE_OMV` | `False` | `True` | Official Music Video — proper video production |
+| `MUSIC_VIDEO_TYPE_OMV` | `False` | `True` | Official Music Video, a proper video production |
 | `MUSIC_VIDEO_TYPE_UGC` | `False` | `True` | User-generated content |
 
 `length` is `None` (not `0`) when the duration is genuinely unknown. Check `t.length is not None` before arithmetic.
@@ -204,7 +193,7 @@ t.as_dict             # {videoId, title, artist, album, year, image, url, durati
 Returned by `iterate_yt_music_videos()`. Same as `MusicTrack` except:
 
 ```python
-t.watch_url           # str — https://www.youtube.com/watch?v=...  (not music.youtube.com)
+t.watch_url           # str: https://www.youtube.com/watch?v=...  (not music.youtube.com)
 t.get()               # returns a Video object from the regular YouTube channel layer
 ```
 
@@ -220,22 +209,21 @@ Returned by `iterate_music_albums()`. Extends `MusicPlaylist` with a `label` fie
 
 ```python
 a.title               # str
-a.name                # str — alias for title
+a.name                # str: alias for title
 a.artist              # str
 a.year                # int or None
-a.track_count         # int — from API data or len(tracks)
-a.duration_seconds    # int — total album duration, or 0 if unknown
+a.track_count         # int: from API data or len(tracks)
+a.duration_seconds    # int: total album duration, or 0 if unknown
 a.is_explicit         # bool
-a.label               # str — record label, or ""
+a.label               # str: record label, or ""
 a.thumbnail_url       # str
-a.playlist_url        # str — https://music.youtube.com/playlist?list=...
-a.tracks              # list[MusicTrack] — fully populated track listing
-
+a.playlist_url        # str: https://music.youtube.com/playlist?list=...
+a.tracks              # list[MusicTrack]: fully populated track listing
 a.as_dict             # {title, artist, year, image, url, track_count, explicit, label,
                       #  playlist: [MusicTrack.as_dict, ...]}
 ```
 
-`tracks` is populated from the full album page fetched during `iterate_music_albums()`. Each `MusicTrack` in `tracks` has `track_number` set.
+tutubo populates `tracks` from the full album page fetched during `iterate_music_albums()`. Each `MusicTrack` in `tracks` has `track_number` set.
 
 ---
 
@@ -247,15 +235,14 @@ Returned by `iterate_music_playlists()`. Community or editorial playlists.
 
 ```python
 p.title               # str
-p.artist              # str — curator or creator
+p.artist              # str: curator or creator
 p.year                # int or None
 p.track_count         # int
-p.duration_seconds    # int — total duration, or 0
+p.duration_seconds    # int: total duration, or 0
 p.is_explicit         # bool
 p.thumbnail_url       # str
-p.playlist_url        # str — https://music.youtube.com/playlist?list=...
+p.playlist_url        # str: https://music.youtube.com/playlist?list=...
 p.tracks              # list[MusicTrack]
-
 p.as_dict             # {title, artist, year, image, url, track_count, explicit,
                       #  playlist: [...]}
 ```
@@ -269,32 +256,30 @@ p.as_dict             # {title, artist, year, image, url, track_count, explicit,
 Returned by `iterate_music_artists()`.
 
 ```python
-a.name                # str — artist name (prefers "artist" key over "title")
-a.artist              # str — alias for name
-a.subscribers         # str — e.g. "1.2M subscribers" (falls back to "views" field)
-a.description         # str — artist biography, or ""
+a.name                # str: artist name (prefers "artist" key over "title")
+a.artist              # str: alias for name
+a.subscribers         # str: e.g. "1.2M subscribers" (falls back to "views" field)
+a.description         # str: artist biography, or ""
 a.thumbnail_url       # str
-a.tracks              # list[MusicTrack] — top tracks from the artist page
-
+a.tracks              # list[MusicTrack]: top tracks from the artist page
 a.as_dict             # {artist, image, subscribers, description,
                       #  playlist: [MusicTrack.as_dict, ...]}
 ```
 
-`tracks` comes from the artist's top-songs section, not the full discography. Expect 5–10 tracks.
+`tracks` comes from the artist's top-songs section, not the full discography. Expect 5 to 10 tracks.
 
 ---
 
 ## ContentType / classify_video
 
-`ContentType` — `mediavocab.taxonomy.ContentType` (mediavocab package)
-`classify_video` — `mediavocab.text.classify_video` (mediavocab package)
+`ContentType`: `mediavocab.taxonomy.ContentType` (mediavocab package)
+`classify_video`: `mediavocab.text.classify_video` (mediavocab package)
 
-An enum (also a `str` subclass) representing the semantic content type of a YouTube video. `VideoPreview` and `Video` both expose a `.content_type` computed property that calls `classify_video()` automatically.
+An enum (also a `str` subclass) that represents the semantic content type of a YouTube video. `VideoPreview` and `Video` both expose a `.content_type` computed property that calls `classify_video()` automatically.
 
 ```python
 from tutubo import ContentType
 from mediavocab.text import classify_video
-
 ct = classify_video(
     title="My Documentary Film",
     description="",
@@ -319,30 +304,30 @@ See [docs/content_type.md](content_type.md) for the `Category` facets and the `c
 | `SHORT_FILM` | `"short_film"` | Narrative short film (not YouTube Shorts) |
 | `LIVE` | `"live"` | Currently broadcasting |
 | `UPCOMING` | `"upcoming"` | Scheduled premiere |
-| `LIVE_RADIO` | `"live_radio"` | Live radio / 24/7 music stream |
+| `LIVE_RADIO` | `"live_radio"` | Live radio or 24/7 music stream |
 | `LIVE_NEWS` | `"live_news"` | Live news broadcast stream |
 | `IPTV` | `"iptv"` | Live TV channel (non-news) |
-| `MOVIE` | `"movie"` | Full feature-length film (≥ 60 min if duration known) |
-| `TRAILER` | `"trailer"` | Movie or show trailer (≤ 10 min if duration known) |
+| `MOVIE` | `"movie"` | Full feature-length film (at least 60 min if duration known) |
+| `TRAILER` | `"trailer"` | Movie or show trailer (at most 10 min if duration known) |
 | `BEHIND_THE_SCENES` | `"behind_the_scenes"` | Making-of, bloopers, on-set footage |
 | `DOCUMENTARY` | `"documentary"` | Documentary or docu-series |
 | `ANIME` | `"anime"` | Anime episode or series |
 | `TV_EPISODE` | `"tv_episode"` | Scripted TV series episode |
-| `AUDIOBOOK` | `"audiobook"` | Audiobook, audio drama, radio play — spoken audio without video |
+| `AUDIOBOOK` | `"audiobook"` | Audiobook, audio drama, radio play: spoken audio without video |
 | `PODCAST` | `"podcast"` | Podcast episode (publisher-defined only) |
 | `STAND_UP` | `"stand_up"` | Stand-up comedy special |
 | `INTERVIEW` | `"interview"` | Dedicated one-on-one or panel interview |
 | `LECTURE` | `"lecture"` | Academic lecture, TED Talk, Masterclass |
-| `CONCERT` | `"concert"` | Live concert / full show recording |
+| `CONCERT` | `"concert"` | Live concert or full show recording |
 | `NEWS` | `"news"` | Recorded news segment, report, or recap |
 | `SPORT` | `"sport"` | Sports match, highlights, recap |
 | `GAMING` | `"gaming"` | Gameplay, let's play, playthrough |
 | `TUTORIAL` | `"tutorial"` | Instructional how-to, DIY, step-by-step |
-| `REACTION` | `"reaction"` | Reaction / first-watch video |
+| `REACTION` | `"reaction"` | Reaction or first-watch video |
 | `COMPILATION` | `"compilation"` | Clip compilation, best-of, top-N |
 | `KIDS` | `"kids"` | Children's content, cartoons, nursery rhymes |
 | `MUSIC_VIDEO` | `"music_video"` | Official music video |
-| `MUSIC_AUDIO` | `"music_audio"` | Audio-only: lyric video, visualiser, official audio |
+| `MUSIC_AUDIO` | `"music_audio"` | Audio-only: lyric video, visualizer, official audio |
 
 ---
 
@@ -352,11 +337,14 @@ tutubo exposes enough metadata to distinguish between closely related content ty
 
 | Goal | How to detect |
 |---|---|
-| Official music video vs audio-only | `MusicTrack.is_music_video` vs `MusicTrack.is_audio_only`; or `video_type` |
-| YouTube Music track vs YouTube video | `MusicTrack.watch_url` contains `music.youtube.com`; `MusicVideo.watch_url` contains `youtube.com` |
+| Official music video vs audio-only | `MusicTrack.is_music_video` vs `MusicTrack.is_audio_only`, or `video_type` |
+| YouTube Music track vs YouTube video | `MusicTrack.watch_url` contains `music.youtube.com`, `MusicVideo.watch_url` contains `youtube.com` |
 | Currently live vs archived stream | `Video.is_live` from `Channel.live` |
 | Upcoming premiere | `VideoPreview.is_upcoming` |
 | Closed captions available | `VideoPreview.has_captions` |
 | Official Artist Channel | `VideoPreview.is_official_artist_channel` |
 | YouTube Shorts (Reels) | From `Channel.shorts` tab iteration |
 | Podcast shows | From `Channel.podcasts` as `PodcastPreview` objects |
+
+---
+[← Channel](channel.md) · [Home](index.md) · [Content classification →](content_type.md)

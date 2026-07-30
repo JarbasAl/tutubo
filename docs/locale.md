@@ -1,16 +1,16 @@
-# Locale System
+# Locale system
 
 `mediavocab.locale` is the canonical home for the keyword vocab and the
-loader API. tutubo just consumes it; nothing locale-related ships in
+loader API. tutubo just consumes it. Nothing locale-related ships in
 tutubo any more.
 
-Classification keywords are stored in plain `.voc` files, one phrase per
-line, organised by language. This lets tutubo classify content in
+Classification keywords live in plain `.voc` files, one phrase per
+line, organized by language. This lets tutubo classify content in
 languages other than English without changing Python code.
 
-The locale loader is **stateless** — there is no `set_lang()` /
-`get_lang()` / `TUTUBO_LANG` any more. Pass `lang="xx-yy"` per call;
-the default is read once from `MEDIAVOCAB_LANG` at import.
+The locale loader is **stateless**. There is no `set_lang()`,
+`get_lang()`, or `TUTUBO_LANG` any more. Pass `lang="xx-yy"` per call.
+The default is read once from `MEDIAVOCAB_LANG` at import.
 
 ---
 
@@ -39,8 +39,8 @@ mediavocab/locale/
         ...
 ```
 
-A variant directory (e.g. `es-es`) only needs files that differ from
-the shared base (`es`). Everything else falls back through the chain.
+A variant directory (e.g. `es-es`) needs only the files that differ
+from the shared base (`es`). Everything else falls back through the chain.
 
 ---
 
@@ -54,7 +54,7 @@ A `.voc` file contains one phrase per line.
 - Phrases are matched case-insensitively.
 - Multi-word phrases are supported: `full movie` is a single entry.
 
-Example — `en-us/movie_keywords.voc`:
+Example: `en-us/movie_keywords.voc`
 
 ```
 # full-length feature film indicators
@@ -64,7 +64,7 @@ full length
 complete film
 ```
 
-Example — `es/movie_keywords.voc`:
+Example: `es/movie_keywords.voc`
 
 ```
 película completa
@@ -76,41 +76,40 @@ largometraje
 
 ## Fallback chain
 
-When a `.voc` file is requested for a given language, the loader walks
+When you request a `.voc` file for a given language, the loader walks
 this chain and returns the first file it finds:
 
-1. Exact locale match — e.g. `es-es`
-2. Language-only code — e.g. `es`
+1. Exact locale match, e.g. `es-es`
+2. Language-only code, e.g. `es`
 3. `en-us`
 
 So `es-es` and `es-mx` automatically inherit all `es/` files they do
 not override. Any unsupported locale falls back to English.
 
-Example — requesting `movie_keywords` with lang `de-de` (not supported):
+Example: requesting `movie_keywords` with lang `de-de` (not supported)
 
 ```
-de-de/movie_keywords.voc   → not found
-de/movie_keywords.voc      → not found
-en-us/movie_keywords.voc   → found, use this
+de-de/movie_keywords.voc   -> not found
+de/movie_keywords.voc      -> not found
+en-us/movie_keywords.voc   -> found, use this
 ```
 
 ---
 
 ## Public API
 
-The locale system is **stateless** and thread-safe — there is no global
+The locale system is **stateless** and thread-safe. There is no global
 mutable language. Pass `lang=` to every call. The default comes from the
-`MEDIAVOCAB_LANG` environment variable read once at import (falling back
-to `"en-us"`); this default is read-only at runtime.
+`MEDIAVOCAB_LANG` environment variable, read once at import (falling back
+to `"en-us"`). This default is read-only at runtime.
 
 ### `voc_regex(name, lang=None) -> Optional[re.Pattern]`
 
-Compiled word-boundary alternation regex from the named `.voc` file.
+A compiled word-boundary alternation regex from the named `.voc` file.
 Returns `None` if the file is empty or missing in the fallback chain.
 
 ```python
 from mediavocab.locale import voc_regex
-
 rx_en = voc_regex("cut_directors", lang="en-us")
 rx_pt = voc_regex("cut_directors", lang="pt-pt")
 rx_default = voc_regex("cut_directors")  # uses MEDIAVOCAB_LANG / "en-us"
@@ -118,12 +117,11 @@ rx_default = voc_regex("cut_directors")  # uses MEDIAVOCAB_LANG / "en-us"
 
 ### `voc_set(name, lang=None) -> frozenset[str]`
 
-Frozenset of lowercased phrases from the named `.voc` file. Used for
+A frozenset of lowercased phrases from the named `.voc` file. Used for
 intersection checks against tag-like input (channel tags, hashtags).
 
 ```python
 from mediavocab.locale import voc_set
-
 movie_tags = voc_set("channel_movie_tags", lang="en-us")
 channel_tags = {"full movie", "bollywood films", "comedy"}
 if channel_tags & movie_tags:
@@ -133,12 +131,12 @@ if channel_tags & movie_tags:
 
 ### `get_default_lang() -> str`
 
-Return the import-time default language (the value of `MEDIAVOCAB_LANG`
+Returns the import-time default language (the value of `MEDIAVOCAB_LANG`
 or `"en-us"` if unset). Read-only.
 
 ### `MEDIAVOCAB_LANG` environment variable
 
-Set before starting the Python process to switch the default language:
+Set this before you start the Python process, to switch the default language:
 
 ```bash
 MEDIAVOCAB_LANG=it-it python my_script.py
@@ -148,13 +146,12 @@ MEDIAVOCAB_LANG=it-it python my_script.py
 
 ## Per-call language
 
-Concurrent callers should always pass `lang=` explicitly so different
-tenants / requests / threads do not interfere — the cache is keyed on
-`(name, lang)` so different languages cannot collide.
+Concurrent callers should always pass `lang=` explicitly, so different
+tenants, requests, or threads do not interfere. The cache is keyed on
+`(name, lang)`, so different languages cannot collide.
 
 ```python
 from mediavocab.text import classify_video, parse_title
-
 ct_pt  = classify_video("Filme Completo HD", length=7200, lang="pt-pt")
 ct_es  = classify_video("Película completa HD", length=7200, lang="es")
 parsed = parse_title("Star Wars [Edição do Director]", lang="pt-pt")
@@ -162,15 +159,15 @@ parsed = parse_title("Star Wars [Edição do Director]", lang="pt-pt")
 
 ---
 
-## Caching behaviour
+## Caching behavior
 
 All `.voc` loads and compiled patterns are cached with
 `functools.lru_cache(maxsize=512)`, keyed on `(name, lang)`. The cache
 is shared across calls for the same `(name, lang)` pair within a
-process; different languages are cached independently and never evict
+process. Different languages are cached independently and never evict
 each other.
 
-There is no public cache-clear API. The only way to invalidate is to
+There is no public cache-clear API. The only way to invalidate the cache is to
 restart the process.
 
 ---
@@ -182,9 +179,9 @@ numeric, structural, or language-universal:
 
 | Pattern | Reason |
 |---|---|
-| `S01E02`, `Season N Episode N` | Standardised production codes; identical across all languages |
+| `S01E02`, `Season N Episode N` | Standardized production codes, identical across all languages |
 | `Top \d+` | Numeric; the word "top" plus a number needs no translation |
-| Duration gates (`length < 62`, `length >= 3600`, …) | Numeric thresholds; not linguistic |
+| Duration gates (`length < 62`, `length >= 3600`, and similar) | Numeric thresholds, not linguistic |
 | `is_live`, `is_upcoming`, `is_podcast` flag checks | Boolean signals from publisher data |
 
 ---
@@ -211,15 +208,15 @@ tuple, regardless of language.
 ## Channel tag `.voc` files
 
 Files named `channel_*.voc` (e.g. `channel_news_tags.voc`,
-`channel_music_tags.voc`) list phrases that, when found in a channel's
-keyword tags, boost that channel's content into a specific
-`ContentType`.
+`channel_music_tags.voc`) list phrases that boost a channel's content
+into a specific `ContentType` when tutubo finds them in that channel's
+keyword tags.
 
 These files should include multilingual signals. Channel operators tag
-their channels in whatever language they operate in — a French news
+their channels in whatever language they operate in. A French news
 channel may use `"actualités"` regardless of what language the viewer
-has set. Include those terms in `en-us/channel_news_tags.voc` so they
-are recognised under the default fallback.
+has set. Include those terms in `en-us/channel_news_tags.voc`, so tutubo
+recognizes them under the default fallback.
 
 ---
 
@@ -232,17 +229,17 @@ are recognised under the default fallback.
 | `it-it` | Italian |
 | `nl-nl` | Dutch |
 | `es` | Spanish base; shared by `es-es` and `es-mx` |
-| `es-es` | Spain Spanish — sparse overrides |
-| `es-mx` | Mexican Spanish — sparse overrides |
+| `es-es` | Spain Spanish, sparse overrides |
+| `es-mx` | Mexican Spanish, sparse overrides |
 | `pt` | Portuguese base; shared by `pt-pt` and `pt-br` |
-| `pt-pt` | European Portuguese — sparse overrides |
-| `pt-br` | Brazilian Portuguese — sparse overrides |
+| `pt-pt` | European Portuguese, sparse overrides |
+| `pt-br` | Brazilian Portuguese, sparse overrides |
 
 ---
 
 ## Adding a new language
 
-### Step 1 — Create the directory
+### Step 1: create the directory
 
 ```bash
 mkdir mediavocab/locale/de-de
@@ -253,20 +250,22 @@ If the language has regional variants (e.g. `de-at`, `de-ch`), create
 `de/` as the shared base and add the variant directories with only the
 files that differ.
 
-### Step 2 — Translate `.voc` files
+### Step 2: translate `.voc` files
 
 Copy from `en-us/` and translate phrase by phrase. You only need to
 provide files for patterns that have meaningful translations. Skip
-files where the English phrases will work (episode codes, brand names).
+files where the English phrases work (episode codes, brand names).
 
-### Step 3 — Test your translation
+### Step 3: test your translation
 
 ```python
 from mediavocab.text import classify_video
 from tutubo import ContentType
-
 assert classify_video("Der Pate — Ganzer Film Deutsch", lang="de-de") == ContentType.MOVIE
 assert classify_video("Metallica — Live in Berlin — Komplettes Konzert", lang="de-de") == ContentType.CONCERT
 ```
 
 No network access is needed. `classify_video()` works entirely offline.
+
+---
+[← Transport](transport.md) · [Home](index.md) · [Downloading →](downloading.md)
