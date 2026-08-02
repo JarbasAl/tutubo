@@ -1,48 +1,52 @@
 # Changelog
 
-## [4.3.1a2](https://github.com/TigreGotico/tutubo/tree/4.3.1a2) (2026-07-30)
+## [4.3.1a3](https://github.com/LeMetadatarr/tutubo/tree/4.3.1a3) (2026-08-02)
 
-[Full Changelog](https://github.com/TigreGotico/tutubo/compare/4.3.1a1...4.3.1a2)
-
-**Merged pull requests:**
-
-- docs: rewrite README in Simplified Technical English [\#44](https://github.com/TigreGotico/tutubo/pull/44) ([JarbasAl](https://github.com/JarbasAl))
-
-## [4.3.1a1](https://github.com/TigreGotico/tutubo/tree/4.3.1a1) (2026-06-23)
-
-[Full Changelog](https://github.com/TigreGotico/tutubo/compare/4.3.0a1...4.3.1a1)
+[Full Changelog](https://github.com/LeMetadatarr/tutubo/compare/4.3.1a2...4.3.1a3)
 
 **Merged pull requests:**
 
-- fix: migrate off removed ContentType enum onto ClassificationResult [\#40](https://github.com/TigreGotico/tutubo/pull/40) ([JarbasAl](https://github.com/JarbasAl))
+- docs: QA pass — accuracy, org-move URLs, related projects [\#46](https://github.com/LeMetadatarr/tutubo/pull/46) ([JarbasAl](https://github.com/JarbasAl))
 
-## [4.3.0a1](https://github.com/TigreGotico/tutubo/tree/4.3.0a1) (2026-05-29)
+## [4.3.1a2](https://github.com/LeMetadatarr/tutubo/tree/4.3.1a2) (2026-07-30)
 
-[Full Changelog](https://github.com/TigreGotico/tutubo/compare/4.2.0a1...4.3.0a1)
-
-**Merged pull requests:**
-
-- feat: route HTTP through unblock\_requests \(pre-emptive anti-bot\) [\#38](https://github.com/TigreGotico/tutubo/pull/38) ([JarbasAl](https://github.com/JarbasAl))
-
-## [4.2.0a1](https://github.com/TigreGotico/tutubo/tree/4.2.0a1) (2026-05-07)
-
-[Full Changelog](https://github.com/TigreGotico/tutubo/compare/4.1.0a1...4.2.0a1)
+[Full Changelog](https://github.com/LeMetadatarr/tutubo/compare/4.3.1a1...4.3.1a2)
 
 **Merged pull requests:**
 
-- feat: lift parser/locale/content-type into mediavocab [\#33](https://github.com/TigreGotico/tutubo/pull/33) ([JarbasAl](https://github.com/JarbasAl))
+- docs: rewrite README in Simplified Technical English [\#44](https://github.com/LeMetadatarr/tutubo/pull/44) ([JarbasAl](https://github.com/JarbasAl))
 
-## [4.1.0a1](https://github.com/TigreGotico/tutubo/tree/4.1.0a1) (2026-04-30)
+## [4.3.1a1](https://github.com/LeMetadatarr/tutubo/tree/4.3.1a1) (2026-06-23)
 
-[Full Changelog](https://github.com/TigreGotico/tutubo/compare/4.0.0a1...4.1.0a1)
+[Full Changelog](https://github.com/LeMetadatarr/tutubo/compare/4.3.0a1...4.3.1a1)
 
 **Merged pull requests:**
 
-- feat: surface canonical YouTube IDs \(channelId, browseId\) in search results [\#31](https://github.com/TigreGotico/tutubo/pull/31) ([JarbasAl](https://github.com/JarbasAl))
+- fix: migrate off removed ContentType enum onto ClassificationResult [\#40](https://github.com/LeMetadatarr/tutubo/pull/40) ([JarbasAl](https://github.com/JarbasAl))
 
-## [4.0.0a1](https://github.com/TigreGotico/tutubo/tree/4.0.0a1) (2026-04-29)
+## [4.3.0a1](https://github.com/LeMetadatarr/tutubo/tree/4.3.0a1) (2026-05-29)
 
-[Full Changelog](https://github.com/TigreGotico/tutubo/compare/4.0.0...4.0.0a1)
+[Full Changelog](https://github.com/LeMetadatarr/tutubo/compare/4.2.0a1...4.3.0a1)
+
+**Merged pull requests:**
+
+- feat: route HTTP through unblock\_requests \(pre-emptive anti-bot\) [\#38](https://github.com/LeMetadatarr/tutubo/pull/38) ([JarbasAl](https://github.com/JarbasAl))
+
+## [4.2.0a1](https://github.com/LeMetadatarr/tutubo/tree/4.2.0a1) (2026-05-07)
+
+[Full Changelog](https://github.com/LeMetadatarr/tutubo/compare/4.1.0a1...4.2.0a1)
+
+**Merged pull requests:**
+
+- feat: lift parser/locale/content-type into mediavocab [\#33](https://github.com/LeMetadatarr/tutubo/pull/33) ([JarbasAl](https://github.com/JarbasAl))
+
+## [4.1.0a1](https://github.com/LeMetadatarr/tutubo/tree/4.1.0a1) (2026-04-30)
+
+[Full Changelog](https://github.com/LeMetadatarr/tutubo/compare/4.0.0...4.1.0a1)
+
+**Merged pull requests:**
+
+- feat: surface canonical YouTube IDs \(channelId, browseId\) in search results [\#31](https://github.com/LeMetadatarr/tutubo/pull/31) ([JarbasAl](https://github.com/JarbasAl))
 
 
 
