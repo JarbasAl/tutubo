@@ -6,7 +6,7 @@ These channels publish full albums and premieres (MUSIC_AUDIO) and long mixes (V
 They're absent from YouTube Music — YouTube is the only way to find this content.
 """
 from tutubo.channel import Channel
-from mediavocab.taxonomy import ContentType  # noqa
+from tutubo import ContentType
 from mediavocab.text import extract_tags
 
 CHANNELS = [

@@ -164,7 +164,7 @@ Commit all resulting files to enable offline CI runs.
 
 ### Ad-hoc recording
 
-Set `TUTUBO_RECORD_DIR` before you run any script that uses tutubo. The innertube client checks `os.environ.get("TUTUBO_RECORD_DIR")` on module import (`tutubo/_innertube.py:11`) and automatically writes every API response to that directory:
+Set `TUTUBO_RECORD_DIR` before you run any script that uses tutubo. The innertube client checks `os.environ.get("TUTUBO_RECORD_DIR")` on module import (`tutubo/_innertube.py:18`) and automatically writes every API response to that directory:
 
 ```bash
 TUTUBO_RECORD_DIR=test/fixtures python examples/search.py

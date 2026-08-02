@@ -5,7 +5,7 @@ Channels: @PinkFongBabyShark
 Verifies KIDS classification and reports what slipped through the filter.
 """
 from tutubo.channel import Channel
-from mediavocab.taxonomy import ContentType  # noqa
+from tutubo import ContentType
 
 url = "https://www.youtube.com/@pinkfongbabyshark/videos"
 c = Channel(url)

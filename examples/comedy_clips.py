@@ -5,7 +5,7 @@ Channels: @ComedyCentral, @markiplier, @OverlySarcasticProductions
 Sorted by view count. Skips full specials and VODs (CONCERT / STAND_UP).
 """
 from tutubo.channel import Channel
-from mediavocab.taxonomy import ContentType  # noqa
+from tutubo import ContentType
 
 CHANNELS = [
     ("Comedy Central",               "https://www.youtube.com/@ComedyCentral/videos"),

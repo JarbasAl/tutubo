@@ -12,6 +12,12 @@ The locale loader is **stateless**. There is no `set_lang()`,
 `get_lang()`, or `TUTUBO_LANG` any more. Pass `lang="xx-yy"` per call.
 The default is read once from `MEDIAVOCAB_LANG` at import.
 
+`en-us` is the only locale mediavocab currently ships `.voc` files for.
+Any other `lang` code falls back to it through the chain below, so the
+`.voc` files and example directories referenced further down (`es/`,
+`pt-pt/`, and similar) describe the fallback mechanism, not locales
+that exist yet.
+
 ---
 
 ## Directory layout
@@ -22,25 +28,16 @@ mediavocab/locale/
         movie_keywords.voc
         documentary_keywords.voc
         music_video_keywords.voc
-        channel_movie_tags.voc
-        channel_news_tags.voc
+        short_film_keywords.voc
+        trailer_keywords.voc
+        tv_episode_keywords.voc
         ... (one .voc file per keyword category)
-        tags/
-            horror.voc
-            sci-fi.voc
-            full-album.voc
-            ... (one .voc file per auto-tag label)
-    es/
-        movie_keywords.voc      # shared Spanish base
-        ...
-    es-es/
-        live_news_keywords.voc  # Spain-specific overrides only
-    es-mx/  fr-fr/  it-it/  nl-nl/  pt/  pt-pt/  pt-br/
-        ...
 ```
 
-A variant directory (e.g. `es-es`) needs only the files that differ
-from the shared base (`es`). Everything else falls back through the chain.
+Currently `en-us` is the only shipped locale. A regional variant directory
+(e.g. a future `es-es`) would only need the files that differ from a shared
+base language directory (e.g. `es`); everything else falls back through the
+chain below.
 
 ---
 
@@ -186,54 +183,15 @@ numeric, structural, or language-universal:
 
 ---
 
-## The `tags/` subdirectory
-
-Auto-tags (returned by `extract_tags()`) are also keyword-driven. Their
-`.voc` files live in `locale/<lang>/tags/`. The mapping from label name
-to file stem is defined in `_TAG_MANIFEST` inside
-`mediavocab.text.classify`.
-
-```python
-("horror",     "tags/horror"),
-("full-album", "tags/full-album"),
-("narrated",   "tags/narrated"),
-```
-
-So `voc_regex("tags/horror")` loads `locale/<lang>/tags/horror.voc`.
-The label returned by `extract_tags()` is the first element of each
-tuple, regardless of language.
-
----
-
-## Channel tag `.voc` files
-
-Files named `channel_*.voc` (e.g. `channel_news_tags.voc`,
-`channel_music_tags.voc`) list phrases that boost a channel's content
-into a specific `ContentType` when tutubo finds them in that channel's
-keyword tags.
-
-These files should include multilingual signals. Channel operators tag
-their channels in whatever language they operate in. A French news
-channel may use `"actualités"` regardless of what language the viewer
-has set. Include those terms in `en-us/channel_news_tags.voc`, so tutubo
-recognizes them under the default fallback.
-
----
-
 ## Supported languages
 
 | Code | Notes |
 |---|---|
-| `en-us` | Default; full `.voc` coverage |
-| `fr-fr` | French |
-| `it-it` | Italian |
-| `nl-nl` | Dutch |
-| `es` | Spanish base; shared by `es-es` and `es-mx` |
-| `es-es` | Spain Spanish, sparse overrides |
-| `es-mx` | Mexican Spanish, sparse overrides |
-| `pt` | Portuguese base; shared by `pt-pt` and `pt-br` |
-| `pt-pt` | European Portuguese, sparse overrides |
-| `pt-br` | Brazilian Portuguese, sparse overrides |
+| `en-us` | Only locale currently shipped; full `.voc` coverage |
+
+Any other `lang=` value falls back to `en-us` through the chain above.
+Adding a new language means adding a new `mediavocab/locale/<lang>/`
+directory of translated `.voc` files in the mediavocab package.
 
 ---
 
@@ -243,7 +201,6 @@ recognizes them under the default fallback.
 
 ```bash
 mkdir mediavocab/locale/de-de
-mkdir mediavocab/locale/de-de/tags
 ```
 
 If the language has regional variants (e.g. `de-at`, `de-ch`), create
@@ -260,9 +217,10 @@ files where the English phrases work (episode codes, brand names).
 
 ```python
 from mediavocab.text import classify_video
-from tutubo import ContentType
-assert classify_video("Der Pate — Ganzer Film Deutsch", lang="de-de") == ContentType.MOVIE
-assert classify_video("Metallica — Live in Berlin — Komplettes Konzert", lang="de-de") == ContentType.CONCERT
+from tutubo import Category, classify_category
+
+result = classify_video("Der Pate — Ganzer Film Deutsch", lang="de-de")
+assert classify_category(result) == Category.MOVIE
 ```
 
 No network access is needed. `classify_video()` works entirely offline.
