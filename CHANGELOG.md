@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.3.1a4](https://github.com/LeMetadatarr/tutubo/tree/4.3.1a4) (2026-08-02)
+
+[Full Changelog](https://github.com/LeMetadatarr/tutubo/compare/4.3.1a3...4.3.1a4)
+
+**Merged pull requests:**
+
+- fix: pin mediavocab\>=2.0.0a0 \(2.x prerelease has the API tutubo targets\) [\#47](https://github.com/LeMetadatarr/tutubo/pull/47) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [4.3.1a3](https://github.com/LeMetadatarr/tutubo/tree/4.3.1a3) (2026-08-02)
 
 [Full Changelog](https://github.com/LeMetadatarr/tutubo/compare/4.3.1a2...4.3.1a3)
