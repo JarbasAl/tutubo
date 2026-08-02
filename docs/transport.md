@@ -8,7 +8,7 @@ tutubo fetches channel and playlist HTML pages through a pluggable HTTP session.
 
 ## Default session: `default_session()`
 
-`tutubo/transport.py:34`
+`tutubo/transport.py:37`
 
 Returns a fresh HTTP session. By default this is a `requests.Session`. The function honors the `TUTUBO_TRANSPORT` environment variable:
 
@@ -51,7 +51,7 @@ ch = Channel(
 )
 ```
 
-If `TUTUBO_TRANSPORT=curl_cffi` is set but `curl_cffi` is not installed, tutubo logs a warning and falls back to `requests.Session` (`tutubo/transport.py:44`).
+If `TUTUBO_TRANSPORT=curl_cffi` is set but `curl_cffi` is not installed, tutubo logs a warning and falls back to `requests.Session` (`tutubo/transport.py:37`).
 
 ---
 

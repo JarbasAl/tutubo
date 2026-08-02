@@ -196,6 +196,13 @@ ch = Channel("https://www.youtube.com/@LinusTechTips",
 - [docs/downloading.md](docs/downloading.md): `download()` and `download_playlist()`
 - [docs/testing.md](docs/testing.md): fixture-based offline testing
 
+## Related projects
+
+- [mediavocab](https://github.com/TigreGotico/mediavocab): the classification and data model (`Work`, `Release`, `Entity`, `classify_video`) tutubo builds on
+- [unblock_requests](https://github.com/LeMetadatarr/unblock_requests): Cloudflare-bypassing `requests.Session` subclass, used by tutubo's `stealth` extra
+- [media-archivist](https://github.com/LeMetadatarr/media-archivist): indexes and deduplicates catalogues (including YouTube, via tutubo) into a typed mediavocab dataset
+- [py_bandcamp](https://github.com/LeMetadatarr/py_bandcamp), [nuvem_de_som](https://github.com/LeMetadatarr/nuvem_de_som), [tunein](https://github.com/LeMetadatarr/tunein), [audiobooker](https://github.com/LeMetadatarr/audiobooker): sibling scraper clients that emit the same typed mediavocab `Release` objects for other sources
+
 ## License
 
 Apache 2.0

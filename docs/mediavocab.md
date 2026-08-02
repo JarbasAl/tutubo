@@ -4,7 +4,7 @@
 
 mediavocab is a hard runtime dependency of tutubo. It provides:
 
-- `ContentType` enum and `classify_video()`, consumed by every `VideoPreview` and `Video`
+- `classify_video()`, consumed by every `VideoPreview` and `Video` through tutubo's `Category`/`ContentType` collapse
 - `parse_title()`, a title parser (year, season, episode, variant, edition, source format)
 - `extract_tags()`, a freeform label extractor (genre, era, format subtype, audience)
 - `Work`, `Release`, `Entity`: typed data model for downstream consumers
@@ -35,7 +35,7 @@ from mediavocab.text import classify_video, extract_tags, parse_title, TitlePars
 
 ## `VideoPreview.to_work()` and `to_release()`
 
-`tutubo/models.py:361` and `tutubo/models.py:376`
+`tutubo/models.py:372` and `tutubo/models.py:387`
 
 Converts a `VideoPreview` to a `mediavocab.Work` + `mediavocab.Release` pair.
 

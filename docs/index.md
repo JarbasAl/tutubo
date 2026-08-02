@@ -11,9 +11,9 @@ tutubo queries YouTube and YouTube Music search endpoints and channel pages, and
 | Class | Purpose | Source |
 |---|---|---|
 | `YoutubeSearch` | Search YouTube by query, yield typed results | `tutubo/search.py:37` |
-| `VideoPreview` | Video result from a YouTube search | `tutubo/models.py:170` |
-| `ChannelPreview` | Channel result from a YouTube search | `tutubo/models.py:89` |
-| `PlaylistPreview` | Playlist result from a YouTube search | `tutubo/models.py:14` |
+| `VideoPreview` | Video result from a YouTube search | `tutubo/models.py:192` |
+| `ChannelPreview` | Channel result from a YouTube search | `tutubo/models.py:109` |
+| `PlaylistPreview` | Playlist result from a YouTube search | `tutubo/models.py:28` |
 | `MusicTrack` | Track result from YouTube Music search | `tutubo/ytmus.py` |
 | `MusicAlbum` | Album result from YouTube Music search | `tutubo/ytmus.py` |
 | `MusicArtist` | Artist result from YouTube Music search | `tutubo/ytmus.py` |
@@ -22,8 +22,8 @@ tutubo queries YouTube and YouTube Music search endpoints and channel pages, and
 | `Video` | Video stub from a channel tab | `tutubo/channel.py` |
 | `PodcastPreview` | Podcast show card from channel podcasts tab | `tutubo/channel.py` |
 | `YoutubeMusicSearch` | Search YouTube Music catalogue, yield music entities | `tutubo/search.py:416` |
-| `ContentType` | Enum of semantic video content types | `mediavocab.taxonomy.ContentType` |
-| `classify_video` | Infer `ContentType` from metadata | `mediavocab.text.classify_video` |
+| `Category` (alias `ContentType`) | Single search-facet enum, collapsed from mediavocab's classification | `tutubo/classification.py` |
+| `classify_video` | Multi-axis `ClassificationResult` from metadata | `mediavocab.text.classify_video` |
 
 ## Contents
 

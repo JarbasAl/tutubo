@@ -6,7 +6,7 @@ These channels publish narrative short films — typically 5-30 minutes,
 free to watch, classified as SHORT_FILM or VIDEO.
 """
 from tutubo.channel import Channel
-from mediavocab.taxonomy import ContentType  # noqa
+from tutubo import ContentType
 from mediavocab.text import extract_tags
 
 CHANNELS = [

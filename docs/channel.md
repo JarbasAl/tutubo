@@ -1,6 +1,6 @@
 # Channel API
 
-`Channel`: `tutubo/channel.py:249`
+`Channel`: `tutubo/channel.py:276`
 
 `Channel` fetches metadata and tab content from a YouTube channel page. All properties load lazily on first access and cache in-instance, so repeated reads of the same property issue no additional network requests.
 
@@ -23,7 +23,7 @@ c = Channel("https://www.youtube.com/c/LofiGirl")
 c = Channel("https://www.youtube.com/channel/UC4BSeEq7XNtihGqI309vhYg")
 ```
 
-The `channel_name()` utility in `tutubo/_utils.py:34` normalizes all three formats to a canonical URI path (`/@Handle`, `/c/name`, or `/channel/UC…`), which tutubo appends to `https://www.youtube.com`.
+The `channel_name()` utility in `tutubo/_utils.py:36` normalizes all three formats to a canonical URI path (`/@Handle`, `/c/name`, or `/channel/UC…`), which tutubo appends to `https://www.youtube.com`.
 
 The optional `language` parameter controls the `Accept-Language` request header. This can affect the display language for auto-translated titles and some metadata:
 
@@ -91,7 +91,7 @@ c.podcasts_url   # str: /podcasts tab
 
 ## Videos tab: `channel.videos`
 
-`tutubo/channel.py:559`
+`tutubo/channel.py:598`
 
 Returns a `DeferredGeneratorList` of `Video` objects from the `/videos` tab. tutubo fetches items page by page as you consume the list. YouTube returns roughly 30 items per page. tutubo resolves continuation tokens automatically.
 
@@ -113,7 +113,7 @@ all_videos = list(c.videos)    # fetches all pages
 
 ## Shorts tab: `channel.shorts`
 
-`tutubo/channel.py:565`
+`tutubo/channel.py:603`
 
 Same interface as `videos` but reads from the `/shorts` tab. Items are `Video` objects with `is_live=False` and typically very short durations.
 
@@ -124,7 +124,7 @@ for short in c.shorts:
 
 ## Streams tab: `channel.streams`
 
-`tutubo/channel.py:600`
+`tutubo/channel.py:608`
 
 Returns a `DeferredGeneratorList` of `Video` objects from the `/@handle/streams` tab. This tab contains the channel's full stream archive: both currently active streams (`is_live=True`) and recordings of past streams (`is_live=False`).
 
@@ -147,7 +147,7 @@ for stream in c.streams:
 
 ## Current live stream: `channel.live`
 
-`tutubo/channel.py:610`
+`tutubo/channel.py:618`
 
 Returns a single `Video` object for the stream currently on air, or `None` if the channel is offline.
 
@@ -176,7 +176,7 @@ else:
 
 ## Video object
 
-`Video`: `tutubo/channel.py:31`
+`Video`: `tutubo/channel.py:36`
 
 A lightweight object populated from channel-page renderer data. It does not represent a fully fetched video page.
 
@@ -207,7 +207,8 @@ Example: a video titled "Episode 42" on a channel tagged `["podcast", "interview
 
 ```python
 c = Channel("https://www.youtube.com/@BBCNews")
-for v in c.live:
+v = c.live
+if v:
     print(v.title, v.content_type)
     # typical output: "BBC News Live" ContentType.LIVE_NEWS
 ```
@@ -216,7 +217,7 @@ for v in c.live:
 
 ## Playlists
 
-`tutubo/channel.py:698`
+`tutubo/channel.py:734`
 
 ```python
 # Just the URLs, no Playlist objects constructed
@@ -231,7 +232,7 @@ for playlist in c.playlists:
 
 `Channel.playlists` returns a `DeferredGeneratorList` of `Playlist` objects. `Playlist.videos` is a generator that pages through the playlist using continuation tokens.
 
-`Playlist`: `tutubo/channel.py:92`
+`Playlist`: `tutubo/channel.py:113`
 
 ```python
 pl.playlist_id    # str
@@ -255,7 +256,7 @@ for v in pl.videos:
 
 ## Podcasts
 
-`tutubo/channel.py:773`
+`tutubo/channel.py:810`
 
 YouTube channels with a Podcasts tab expose grouped podcast shows. Each show is a `PodcastPreview` backed by a YouTube playlist of episodes.
 
@@ -274,7 +275,7 @@ for pod in c.podcasts:
         break
 ```
 
-`PodcastPreview`: `tutubo/channel.py:216`
+`PodcastPreview`: `tutubo/channel.py:242`
 
 ```python
 pod.title           # str: show title

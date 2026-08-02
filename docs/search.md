@@ -1,6 +1,6 @@
 # Search API
 
-`YoutubeSearch` — `tutubo/search.py:34`
+`YoutubeSearch` — `tutubo/search.py:37`
 
 `YoutubeSearch` searches both YouTube and YouTube Music, and returns typed Python objects. It handles pagination automatically through continuation tokens. It fetches each page of results lazily as you consume the iterator.
 
@@ -83,7 +83,7 @@ for v in YoutubeSearch.for_concerts("black sabbath").iterate_concerts():
 
 ### `iterate_youtube(max_res=-1, search_type=SearchType.YOUTUBE)`
 
-`tutubo/search.py:178`
+`tutubo/search.py:182`
 
 A low-level iterator that yields all result types mixed together: `VideoPreview`, `ChannelPreview`, `PlaylistPreview`, `YoutubeMixPreview`, `RelatedVideoPreview`, `RelatedSearch`. Pass `max_res` to stop after N items (counting from 1; the iterator stops as soon as it would yield item N+1).
 
@@ -100,7 +100,7 @@ Passing `SearchType.VIDEOS` tells the parser to skip non-video renderers entirel
 
 ### `iterate_videos(max_res=-1)`
 
-`tutubo/search.py:271`
+`tutubo/search.py:281`
 
 Yields only `VideoPreview` (and `Video` when `preview=False`). This is the most commonly used iterator. Results include all video types. Use `v.content_type` or `iterate_by_content_type()` to narrow further.
 
@@ -114,13 +114,13 @@ for v in YoutubeSearch("python tutorials").iterate_videos(max_res=20):
 
 ### `iterate_related_videos(max_res=-1)`
 
-`tutubo/search.py:276`
+`tutubo/search.py:287`
 
 Yields `RelatedVideoPreview` objects from "shelf" cards that YouTube occasionally inserts alongside main results. These are algorithmically related video recommendations. They share all fields with `VideoPreview`.
 
 ### `iterate_channels(max_res=-1)`
 
-`tutubo/search.py:281`
+`tutubo/search.py:293`
 
 Yields `ChannelPreview` objects.
 
@@ -132,7 +132,7 @@ for ch in YoutubeSearch("metallica").iterate_channels():
 
 ### `iterate_playlists(max_res=-1)`
 
-`tutubo/search.py:286`
+`tutubo/search.py:299`
 
 Yields `PlaylistPreview` objects.
 
@@ -144,13 +144,13 @@ for pl in YoutubeSearch("lofi beats").iterate_playlists():
 
 ### `iterate_mixes(max_res=-1)`
 
-`tutubo/search.py:291`
+`tutubo/search.py:305`
 
 Yields `YoutubeMixPreview` objects, YouTube's auto-generated radio-style playlists (the "radio" or "mix" cards in search results). `YoutubeMixPreview` inherits from `PlaylistPreview` and exposes the same fields.
 
 ### `iterate_queries(max_res=-1)`
 
-`tutubo/search.py:296`
+`tutubo/search.py:311`
 
 Yields `RelatedSearch` objects from "People also searched for" horizontal card rows.
 
@@ -167,9 +167,9 @@ for q in YoutubeSearch("iron maiden").iterate_queries():
 
 ## SearchType enum
 
-`SearchType` — `tutubo/search.py:15`
+`SearchType` — `tutubo/search.py:24`
 
-`SearchType` is an `IntEnum`. Pass it to `iterate_youtube()` or `iterate_youtube_music()` to restrict which renderer types are parsed. This is a parse-time filter, not a network filter. It does not change what YouTube returns, only which objects tutubo creates from the response.
+`SearchType` is an `IntEnum`. Pass it to `iterate_youtube()` to restrict which renderer types are parsed. This is a parse-time filter, not a network filter. It does not change what YouTube returns, only which objects tutubo creates from the response.
 
 | Value | What it lets through |
 |---|---|
@@ -190,7 +190,7 @@ for q in YoutubeSearch("iron maiden").iterate_queries():
 
 ### `iterate_by_content_type(content_type, max_res=-1)`
 
-`tutubo/search.py:305`
+`tutubo/search.py:321`
 
 Iterates the full video result stream and yields only `VideoPreview` objects whose `.content_type` property matches the given `ContentType` enum value. Classification runs entirely in-process on data already fetched, so it needs no extra network calls.
 
@@ -240,7 +240,7 @@ The typed convenience methods below are all thin wrappers around `iterate_by_con
 | `iterate_kids(max_res=-1)` | `KIDS` | |
 | `iterate_music_videos(max_res=-1)` | `MUSIC_VIDEO` | Also fires for Official Artist Channel videos |
 | `iterate_music_audio(max_res=-1)` | `MUSIC_AUDIO` | Lyric videos, visualizers, official audio |
-| `iterate_shorts(max_res=-1)` | `SHORT` | Duration under 62 s. Unrelated to the Shorts tab |
+| `iterate_social_clips(max_res=-1)` | `SOCIAL_CLIP` | Duration under 62 s. Unrelated to the Shorts tab |
 
 **Note on `iterate_live_news`, `iterate_live_radio`, `iterate_iptv`:** These rely on `is_live=True` being set in the `VideoPreview`. In a regular YouTube search, a "Live" badge on the result identifies live streams. If no live streams appear in the first few pages, these iterators return nothing.
 
@@ -300,7 +300,7 @@ All accept `max_res=-1`. For albums, playlists, and artists, tutubo automaticall
 
 ### `search_yt(query, as_dict=True, parse=False, max_res=50)`
 
-`tutubo/search.py:456`
+`tutubo/search.py:572`
 
 A thin wrapper over `YoutubeSearch.iterate_youtube()` that returns dicts by default.
 
@@ -324,9 +324,9 @@ Parameters:
 
 ### `search_yt_music(query, as_dict=True, n_retries=3)`
 
-`tutubo/ytmus.py:293`
+`tutubo/ytmus.py:392`
 
-A direct YouTube Music search that yields dicts (`as_dict=True`) or model objects. Unlike `YoutubeSearch.iterate_youtube_music()`, this function does not support `max_res`. It yields everything returned by `ytmusicapi.search()`.
+A direct YouTube Music search that yields dicts (`as_dict=True`) or model objects. Unlike `YoutubeMusicSearch`'s iterators, this function does not support `max_res`. It yields everything returned by `ytmusicapi.search()`.
 
 ```python
 from tutubo import search_yt_music

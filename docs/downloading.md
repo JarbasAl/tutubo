@@ -15,7 +15,7 @@ pip install yt-dlp
 from tutubo.download import download, download_playlist
 # Download video (best quality, saves as .mp4)
 path = download("https://www.youtube.com/watch?v=EqQuihD0hoI")
-print(path)  # -> ./Rob Zombie - Dragula.mp3
+print(path)  # -> ./Rob Zombie - Dragula.mp4
 # Audio only (mp3)
 path = download("https://www.youtube.com/watch?v=EqQuihD0hoI", audio_only=True)
 # Specific quality

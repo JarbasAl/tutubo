@@ -6,7 +6,7 @@ All model types come directly from search and channel iteration. tutubo needs no
 
 ## VideoPreview
 
-`tutubo/models.py:170`
+`tutubo/models.py:192`
 
 Returned by `iterate_videos()`, `iterate_related_videos()`, and `search_yt()`. Wraps a `videoRenderer` dict from the YouTube search API.
 
@@ -61,7 +61,7 @@ v.as_dict                # full dict of all fields above
 
 ### `RelatedVideoPreview`
 
-`tutubo/models.py:338`
+`tutubo/models.py:437`
 
 Identical to `VideoPreview`. Returned by `iterate_related_videos()` from "shelf" cards in search results. Shares all fields and `as_dict`.
 
@@ -69,7 +69,7 @@ Identical to `VideoPreview`. Returned by `iterate_related_videos()` from "shelf"
 
 ## ChannelPreview
 
-`tutubo/models.py:89`
+`tutubo/models.py:109`
 
 Returned by `iterate_channels()`. Wraps a `channelRenderer` dict.
 
@@ -94,7 +94,7 @@ ch.as_dict            # {channelId, title, image, url, description, verified}
 
 ## PlaylistPreview
 
-`tutubo/models.py:14`
+`tutubo/models.py:28`
 
 Returned by `iterate_playlists()`. Wraps a `playlistRenderer` dict.
 
@@ -114,7 +114,7 @@ pl.as_dict            # {playlistId, title, url, image, featured_videos}
 
 ## YoutubeMixPreview
 
-`tutubo/models.py:67`
+`tutubo/models.py:85`
 
 Returned by `iterate_mixes()`. Inherits from `PlaylistPreview` with a different thumbnail extraction path (reads from `thumbnail.thumbnails` rather than `thumbnails[].thumbnails[0]`). All other fields are identical to `PlaylistPreview`.
 
@@ -124,7 +124,7 @@ YouTube Mix previews represent auto-generated radio-style playlists. `get()` ret
 
 ## RelatedSearch
 
-`tutubo/models.py:348`
+`tutubo/models.py:449`
 
 Returned by `iterate_queries()`. Represents a "People also searched for" suggestion card.
 
@@ -148,7 +148,7 @@ for q in YoutubeSearch("iron maiden").iterate_queries():
 
 ## MusicTrack
 
-`tutubo/ytmus.py:63`
+`tutubo/ytmus.py:74`
 
 Returned by `iterate_music_tracks()`. Represents a song from the YouTube Music catalogue.
 
@@ -188,7 +188,7 @@ t.as_dict             # {videoId, title, artist, album, year, image, url, durati
 
 ## MusicVideo
 
-`tutubo/ytmus.py:159`
+`tutubo/ytmus.py:197`
 
 Returned by `iterate_yt_music_videos()`. Same as `MusicTrack` except:
 
@@ -203,7 +203,7 @@ All other properties are identical to `MusicTrack`.
 
 ## MusicAlbum
 
-`tutubo/ytmus.py:241`
+`tutubo/ytmus.py:304`
 
 Returned by `iterate_music_albums()`. Extends `MusicPlaylist` with a `label` field.
 
@@ -229,7 +229,7 @@ tutubo populates `tracks` from the full album page fetched during `iterate_music
 
 ## MusicPlaylist
 
-`tutubo/ytmus.py:174`
+`tutubo/ytmus.py:214`
 
 Returned by `iterate_music_playlists()`. Community or editorial playlists.
 
@@ -251,7 +251,7 @@ p.as_dict             # {title, artist, year, image, url, track_count, explicit,
 
 ## MusicArtist
 
-`tutubo/ytmus.py:259`
+`tutubo/ytmus.py:323`
 
 Returned by `iterate_music_artists()`.
 
@@ -272,62 +272,21 @@ a.as_dict             # {artist, image, subscribers, description,
 
 ## ContentType / classify_video
 
-`ContentType`: `mediavocab.taxonomy.ContentType` (mediavocab package)
+`Category` (aliased as `ContentType`): `tutubo/classification.py`
 `classify_video`: `mediavocab.text.classify_video` (mediavocab package)
 
-An enum (also a `str` subclass) that represents the semantic content type of a YouTube video. `VideoPreview` and `Video` both expose a `.content_type` computed property that calls `classify_video()` automatically.
+`VideoPreview` and `Video` both expose a `.content_type` computed property. It calls mediavocab's `classify_video()`, which returns a multi-axis `ClassificationResult` (`media_type`, `content_form`, `programme_format`, `content_genres`), then collapses that result to a single tutubo `Category` facet through `classify_category()`.
 
 ```python
-from tutubo import ContentType
-from mediavocab.text import classify_video
-ct = classify_video(
-    title="My Documentary Film",
-    description="",
-    length=5400,
-    is_live=False,
-    is_upcoming=False,
-    is_official_artist=False,
-    is_podcast=False,
-    channel_tags=["documentary", "film"],
-)
-# ct == ContentType.DOCUMENTARY
+from tutubo import Category, classify_category, classify_video
+
+result = classify_video(title="My Documentary Film", length=5400)
+classify_category(result)  # Category.DOCUMENTARY
 ```
 
-See [docs/content_type.md](content_type.md) for the `Category` facets and the `classify_category` collapse.
+`Category` is a `str` subclass, so values compare equal to their string form (`Category.DOCUMENTARY == "documentary"`). `ContentType` is a back-compat alias for `Category`.
 
-### ContentType values
-
-| Value | String | Description |
-|---|---|---|
-| `VIDEO` | `"video"` | Generic YouTube video (default) |
-| `SHORT` | `"short"` | Under 62 seconds (YouTube Shorts) |
-| `SHORT_FILM` | `"short_film"` | Narrative short film (not YouTube Shorts) |
-| `LIVE` | `"live"` | Currently broadcasting |
-| `UPCOMING` | `"upcoming"` | Scheduled premiere |
-| `LIVE_RADIO` | `"live_radio"` | Live radio or 24/7 music stream |
-| `LIVE_NEWS` | `"live_news"` | Live news broadcast stream |
-| `IPTV` | `"iptv"` | Live TV channel (non-news) |
-| `MOVIE` | `"movie"` | Full feature-length film (at least 60 min if duration known) |
-| `TRAILER` | `"trailer"` | Movie or show trailer (at most 10 min if duration known) |
-| `BEHIND_THE_SCENES` | `"behind_the_scenes"` | Making-of, bloopers, on-set footage |
-| `DOCUMENTARY` | `"documentary"` | Documentary or docu-series |
-| `ANIME` | `"anime"` | Anime episode or series |
-| `TV_EPISODE` | `"tv_episode"` | Scripted TV series episode |
-| `AUDIOBOOK` | `"audiobook"` | Audiobook, audio drama, radio play: spoken audio without video |
-| `PODCAST` | `"podcast"` | Podcast episode (publisher-defined only) |
-| `STAND_UP` | `"stand_up"` | Stand-up comedy special |
-| `INTERVIEW` | `"interview"` | Dedicated one-on-one or panel interview |
-| `LECTURE` | `"lecture"` | Academic lecture, TED Talk, Masterclass |
-| `CONCERT` | `"concert"` | Live concert or full show recording |
-| `NEWS` | `"news"` | Recorded news segment, report, or recap |
-| `SPORT` | `"sport"` | Sports match, highlights, recap |
-| `GAMING` | `"gaming"` | Gameplay, let's play, playthrough |
-| `TUTORIAL` | `"tutorial"` | Instructional how-to, DIY, step-by-step |
-| `REACTION` | `"reaction"` | Reaction or first-watch video |
-| `COMPILATION` | `"compilation"` | Clip compilation, best-of, top-N |
-| `KIDS` | `"kids"` | Children's content, cartoons, nursery rhymes |
-| `MUSIC_VIDEO` | `"music_video"` | Official music video |
-| `MUSIC_AUDIO` | `"music_audio"` | Audio-only: lyric video, visualizer, official audio |
+See [docs/content_type.md](content_type.md) for the full list of `Category` facets and how the collapse works.
 
 ---
 
