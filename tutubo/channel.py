@@ -83,7 +83,12 @@ class Video:
         """Single tutubo search facet (:class:`~tutubo.classification.Category`),
         collapsed from :attr:`classification`."""
         from tutubo.classification import classify_category
-        return classify_category(self.classification, is_live=self._is_live)
+        return classify_category(
+            self.classification,
+            is_live=self._is_live,
+            title=self._title or "",
+            tags=self.channel_tags,
+        )
 
     @property
     def tags(self) -> List[str]:
@@ -423,6 +428,7 @@ class Channel:
             "context": _BROWSE_CONTEXT,
             **({"visitorData": self._visitor_data} if self._visitor_data else {}),
         }, timeout=30)
+        resp.raise_for_status()
         return resp.text
 
     # ------------------------------------------------------------------

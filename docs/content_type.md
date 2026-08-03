@@ -115,8 +115,19 @@ classify_video(
 `tutubo.classification.classify_category`
 
 ```python
-classify_category(result: ClassificationResult, *, is_live: bool = False, is_upcoming: bool = False) -> Category
+classify_category(
+    result: ClassificationResult, *,
+    is_live: bool = False, is_upcoming: bool = False,
+    title: str = "", tags: Optional[Iterable[str]] = None,
+) -> Category
 ```
+
+`title` and `tags` (channel keywords) are optional and used only to detect
+`Category.KIDS` — mediavocab's `ClassificationResult` carries no
+children's-content signal of its own (no genre, `media_type`, or
+`programme_format` maps to it), so tutubo detects it directly from
+free text, the same way `extract_tags` already does for the rest of
+tutubo's facets.
 
 Collapse order:
 
@@ -124,9 +135,10 @@ Collapse order:
 2. `is_upcoming=True`: `Category.UPCOMING`.
 3. `result.content_form`: `TRAILER`/`TEASER` to `Category.TRAILER`, `BEHIND_SCENES` to `Category.BEHIND_THE_SCENES`, `REACTION` to `Category.REACTION`, `SOCIAL_CLIP`/`EXCERPT` to `Category.SOCIAL_CLIP`.
 4. `content_genres`: `"anime"` to `Category.ANIME`, `"gaming"` to `Category.GAMING`.
-5. `result.programme_format`: `DOCUMENTARY`, `NEWS` to `Category.NEWS`, `SPORTS` to `Category.SPORT`, `STAND_UP`, `CONCERT`, `TALK_SHOW` to `Category.INTERVIEW`.
-6. `result.media_type` fallback: `MOVIE`, `SHORT_FILM`, `EPISODIC_SERIES` to `Category.TV_EPISODE`, `TV` to `Category.IPTV`, `MUSIC_VIDEO`, `MUSIC` to `Category.MUSIC_AUDIO`, `PODCAST`, `AUDIOBOOK`, `AUDIO_DRAMA` to `Category.AUDIOBOOK`, `RADIO` to `Category.LIVE_RADIO`, `GAME` to `Category.GAMING`.
-7. Anything unmatched: `Category.VIDEO`.
+5. `title`/`tags` keyword match (`kids`, `children`, `toddler`, `preschool`, `nursery rhymes`) to `Category.KIDS`.
+6. `result.programme_format`: `DOCUMENTARY`, `NEWS` to `Category.NEWS`, `SPORTS` to `Category.SPORT`, `STAND_UP`, `CONCERT`, `TALK_SHOW` to `Category.INTERVIEW`.
+7. `result.media_type` fallback: `MOVIE`, `SHORT_FILM`, `EPISODIC_SERIES` to `Category.TV_EPISODE`, `TV` to `Category.IPTV`, `MUSIC_VIDEO`, `MUSIC` to `Category.MUSIC_AUDIO`, `PODCAST`, `AUDIOBOOK`, `AUDIO_DRAMA` to `Category.AUDIOBOOK`, `RADIO` to `Category.LIVE_RADIO`, `GAME` to `Category.GAMING`.
+8. Anything unmatched: `Category.VIDEO`.
 
 `Category.SOCIAL_CLIP` is a `content_form`, not a duration check in tutubo's own code — mediavocab decides `ContentForm.SOCIAL_CLIP` from its own title/duration signals before `classify_category()` ever runs.
 

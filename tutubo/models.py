@@ -357,6 +357,7 @@ class VideoPreview(YoutubePreview):
             self.classification,
             is_live=self.is_live,
             is_upcoming=self.is_upcoming,
+            title=self.title or "",
         )
 
     @property

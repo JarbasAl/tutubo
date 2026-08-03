@@ -14,8 +14,9 @@ underlying multi-axis classification.
 """
 from __future__ import annotations
 
+import re
 from enum import Enum
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Iterable, Optional
 
 from mediavocab.taxonomy import MediaType, ContentForm, ProgrammeFormat
 
@@ -100,17 +101,43 @@ _MEDIA_TO_CATEGORY = {
 }
 
 
+# mediavocab's own classifier has no children's-content signal (no genre,
+# media_type or programme_format maps to it), so Category.KIDS is detected
+# here from title / channel-keyword text — the same free-text sources
+# ``extract_tags`` already draws on for the rest of tutubo's facets.
+_KIDS_PATTERN = re.compile(
+    r"\bkids\b|\bchild(?:ren)?\b|\btoddlers?\b|\bpreschool(?:er)?\b|nursery rhymes?",
+    re.IGNORECASE,
+)
+
+
+def _looks_like_kids_content(title: str, tags: Optional[Iterable[str]] = None) -> bool:
+    """True if ``title`` or any of ``tags`` reads as children's content."""
+    if title and _KIDS_PATTERN.search(title):
+        return True
+    for t in tags or ():
+        if t and _KIDS_PATTERN.search(t):
+            return True
+    return False
+
+
 def classify_category(
     result: "ClassificationResult",
     *,
     is_live: bool = False,
     is_upcoming: bool = False,
+    title: str = "",
+    tags: Optional[Iterable[str]] = None,
 ) -> Category:
     """Collapse a mediavocab ``ClassificationResult`` to a single tutubo facet.
 
     Live and upcoming flags win first (they describe delivery, which
     overrides the content classification), then supplementary form, then
     programme format, then a media-type / genre fallback.
+
+    ``title`` and ``tags`` (channel keywords) are optional and used only to
+    detect :attr:`Category.KIDS` — mediavocab's ``ClassificationResult``
+    carries no children's-content signal of its own.
     """
     genres = set(result.content_genres or [])
 
@@ -134,6 +161,8 @@ def classify_category(
         return Category.ANIME
     if "gaming" in genres:
         return Category.GAMING
+    if _looks_like_kids_content(title, tags):
+        return Category.KIDS
 
     # Non-fiction programme format
     fmt_cat = _FORMAT_TO_CATEGORY.get(result.programme_format)

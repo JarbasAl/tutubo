@@ -5,3 +5,5 @@ __pycache__/
 build/
 dist/
 *.m3u8
+.venv/
+.coverage
