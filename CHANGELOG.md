@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.3.1a5](https://github.com/LeMetadatarr/tutubo/tree/4.3.1a5) (2026-08-03)
+
+[Full Changelog](https://github.com/LeMetadatarr/tutubo/compare/4.3.1a4...4.3.1a5)
+
+**Merged pull requests:**
+
+- ci: grant conventional-label workflow write permissions [\#48](https://github.com/LeMetadatarr/tutubo/pull/48) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [4.3.1a4](https://github.com/LeMetadatarr/tutubo/tree/4.3.1a4) (2026-08-02)
 
 [Full Changelog](https://github.com/LeMetadatarr/tutubo/compare/4.3.1a3...4.3.1a4)
