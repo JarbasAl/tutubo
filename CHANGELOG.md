@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.3.1a7](https://github.com/LeMetadatarr/tutubo/tree/4.3.1a7) (2026-09-01)
+
+[Full Changelog](https://github.com/LeMetadatarr/tutubo/compare/4.3.1a6...4.3.1a7)
+
+**Merged pull requests:**
+
+- Update actions/setup-python action to v7 [\#43](https://github.com/LeMetadatarr/tutubo/pull/43) ([renovate[bot]](https://github.com/apps/renovate))
+
 ## [4.3.1a6](https://github.com/LeMetadatarr/tutubo/tree/4.3.1a6) (2026-08-03)
 
 [Full Changelog](https://github.com/LeMetadatarr/tutubo/compare/4.3.1a5...4.3.1a6)
